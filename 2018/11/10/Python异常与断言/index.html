@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Python异常与断言 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Python">
+  
+  
+  
+  
+  <meta name="description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python异常与断言">
+<meta property="og:url" content="http://yoursite.com/2018/11/10/Python异常与断言/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-11-10T08:17:36.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python异常与断言">
+<meta name="twitter:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Python异常与断言" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      Python异常与断言
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/10/Python异常与断言/" class="article-date">
+	  <time datetime="2018-11-10T08:13:57.000Z" itemprop="datePublished">十一月 10, 2018</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="异常与断言"><a href="#异常与断言" class="headerlink" title="异常与断言"></a>异常与断言</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常</p>
+<ul>
+<li>我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常</li>
+<li>很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。</li>
+</ul>
+<p>下面是一个典型异常的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SuccessNum = input(<span class="string">'Enter SuccessNum: '</span>)</span><br><span class="line">totalNum = input(<span class="string">'Enter totalNum: '</span>)</span><br><span class="line">ac = int(SuccessNum)/int(totalNum)</span><br><span class="line">print(<span class="string">'The AC ratio is'</span>,ac)</span><br><span class="line">print(<span class="string">'Now here'</span>)</span><br></pre></td></tr></table></figure>
+<p>该段程序在大多数情况下是运行良好的，但是如果用户输入中出现了0，（或者干脆直接跳过）程序就会崩溃，这显然不是我们乐意看到的<br>我们可以以下方式改写这段程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    SuccessNum = input(<span class="string">'Enter SuccessNum: '</span>)</span><br><span class="line">    totalNum = input(<span class="string">'Enter totalNum: '</span>)</span><br><span class="line">    ac = int(SuccessNum)/int(totalNum)</span><br><span class="line">    print(<span class="string">'The AC ratio is'</span>,ac)</span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">    print(<span class="string">'Failure ! totalNum is 0'</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError:</span><br><span class="line">    print(<span class="string">'Error ! No input'</span>)</span><br><span class="line">print(<span class="string">'Now here'</span>)</span><br></pre></td></tr></table></figure>
+<p>try语句按照如下方式工作；</p>
+<ul>
+<li>首先，执行try子句（在关键字try和关键字except之间的语句）</li>
+<li>如果没有异常发生，忽略except子句，try子句执行后结束。</li>
+<li>如果在执行try子句的过程中发生了异常，那么try子句余下的部分将被忽略。如果异常的类型和 except 之后的名称相符，那么对应的except子句将被执行。最后执行 try 语句之后的代码。</li>
+<li>如果一个异常没有与任何的except匹配，那么这个异常将会传递给上层的try中。<br>一个 try 语句可能包含多个except子句，分别来处理不同的特定的异常。最多只有一个分支会被执行。处理程序将只针对对应的try子句中的异常进行处理，而不是其他的 try 的处理程序中的异常。</li>
+</ul>
+<h4 id="异常的讨论"><a href="#异常的讨论" class="headerlink" title="异常的讨论"></a>异常的讨论</h4><p>异常看上去不太友好（毕竟如果不处理程序会崩溃），但总好于其他方式。使用异常时，程序员需要编写一些代码来处理特定异常。如果忘记处理某个异常<br>那么这异常抛出时，程序便立刻停止。当然这也是好事，线性错误总好于隐士错误，我们来讨论BUG的问题。</p>
+<ul>
+<li>显性-&gt;隐性 显性错误有明显表现，如程序崩溃或运行时间长；隐性错误没有正常表现，程序正常结束，不会出任何问题–错了给出一个错误答案。</li>
+<li>持续-&gt;间歇 持续性错误在每次相同的运行输入时都会发生，间歇性错误仅在某些时候出现，即使是相同的输入和环境</li>
+</ul>
+<p>显性错误和持续性错误是最好的，开发者不会对这种程序抱任何幻想，没有人愚蠢到使用这种程序。<br><strong>优秀的程序员编写程序时，会尽量使程序时显性和持续性的，这种编程方式称为防御性编程</strong></p>
+<p>以隐性方式出错的程序特别危险，因为他们表面没有任何问题。人们使用它并对他产生依赖。逐渐的我们的人类社会将对软件产生依赖，这些软件来执行<br>超过人类能力的计算，我们甚至不能判断这些软件的计算是否正确。因此我们根本意识不到这个情况。这样的程序可能已经造成了严重危害。</p>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>Python 语言为程序员提供了一种确保程序运行状态符合预期的简单方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal</span><span class="params">(num)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> num&gt;=<span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> num**<span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/10/Python调试/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python调试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常与断言"><span class="nav-number">1.</span> <span class="nav-text">异常与断言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异常"><span class="nav-number">1.1.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常的讨论"><span class="nav-number">1.2.</span> <span class="nav-text">异常的讨论</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#断言"><span class="nav-number">2.</span> <span class="nav-text">断言</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

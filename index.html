@@ -94,6 +94,75 @@
         
           <section id="main">
   
+    <article id="post-Python异常与断言" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/11/10/Python异常与断言/">Python异常与断言</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/10/Python异常与断言/" class="article-date">
+	  <time datetime="2018-11-10T08:13:57.000Z" itemprop="datePublished">十一月 10, 2018</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="异常与断言"><a href="#异常与断言" class="headerlink" title="异常与断言"></a>异常与断言</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常</p>
+<ul>
+<li>我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常</li>
+<li>很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。</li>
+</ul>
+<p>下面是一个典型异常的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SuccessNum = input(<span class="string">'Enter SuccessNum: '</span>)</span><br><span class="line">totalNum = input(<span class="string">'Enter totalNum: '</span>)</span><br><span class="line">ac = int(SuccessNum)/int(totalNum)</span><br><span class="line">print(<span class="string">'The AC ratio is'</span>,ac)</span><br><span class="line">print(<span class="string">'Now here'</span>)</span><br></pre></td></tr></table></figure>
+<p>该段程序在大多数情况下是运行良好的，但是如果用户输入中出现了0，（或者干脆直接跳过）程序就会崩溃，这显然不是我们乐意看到的<br>我们可以以下方式改写这段程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    SuccessNum = input(<span class="string">'Enter SuccessNum: '</span>)</span><br><span class="line">    totalNum = input(<span class="string">'Enter totalNum: '</span>)</span><br><span class="line">    ac = int(SuccessNum)/int(totalNum)</span><br><span class="line">    print(<span class="string">'The AC ratio is'</span>,ac)</span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">    print(<span class="string">'Failure ! totalNum is 0'</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError:</span><br><span class="line">    print(<span class="string">'Error ! No input'</span>)</span><br><span class="line">print(<span class="string">'Now here'</span>)</span><br></pre></td></tr></table></figure>
+<p>try语句按照如下方式工作；</p>
+<ul>
+<li>首先，执行try子句（在关键字try和关键字except之间的语句）</li>
+<li>如果没有异常发生，忽略except子句，try子句执行后结束。</li>
+<li>如果在执行try子句的过程中发生了异常，那么try子句余下的部分将被忽略。如果异常的类型和 except 之后的名称相符，那么对应的except子句将被执行。最后执行 try 语句之后的代码。</li>
+<li>如果一个异常没有与任何的except匹配，那么这个异常将会传递给上层的try中。<br>一个 try 语句可能包含多个except子句，分别来处理不同的特定的异常。最多只有一个分支会被执行。处理程序将只针对对应的try子句中的异常进行处理，而不是其他的 try 的处理程序中的异常。</li>
+</ul>
+<h4 id="异常的讨论"><a href="#异常的讨论" class="headerlink" title="异常的讨论"></a>异常的讨论</h4><p>异常看上去不太友好（毕竟如果不处理程序会崩溃），但总好于其他方式。使用异常时，程序员需要编写一些代码来处理特定异常。如果忘记处理某个异常<br>那么这异常抛出时，程序便立刻停止。当然这也是好事，线性错误总好于隐士错误，我们来讨论BUG的问题。</p>
+<ul>
+<li>显性-&gt;隐性 显性错误有明显表现，如程序崩溃或运行时间长；隐性错误没有正常表现，程序正常结束，不会出任何问题–错了给出一个错误答案。</li>
+<li>持续-&gt;间歇 持续性错误在每次相同的运行输入时都会发生，间歇性错误仅在某些时候出现，即使是相同的输入和环境</li>
+</ul>
+<p>显性错误和持续性错误是最好的，开发者不会对这种程序抱任何幻想，没有人愚蠢到使用这种程序。<br><strong>优秀的程序员编写程序时，会尽量使程序时显性和持续性的，这种编程方式称为防御性编程</strong></p>
+<p>以隐性方式出错的程序特别危险，因为他们表面没有任何问题。人们使用它并对他产生依赖。逐渐的我们的人类社会将对软件产生依赖，这些软件来执行<br>超过人类能力的计算，我们甚至不能判断这些软件的计算是否正确。因此我们根本意识不到这个情况。这样的程序可能已经造成了严重危害。</p>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>Python 语言为程序员提供了一种确保程序运行状态符合预期的简单方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal</span><span class="params">(num)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> num&gt;=<span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> num**<span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-Python调试" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -161,7 +230,7 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不可变数据类型</span></span><br><span class="line">a = <span class="number">15</span></span><br><span class="line">b = <span class="number">15</span></span><br><span class="line">print(<span class="string">"a的地址是"</span>+ str(id(a)))</span><br><span class="line">print(<span class="string">"b的地址是"</span>+ str(id(b)))</span><br><span class="line">print(<span class="string">"**********友爱的分割线************"</span>)</span><br><span class="line"></span><br><span class="line">b = <span class="number">20</span></span><br><span class="line">print(<span class="string">"a的值是"</span>+ str(a))</span><br><span class="line">print(<span class="string">"b的值是"</span>+ str(b))</span><br><span class="line">print(<span class="string">"a的地址是"</span>+ str(id(a)))</span><br><span class="line">print(<span class="string">"b的地址是"</span>+ str(id(b)))</span><br><span class="line">print(<span class="string">"**********友爱的分割线************"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可变数据类型</span></span><br><span class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">b = a</span><br><span class="line">c = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">print(<span class="string">"a的地址是"</span>+ str(id(a)))</span><br><span class="line">print(<span class="string">"b的地址是"</span>+ str(id(b)))</span><br><span class="line">print(<span class="string">"c的地址是"</span>+ str(id(c)))</span><br><span class="line">print(<span class="string">"**********友爱的分割线************"</span>)</span><br><span class="line"></span><br><span class="line">b[<span class="number">0</span>] = <span class="number">4</span></span><br><span class="line">c[<span class="number">0</span>] = <span class="number">5</span></span><br><span class="line">print(<span class="string">"a的值是"</span>+ str(a))</span><br><span class="line">print(<span class="string">"b的值是"</span>+ str(b))</span><br><span class="line">print(<span class="string">"c的值是"</span>+ str(c))</span><br><span class="line">print(<span class="string">"a的地址是"</span>+ str(id(a)))</span><br><span class="line">print(<span class="string">"b的地址是"</span>+ str(id(b)))</span><br><span class="line">print(<span class="string">"c的地址是"</span>+ str(id(c)))</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/11/10/Python调试/C:/Users\Eyc\Videos\eyeeco.github.io\source\_posts\Python调试\1541837361506.png" alt="1541837361506"></p>
+<p><img src="/2018/11/10/Python调试/1541837361506.png" alt="1541837361506"></p>
 
       
     </div>
@@ -372,6 +441,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2018/11/10/Python异常与断言/">Python异常与断言</a></h6>
+              <span>十一月 10, 2018</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2018/11/10/Python调试/">Python调试</a></h6>
               <span>十一月 10, 2018</span>
             </div>
@@ -414,7 +495,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试基础/">面试基础</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试基础/">面试基础</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -424,7 +505,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/面试基础/" style="font-size: 10px;">面试基础</a>
+      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/面试基础/" style="font-size: 10px;">面试基础</a>
     </div>
   </div>
 
@@ -434,7 +515,7 @@
     <h3 class="widget-title">Archives</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
