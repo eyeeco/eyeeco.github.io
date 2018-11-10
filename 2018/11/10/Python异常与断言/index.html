@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+  <meta name="description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python异常与断言">
 <meta property="og:url" content="http://yoursite.com/2018/11/10/Python异常与断言/index.html">
 <meta property="og:site_name" content="MapleStory">
-<meta property="og:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+<meta property="og:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-11-10T08:17:36.864Z">
+<meta property="og:updated_time" content="2018-11-10T08:29:48.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python异常与断言">
-<meta name="twitter:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。  下面是一个典型异">
+<meta name="twitter:description" content="异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常  我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常 很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。">
   
   <link rel="icon" href="/css/images/favicon.ico">
   
@@ -130,6 +130,7 @@
 <li>我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常</li>
 <li>很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。</li>
 </ul>
+<a id="more"></a>
 <p>下面是一个典型异常的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SuccessNum = input(<span class="string">'Enter SuccessNum: '</span>)</span><br><span class="line">totalNum = input(<span class="string">'Enter totalNum: '</span>)</span><br><span class="line">ac = int(SuccessNum)/int(totalNum)</span><br><span class="line">print(<span class="string">'The AC ratio is'</span>,ac)</span><br><span class="line">print(<span class="string">'Now here'</span>)</span><br></pre></td></tr></table></figure>
 <p>该段程序在大多数情况下是运行良好的，但是如果用户输入中出现了0，（或者干脆直接跳过）程序就会崩溃，这显然不是我们乐意看到的<br>我们可以以下方式改写这段程序</p>
