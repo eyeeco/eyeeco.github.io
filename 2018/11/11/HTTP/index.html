@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="https://github.com/Yojob/CS_Fundamentals/raw/master/ComputerNetwork/pic/pic1.png?raw=true">
 <meta property="og:image" content="http://yoursite.com/2018/11/11/HTTP/TCP与UDP/1541333885553.png">
-<meta property="og:updated_time" content="2018-11-11T11:57:04.378Z">
+<meta property="og:updated_time" content="2018-11-11T12:00:46.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP">
 <meta name="twitter:description" content="HTTPHTTP方法客户端发送的请求报文第一行包含了方法字段  GET 获取资源，绝大多数请求是GET方法  HEAD 获取报文首部，和get方法一样但是不返回报文实体部分。主要用户URL有效性及资源更新日期时间  POST POST主要用来传输数据  PUT 上传文件（由于本身不带验证机制，存在安全机制一般不用）  PATCH 部分修改资源  DELETE 与PUT功能相反，同样不带验证机制">
@@ -158,6 +158,7 @@
 <p>追踪路径，服务器会把通信路径返回客户端（通常不会用，易受攻击）</p>
 </li>
 </ul>
+<a id="more"></a>
 <h3 id="GET与POST的区别"><a href="#GET与POST的区别" class="headerlink" title="GET与POST的区别"></a>GET与POST的区别</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>GET用于获取资源，POST用于传输实体主体</p>
 <h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>GET和POST都能使用额外的参数，但是GET参数以查询字符串的形式出现在URL中，如<a href="http://127.0.0.1/Test/login.action?name=admin&amp;password=admin%EF%BC%8C%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E7%94%A8%E6%88%B7%E6%98%AF%E5%8F%AF%E8%A7%81%E7%9A%84%EF%BC%9B" target="_blank" rel="noopener">http://127.0.0.1/Test/login.action?name=admin&amp;password=admin</a> 这个过程用户可见。而POST的参数存储在实体主体中。通过HTTP的POST机制。POST参数可以通过一些抓包工具（Fiddler）查看</p>
 <p>因为URL只支持ASCLL码，因此GET参数中文会被编码，空格被编码为%20</p>

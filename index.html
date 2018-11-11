@@ -119,252 +119,46 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><h3 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h3><p>客户端发送的请求报文第一行包含了方法字段</p>
-<ul>
-<li><p>GET</p>
-<p>获取资源，绝大多数请求是GET方法</p>
-</li>
-<li><p>HEAD</p>
-<p>获取报文首部，和get方法一样但是不返回报文实体部分。主要用户URL有效性及资源更新日期时间</p>
-</li>
-<li><p>POST</p>
-<p>POST主要用来传输数据</p>
-</li>
-<li><p>PUT</p>
-<p>上传文件（由于本身不带验证机制，存在安全机制一般不用）</p>
-</li>
-<li><p>PATCH</p>
-<p>部分修改资源</p>
-</li>
-<li><p>DELETE</p>
-<p>与PUT功能相反，同样不带验证机制</p>
-</li>
-<li><p>OPTIONS</p>
-<p>查询URL支持的方法</p>
-</li>
-<li><p>CONNECT</p>
-<p>要求在与代理服务器通信时建立隧道，使用<code>SSl</code>和<code>TSL</code> </p>
-</li>
-<li><p>TRACE</p>
-<p>追踪路径，服务器会把通信路径返回客户端（通常不会用，易受攻击）</p>
-</li>
-</ul>
-<h3 id="GET与POST的区别"><a href="#GET与POST的区别" class="headerlink" title="GET与POST的区别"></a>GET与POST的区别</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>GET用于获取资源，POST用于传输实体主体</p>
-<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>GET和POST都能使用额外的参数，但是GET参数以查询字符串的形式出现在URL中，如<a href="http://127.0.0.1/Test/login.action?name=admin&amp;password=admin%EF%BC%8C%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E7%94%A8%E6%88%B7%E6%98%AF%E5%8F%AF%E8%A7%81%E7%9A%84%EF%BC%9B" target="_blank" rel="noopener">http://127.0.0.1/Test/login.action?name=admin&amp;password=admin</a> 这个过程用户可见。而POST的参数存储在实体主体中。通过HTTP的POST机制。POST参数可以通过一些抓包工具（Fiddler）查看</p>
-<p>因为URL只支持ASCLL码，因此GET参数中文会被编码，空格被编码为%20</p>
-<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>安全的HTTP方法不会改变服务器状态，可以说他是只读的 </p>
-<p>GET方法安全的，POST不是，POST方法传输主体内容，这个内容可能是某个表单数据，服务器可能把其存入数据库中，这样状态就发生了改变</p>
-<h4 id="幂等性"><a href="#幂等性" class="headerlink" title="幂等性"></a>幂等性</h4><p>幂等性的HTTP方法，同样的请求被执行一次和连续执行多次的效果是一样的，服务器状态也是一样的。</p>
-<p>所有安全的方法是幂等的，GET、HEAD、PUT、DELETE方法都是幂等的</p>
-<p>而POST方法不是幂等的</p>
-<h4 id="XMLHTTPRequest"><a href="#XMLHTTPRequest" class="headerlink" title="XMLHTTPRequest"></a><code>XMLHTTPRequest</code></h4><p>XMLHTTP Request是一个API，它为客户端和服务器之间传输数据的功能。他提供了一个URL来获取数据的简单方式，而且不会使整个页面刷新。这使得网页只更新一部分不会打扰到用户，在AJAX中被大量使用</p>
-<p>在<code>xmlhttprequest</code>中POST会先发送header再发送data（当然也和浏览器的做法相关）</p>
-<p>而get方法会一起发送</p>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>Get传输数据量小，因为受URL的限制，但是效率高；POST可以传输大量数据，文件只能通过POST传递</p>
-<p>Get方式只支持ASCII字符，向服务器传输的中文字符可能会乱码。POST支持标准字符集，可以正确的传递中文字符</p>
-<h3 id="HTTP-首部-Request"><a href="#HTTP-首部-Request" class="headerlink" title="HTTP 首部 Request"></a>HTTP 首部 Request</h3><table>
-<thead>
-<tr>
-<th>Header</th>
-<th>解释</th>
-<th>某度首页示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Accept</td>
-<td>客户端能够接受的内容类型</td>
-<td><code>text/html</code></td>
-</tr>
-<tr>
-<td>Accept-Encoding</td>
-<td>浏览器可以支持的web服务器返回内容压缩编码类型</td>
-<td><code>gzip</code></td>
-</tr>
-<tr>
-<td>Accept-Language</td>
-<td>浏览器可以接受的语言</td>
-<td><code>zh-CN</code></td>
-</tr>
-<tr>
-<td>Cache-Control</td>
-<td>指定请求和相应遵循的缓存机制</td>
-<td><code>max-age=0</code></td>
-</tr>
-<tr>
-<td>Connection</td>
-<td>表示是否需要持久连接</td>
-<td><code>keep-alive</code></td>
-</tr>
-<tr>
-<td>Cookie</td>
-<td>HTTP请求发送时，会把保存在请求域名下的所有cookie值一起发送给web服务器</td>
-<td><code>键值对</code></td>
-</tr>
-<tr>
-<td>Host</td>
-<td>请求服务器的域名和端口号</td>
-<td><code>www.baidu.com</code></td>
-</tr>
-<tr>
-<td>Upgrade-Insecure-Requests</td>
-<td>浏览器可以处理HTTPS协议</td>
-<td><code>1</code></td>
-</tr>
-<tr>
-<td>User-Agent</td>
-<td>发出请求的用户信息</td>
-<td><code>Mozilla/5.0</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="HTTP-首部-Response"><a href="#HTTP-首部-Response" class="headerlink" title="HTTP 首部 Response"></a>HTTP 首部 Response</h3><table>
-<thead>
-<tr>
-<th>Header</th>
-<th>解释</th>
-<th>某度首页示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cache-Control</td>
-<td>告诉所有的缓存机制是否可以缓存及缓存哪种类型</td>
-<td><code>private</code></td>
-</tr>
-<tr>
-<td>Connection</td>
-<td>是否保持持久连接</td>
-<td><code>keep-alive</code></td>
-</tr>
-<tr>
-<td>Content-Encoding</td>
-<td>返回内容压缩编码类型</td>
-<td><code>gzip</code></td>
-</tr>
-<tr>
-<td>Content-type</td>
-<td>返回内容的MIME类型</td>
-<td><code>text/html charset=utf-8</code></td>
-</tr>
-<tr>
-<td>Date</td>
-<td>原始服务器消息发出时间</td>
-<td><code>Wed 03 Oct2018 12:04:45 GMT</code></td>
-</tr>
-<tr>
-<td>Expires</td>
-<td>响应过期的时间</td>
-<td><code>Wed 03 Oct2018 12:04:45 GMT</code></td>
-</tr>
-<tr>
-<td>Server</td>
-<td>Web服务器软件名称</td>
-<td><code>BWS1.1</code></td>
-</tr>
-<tr>
-<td>Set-Cookie</td>
-<td>设置浏览器缓存</td>
-<td><code>BDSVRTM=114; path=/</code></td>
-</tr>
-<tr>
-<td>Transfer-Encoding</td>
-<td>文件传输编码</td>
-<td><code>chunked</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><p>HTTP中状态码大致分为五大类：</p>
-<h4 id="100-199-信息性状态码"><a href="#100-199-信息性状态码" class="headerlink" title="100-199 信息性状态码"></a>100-199 信息性状态码</h4><ul>
-<li>100 continue： 收到了请求的初始部分，请客户端继续</li>
-</ul>
-<h4 id="200-299-成功状态码"><a href="#200-299-成功状态码" class="headerlink" title="200-299 成功状态码"></a>200-299 成功状态码</h4><ul>
-<li>200 OK：请求被正常处理</li>
-<li>204 No Content: 请求被接受，但是响应报文只有首部和状态行，没有实体部分</li>
-<li>206 Partial Content: 客户端只请求了一部分的资源，服务器只针对请求的部分资源进行返回</li>
-</ul>
-<h4 id="300-399-重定向状态码"><a href="#300-399-重定向状态码" class="headerlink" title="300-399 重定向状态码"></a>300-399 重定向状态码</h4><ul>
-<li>301 Moved Permanently: 永久重定向</li>
-<li>302 Found: 临时重定向，资源被临时移动了</li>
-<li>303 See Other: 表示用户请求的资源代表着另一个URI，应该使用GET去获取资源</li>
-<li>304 Not Modified: 当客户端发送的请求附带条件时，服务器找到资源但未符合请求</li>
-<li>307 Temporary Redirect: 同302，临时重定向</li>
-</ul>
-<h4 id="400-499-客户端错误状态码"><a href="#400-499-客户端错误状态码" class="headerlink" title="400-499 客户端错误状态码"></a>400-499 客户端错误状态码</h4><ul>
-<li>400 Bad Request: 告知客户端它发送了一个错误的请求</li>
-<li>401 Unauthorized: 请求需进行认证</li>
-<li>403 Forbidden: 请求被服务器拒绝了</li>
-<li>404 Not Found：服务器无法找到对应资源</li>
-<li>405 Method Not Allowed：请求中带有不支持的方法 </li>
-</ul>
-<h4 id="500-599-服务器错误状态码"><a href="#500-599-服务器错误状态码" class="headerlink" title="500-599 服务器错误状态码"></a>500-599 服务器错误状态码</h4><ul>
-<li>500 Internet Server Error: 服务器内部错误</li>
-<li>502 Bad <code>GateWay</code>： 代理或网关服务器从下一条链路收到了伪响应</li>
-<li>503 Server Unavailable: 服务器正忙</li>
-<li>504 <code>GateWay</code> Timeout: 一个代理网关等待另一服务器时超时了</li>
-</ul>
-<h3 id="持续性连接和非持续性连接"><a href="#持续性连接和非持续性连接" class="headerlink" title="持续性连接和非持续性连接"></a>持续性连接和非持续性连接</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>非持续连接：每个请求、相应都经一个而单独的TCP连接发送</p>
-<p>持续连接：所有的请求相应通过相同的TCP连接发送</p>
-<h4 id="2-区别"><a href="#2-区别" class="headerlink" title="2. 区别"></a>2. 区别</h4><p>如果采用非持续连接，打开包含一个HTML文件和10个内联对象网页，HTTP需要建立11次TCP连接才能把文件从服务器传到客户机。而如果采用持续连接，HTTP建立一次TCP就把文件从服务器传到客户机</p>
-<ul>
-<li>每次TCP连接必需建立和断开（通过三次握手建立、四次挥手断开），这都需要占用CPU资源，这样占用客户机和服务器的CPU时间大大减少</li>
-<li>每次连接，客户端和服务器都必须分配发送和接收缓存，这意味着影响服务器和客户机的资源，着同样要占用CPU时间</li>
-<li>对于大量对象组成的文件，TCP低速启动算法会限制服务机向客户机传送对象的速度。使用HTTP/1.1后，大多数对象以最大速率传输</li>
-</ul>
-<h4 id="3-HTTP-1-0-keep-alive"><a href="#3-HTTP-1-0-keep-alive" class="headerlink" title="3. HTTP/1.0 + keep-alive"></a>3. HTTP/1.0 + keep-alive</h4><p>HTTP/1.1 中默认保持持久连接，但是1.0版本的HTTP需要设置 connection:keep-live </p>
-<p><code>connection:keep-live</code> 是HTTP1.0 浏览器和服务器的实验性扩展 </p>
-<h3 id="Cookie-与-Session"><a href="#Cookie-与-Session" class="headerlink" title="Cookie 与 Session"></a>Cookie 与 Session</h3><p>由于HTTP是无状态协议，为了保持客户端与服务器的一些关系，便有了cookie和session</p>
-<h4 id="1-cookie"><a href="#1-cookie" class="headerlink" title="1.cookie"></a>1.cookie</h4><p>cookie是服务器在本地机器上存储的小段文本并随每一个请求发送至同一个服务器。网络服务器用HTTP头想客户端发送cookies, 在客户终端，浏览器解析这些cookies 并将它们保存为一个本地文件，它们在会在下一次对服务器的请求时附上这些cookies。</p>
-<h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p><img src="https://github.com/Yojob/CS_Fundamentals/raw/master/ComputerNetwork/pic/pic1.png?raw=true" alt="logo"></p>
-<h4 id="过期时间"><a href="#过期时间" class="headerlink" title="过期时间"></a>过期时间</h4><p>会话cookie：若不设置过期时间，则表示这个cookie的生命周期为浏览器会话期间，若关闭浏览器，cookie就会消失。这种生命周期的cookie被称为会话cookie</p>
-<p>持久cookie：若设置了过期时间，浏览器会把cookie存储到硬盘上（当然用户可以选择拒绝），关闭后再打开这些cookie仍然有效</p>
-<h4 id="2-session"><a href="#2-session" class="headerlink" title="2.session"></a>2.session</h4><p>session机制是一种服务端的机制，服务器利用一种类似于散列表的结构来保存信息</p>
-<p>当程序需要为某个客户端的请求创建session时，服务器检查这个客户端是否包含了一个session标志，称为session_id, 如果检测到说明该客户曾创建过ID，服务器会把这个ID检索出来使用（或者未检测到新建一个），session_id 既不会重复也不容易被找到仿造。</p>
-<p><img src="/2018/11/11/HTTP/TCP与UDP/1541333885553.png" alt=""></p>
-<h5 id="session-id的储存"><a href="#session-id的储存" class="headerlink" title="session_id的储存"></a>session_id的储存</h5><ol>
-<li>保存这个session_id可以采用cookie，这样交互过程中浏览器可以把这个标志返回给服务器。一般该变量名与session有关，如<code>github</code>的session ID即名为<code>user_session</code> </li>
-<li>由于cookie可以被认为的禁止，必须有其他机制保证session_id传回服务器，经常使用的一种方法是URL重写，即直接把session_ID附在URL后面。作为路径的附加信息或查询字符</li>
-<li>另一种技术是表单隐藏字段，服务器自动修改表单加入一个隐藏字段，便于传回session_id </li>
-</ol>
-<h4 id="3-cookie与session的区别"><a href="#3-cookie与session的区别" class="headerlink" title="3. cookie与session的区别"></a>3. cookie与session的区别</h4><h5 id="存取方式不同"><a href="#存取方式不同" class="headerlink" title="存取方式不同"></a>存取方式不同</h5><p>cookie只能保存ASCII字符，Unicode及二进制数据需要编码，cookie不能直接存取java对象，存储略微复杂的信息较为艰难。而session中能够存取任何类型的数据，包括不限于string、integer、list、map，而且可以直接存取java的类对象，十分方便</p>
-<h5 id="隐私策略不同"><a href="#隐私策略不同" class="headerlink" title="隐私策略不同"></a>隐私策略不同</h5><p>cookie存储在客户端阅读器中，对客户端可见，客户端可以窥探甚至是修改cookie内容。而session存储在服务器上对用户透明，不存在泄露风险。cookie可以像<code>google</code>及<code>baidu</code>一样将敏感信息加密后保存，在服务器上进行解密。</p>
-<h5 id="有效时间不同"><a href="#有效时间不同" class="headerlink" title="有效时间不同"></a>有效时间不同</h5><p>由于session依赖于session_id的cookie，而session_id过期时间默许为-1，关闭浏览器即消失。而cookie可以设置长期的保存</p>
-<h5 id="服务器压力不同"><a href="#服务器压力不同" class="headerlink" title="服务器压力不同"></a>服务器压力不同</h5><p>由于不同的储存方式，储存在客户点的cookie不会给服务器造成压力，而session由于存在服务器上，对服务器压力较大</p>
-<h5 id="浏览器支持不同"><a href="#浏览器支持不同" class="headerlink" title="浏览器支持不同"></a>浏览器支持不同</h5><p>cookie是需要客户端浏览器支持的，假如客户端禁用了cookie或者不支持cookie，则会话跟踪会失效。</p>
-<p>假如客户端不支持cookie，就需要运用session及<code>url</code>地址重写。需要注意的是一切用到session的程序<code>ur</code>l都需要进行重写，否则session会话还是会失效</p>
-<h5 id="跨域支持不同"><a href="#跨域支持不同" class="headerlink" title="跨域支持不同"></a>跨域支持不同</h5><p>cookie支持跨域名访问，一切以相同后缀的域名均可以访问该cookie，跨域名cookie被广泛应用</p>
-<p>session仅在当前域名有效</p>
-<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><h3 id="一个web页面的请求过程"><a href="#一个web页面的请求过程" class="headerlink" title="一个web页面的请求过程"></a>一个web页面的请求过程</h3><h4 id="1-DHCP配置主机信息（找本机IP）"><a href="#1-DHCP配置主机信息（找本机IP）" class="headerlink" title="1.DHCP配置主机信息（找本机IP）"></a>1.DHCP配置主机信息（找本机IP）</h4><ul>
-<li>主机生成一个DHCP请求报文，并将这个报文放入目的端口67和源端口68的UDP报文段中</li>
-<li>该报文段放在一个广播IP地址（255.255.255.255）和源IP地址（0.0.0.0）的IP数据报中</li>
-<li>该数据报被放在MAC帧中，目的地址FF:FF:FF:FF:FF:FF，广播到交换机连接的所有设备</li>
-<li>交换机的DHCP服务器收到广播帧后，不断向上解析得到IP、UDP、DHCP报文，之后生成DHCP的ACK报文，该报文包括 IP地址、DNS服务器IP地址、默认网关路由器的IP地址和子网掩码，再经过层层封装到MAC帧中</li>
-<li>该帧的目的地址是主机的mac地址，主机收到该帧后分解得DHCP报文，之后配置IP地址，子网掩码、DNS服务器IP地址，安装默认网关</li>
-</ul>
-<h4 id="2-ARP解析网关MAC地址（找网关MAC地址）"><a href="#2-ARP解析网关MAC地址（找网关MAC地址）" class="headerlink" title="2.ARP解析网关MAC地址（找网关MAC地址）"></a>2.ARP解析网关MAC地址（找网关MAC地址）</h4><ul>
-<li>主机通过浏览器生成一个TCP套接字，为了发送HTTP请求，需要知道网站对应的IP地址</li>
-<li>生成一个DNS查询报文，端口53（DNS服务器）</li>
-<li>DNS查询报文放入目的地址为DNS服务器IP地址的IP数据报中</li>
-<li>IP数据报放入一个以太网帧中，发送至网关路由器</li>
-<li>DHCP过程只知道网关的IP地址，为了获取网关的MAC地址，需要用ARP协议</li>
-<li>主机生成一个目的地址为网关路由器IP的ARP查询报文，放入一个广播帧中，并发送这个以太网帧，交换机将其发送给所有的连接设备</li>
-<li>网关接收到该帧后，分解得到ARP报文，发现IP地址与自己想匹配，发送一个ACK报文回应自己的MAC地址</li>
-</ul>
-<h4 id="3-DNS解析域名（找服务器IP）"><a href="#3-DNS解析域名（找服务器IP）" class="headerlink" title="3.DNS解析域名（找服务器IP）"></a>3.DNS解析域名（找服务器IP）</h4><ul>
-<li>知道了DNS的MAC地址后就可以继续DNS解析过程</li>
-<li>网关接收到DNS查询报文后，抽出IP数据报，并根据该表选择该转发的路由器</li>
-<li>路由器根据内部网关协议（RIP、OSPF）和外部网关协议（BGP）配置路由器到DNS的路由表项</li>
-<li>之前的DNS报文到DNS服务器后，照常依次抽出报文，在DNS库中查找解析域名</li>
-<li>找到DNS记录后发送DNS回答报文，然后将其放入UDP报文段、IP数据报，通过路由器反转发回网关路由器，经过交换机到主机</li>
-</ul>
-<h4 id="4-HTTP请求页面"><a href="#4-HTTP请求页面" class="headerlink" title="4. HTTP请求页面"></a>4. HTTP请求页面</h4><ul>
-<li>有了HTTP服务器的IP地址后，主机便可以生成TCP套接字，向web服务器发送HTTP get报文</li>
-<li>建立HTTP连接前需要进行TCP连接，进行三次握手，过程略</li>
-<li>建立连接后发送HTTP的GET报文，交付给HTTP服务器</li>
-<li>HTTP服务器从TCP中读出报文，生成HTTP相应报文，将web页面放入HTTP报文主体中发挥主机</li>
-<li>浏览器收到HTTP相应报文后抽取WEB页面内容进行渲染，显示web页面</li>
-</ul>
+        
 
+          
+          <div class="entry-summary">
+          HTTPHTTP方法客户端发送的请求报文第一行包含了方法字段
+
+GET
+获取资源，绝大多数请求是GET方法
+
+HEAD
+获取报文首部，和get方法一样但是不返回报文实体部分。主要用户URL有效性及资源更新日期时间
+
+POST
+POST主要用来传输数据
+
+PUT
+上传文件（由于本身不带验证机制，存在安全机制一般不用）
+
+PATCH
+部分修改资源
+
+DELETE
+与PUT功能相反，同样不带验证机制
+
+OPTIONS
+查询URL支持的方法
+
+CONNECT
+要求在与代理服务器通信时建立隧道，使用SSl和TSL 
+
+TRACE
+追踪路径，服务器会把通信路径返回客户端（通常不会用，易受攻击）
+
+
+
+        
+          <p class="article-more-link">
+            <a href="/2018/11/11/HTTP/#more">Continue Reading →</a>
+          </p>
+        </div>
       
     </div>
     <footer class="entry-meta entry-footer">
