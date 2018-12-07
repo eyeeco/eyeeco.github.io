@@ -130,13 +130,13 @@
       
         <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><h3 id="TCP-的连接与断开"><a href="#TCP-的连接与断开" class="headerlink" title="TCP 的连接与断开"></a>TCP 的连接与断开</h3><p>TCP与UDP部分感觉与网络考研书上讲的比较接近，重点内容包括TCP的三次握手、四次挥手、TCP可靠传输、流量控制、拥塞控制</p>
 <a id="more"></a>
-<h4 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h4><p><img src="/2018/11/11/TCP与UDP/1538287170847.png" alt=""></p>
+<h4 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h4><p><img src="1538287170847.png" alt=""></p>
 <p>第一步：客户机的TCP首先向服务器的TCP发送一个请求连接报文段。这个特殊的报文段不包含应用层数据，其中首部的SYN标志位被置位1.另外客户机会随机选择一个起始序号<code>seq=x</code></p>
 <p>第二步：服务器的TCP收到请求的报文后，如同意建立连接，就向客户机发回确认，并为该TCP分配TCP缓存和变量。在确认报文段中，SYN和ACK被置为1，确认号的字段值为x+1</p>
 <p>第三步：客户机收到确认报文段后向服务器给出确认，并且给该连接分配内存和变量，ACK置1，确认号为y+1</p>
 <h4 id="为什么TCP进行三次握手？"><a href="#为什么TCP进行三次握手？" class="headerlink" title="为什么TCP进行三次握手？"></a>为什么TCP进行三次握手？</h4><p>本质上TCP协议的三次握手需要解决这样一个问题：在不可靠的信道上（IP数据报尽最大努力交付）完成可靠的数据传输。而全双工的连接建立需要双方的连接请求和确认，这样最少需要使用三次握手才能建立连接</p>
 <p>至于为什么三次是最少，客户端服务器二者最少都需要向对方发送一个同步报文（SYN），但是如果只有这两次握手，服务器就只能接受连接，无法确认连接；设想如果服务器接受一个SYN报文就建立连接，那客户端因为阻塞原因重发了N个SYN同步报文 ，服务器每接受到一个就需要建立一次连接，这是不堪设想的。所以只有当服务器接收到客户端第二次的<code>ack</code>确认报文后才会建立连接</p>
-<h4 id="TCP四次挥手断开连接"><a href="#TCP四次挥手断开连接" class="headerlink" title="TCP四次挥手断开连接"></a>TCP四次挥手断开连接</h4><p><img src="/2018/11/11/TCP与UDP/1538553330239.png" alt="1538553330239"></p>
+<h4 id="TCP四次挥手断开连接"><a href="#TCP四次挥手断开连接" class="headerlink" title="TCP四次挥手断开连接"></a>TCP四次挥手断开连接</h4><p><img src="1538553330239.png" alt="1538553330239"></p>
 <ul>
 <li>客户端请求断开FIN1（客户端无更多数据）</li>
 <li>服务器ACK确认（收到，但是仍有数据传输）</li>
