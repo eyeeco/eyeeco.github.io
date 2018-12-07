@@ -165,68 +165,28 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[TOC]</p>
-<h2 id="内存部分"><a href="#内存部分" class="headerlink" title="内存部分"></a>内存部分</h2><h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><h4 id="虚拟内存的概念"><a href="#虚拟内存的概念" class="headerlink" title="虚拟内存的概念"></a>虚拟内存的概念</h4><p>内存管理中进程有如下特征：</p>
-<ol>
-<li>一次性：作业必须一次性全部装入内存后才能开始运行</li>
-<li>驻留性：作业被装入内存后驻留在内存中，任何部分都不会被唤出直至作业结束</li>
-</ol>
-<h5 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h5><blockquote>
-<p>高速缓存是计算机科学中唯一重要的思想。事实上告诉缓存技术极大的影响了计算机系统的设计</p>
-<pre><code>-- Bill Joy「SUN 公司 CEO」
-</code></pre></blockquote>
-<p>时间局部性： 如果程序某条指令一旦执行，不久之后可能会再次被执行；如果某个数据被访问过，不久以后它可能再次被访问</p>
-<p>空间局部性：一旦程序访问某个储存单元，不久之后其附近的单元也将被访问。</p>
-<p>基于局部性原理，程序装入内存时，可以先装入一部分内存，其余部分留在外存。在程序运行过程中，当访问信息不存在时，操作系统将需要信息调入内存；另一方面操作系统将暂时不适用的内容放到外存之中。这样系统好像为用户提供了一个大的多的储存器，称为<strong>虚拟储存器</strong></p>
-<p>之所以称为虚拟储存器，是因为这种储存器并不存在，只是由于系统提供了部分装入请求和置换功能后，给用户感觉是一个比实际物理内存大的多的存储器。</p>
-<h4 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h4><h5 id="最佳置换算法「OPT」"><a href="#最佳置换算法「OPT」" class="headerlink" title="最佳置换算法「OPT」"></a>最佳置换算法「OPT」</h5><p>最佳置换算法选择被淘汰页面是以后用不使用的，或者在最长时间未被访问的页面，这样可以保证最低的缺页率。</p>
-<p>该算法是理想算法  ，「无法实现」</p>
-<h5 id="先进先出算法「FIFO」"><a href="#先进先出算法「FIFO」" class="headerlink" title="先进先出算法「FIFO」"></a>先进先出算法「FIFO」</h5><p>优先淘汰最早进入内存的页面，亦即在内存中驻留最久的页面。</p>
-<p>算法实现较简单，但是可能出现页故障数随物理块数增大不降反增的状况<code>「Belady」</code>异常</p>
-<h5 id="最近最久未使用算法「LRU」"><a href="#最近最久未使用算法「LRU」" class="headerlink" title="最近最久未使用算法「LRU」"></a>最近最久未使用算法「LRU」</h5><p>选择最近最长时间未访问过的页面予以淘汰，他认为最近一段时间未访问的页面在将来一段时间也不会被访问。</p>
-<h5 id="时钟置换算法「CLOCK」「NRU」"><a href="#时钟置换算法「CLOCK」「NRU」" class="headerlink" title="时钟置换算法「CLOCK」「NRU」"></a>时钟置换算法「CLOCK」「NRU」</h5><p>某次装入内存时，其使用位被置位 1 ，当再次被访问到时，其再被置为 1 </p>
-<p>当需要替换页时，从缓冲区头部开始扫描，遇到 1 置 0 ；遇到 0 就选择该页置换；依次循环</p>
-<p>改进 <strong>CLOCK 算法</strong> </p>
-<p>将使用位再细分为 访问与修改两种状态，修改优先级大于访问</p>
-<h2 id="文件部分"><a href="#文件部分" class="headerlink" title="文件部分"></a>文件部分</h2><h3 id="磁盘的结构"><a href="#磁盘的结构" class="headerlink" title="磁盘的结构"></a>磁盘的结构</h3><p>磁盘由表面涂有磁性物质的金属或塑料构成圆形盘片，通过一个名为磁头的导线圈从磁盘中读取数据。在读写操作期间， 磁头固定，磁片高速旋转。</p>
-<h4 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h4><h5 id="先来先服务-「FCFS」"><a href="#先来先服务-「FCFS」" class="headerlink" title="先来先服务 「FCFS」"></a>先来先服务 「FCFS」</h5><p>FCFS根据请求磁盘的先后顺序调度，该算法较为简单</p>
-<h5 id="最短寻道时间优先「SSTF」"><a href="#最短寻道时间优先「SSTF」" class="headerlink" title="最短寻道时间优先「SSTF」"></a>最短寻道时间优先「SSTF」</h5><p>优先调度当前磁头所在磁道最近的磁道</p>
-<p>平均寻道时间较低，但是较为不公平。如果新的磁道总是比一个等待的磁道近，等待的磁道会一直等待下去出现饥饿现象</p>
-<h5 id="电梯算法"><a href="#电梯算法" class="headerlink" title="电梯算法"></a>电梯算法</h5><p>当前移动方向上选择当前磁头最近请求作为下一次服务方向。即总是面向一个方向运行，直到该方向没有请求位置，改变运行方向。</p>
-<h2 id="程序编译与链接"><a href="#程序编译与链接" class="headerlink" title="程序编译与链接"></a>程序编译与链接</h2><h3 id="编译系统"><a href="#编译系统" class="headerlink" title="编译系统"></a>编译系统</h3><p>以下是一个 hello.c 程序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello, world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 <code>unix</code> 上, 编译器把源文件转换为目标文件</p>
-<p><code>gcc -o hello hello.c</code></p>
-<p><img src="b396d726-b75f-4a32-89a2-03a7b6e19f6f.jpg" alt="img"></p>
-<ul>
-<li>预处理阶段：预处理以 # 开头的预处理命令</li>
-<li>编译阶段：翻译成汇编文件</li>
-<li>汇编阶段：将汇编文件翻译成可重定向的目标文件</li>
-<li>连接阶段：将可重定向目标文件和 <code>printf.o</code> 等单独编译好的文件进行合并，得到可执行的目标文件</li>
-</ul>
-<h3 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h3><p>静态链接器以一组可重定向目标文件为输入，生成一个完全链接的可执行目标文件为输出，链接器主要完成以下任务：</p>
-<ul>
-<li>符号解析：每个符号对应一个函数，一个全局变量或静态变量，符号解析的目的是将每个符号引用与一个符号定义关联起来</li>
-<li>重定位：链接器通过吧每个符号定义与一个内存位置关联起来，修改对这些符号的引用，使他们指向这个内存位置</li>
-</ul>
-<p><img src="47d98583-8bb0-45cc-812d-47eefa0a4a40.jpg" alt="img"></p>
-<h3 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h3><ul>
-<li>可执行目标文件：直接在内存中执行</li>
-<li>可重定向目标文件：可以其他重定向文件在链接阶段合并，传建一个可执行目标文件</li>
-<li>共享目标文件：特殊的可重定向文件，在运行时被动态加载进内存并链接</li>
-</ul>
-<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p>静态库有以下两个问题：</p>
-<ul>
-<li>当静态库更新时，整个程序重新链接</li>
-<li>对于 <code>printf</code> 这种标准库函数，每个程序都要都代码，极大浪费资源</li>
-</ul>
-<p>共享库是为了解决静态库的问题而设计的，在<code>linux</code>中用<code>.so</code>文件来表示，<code>windows</code> 中被称为<code>dll</code> 它们具有以下特点</p>
-<ul>
-<li>在给定的文件系统中一个库只有一个文件，所有引用库的可执行目标都共享这个文件，他不会被复制到他的可执行文件中</li>
-<li>内存中共享的副本可以被不同正在运行的进程共享</li>
-</ul>
-<p><img src="76dc7769-1aac-4888-9bea-064f1caa8e77.jpg" alt="img"></p>
+        
 
+          
+          <div class="entry-summary">
+          [TOC]
+内存部分虚拟内存虚拟内存的概念内存管理中进程有如下特征：
+
+一次性：作业必须一次性全部装入内存后才能开始运行
+驻留性：作业被装入内存后驻留在内存中，任何部分都不会被唤出直至作业结束
+
+局部性原理
+高速缓存是计算机科学中唯一重要的思想。事实上告诉缓存技术极大的影响了计算机系统的设计
+-- Bill Joy「SUN 公司 CEO」
+
+时间局部性： 如果程序某条指令一旦执行，不久之后可能会再次被执行；如果某个数据被访问过，不久以后它可能再次被访问
+空间局部性：一旦程序访问某个储存单元，不久之后其附近的单元也将被访问。
+
+        
+          <p class="article-more-link">
+            <a href="/2018/12/07/操作系统之文件/#more">Continue Reading →</a>
+          </p>
+        </div>
       
     </div>
     <footer class="entry-meta entry-footer">

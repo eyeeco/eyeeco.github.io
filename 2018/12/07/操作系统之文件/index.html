@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/07/操作系统之文件/b396d726-b75f-4a32-89a2-03a7b6e19f6f.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/07/操作系统之文件/47d98583-8bb0-45cc-812d-47eefa0a4a40.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/12/07/操作系统之文件/76dc7769-1aac-4888-9bea-064f1caa8e77.jpg">
-<meta property="og:updated_time" content="2018-12-07T13:26:09.981Z">
+<meta property="og:updated_time" content="2018-12-07T13:28:35.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统之文件">
 <meta name="twitter:description" content="[TOC] 内存部分虚拟内存虚拟内存的概念内存管理中进程有如下特征：  一次性：作业必须一次性全部装入内存后才能开始运行 驻留性：作业被装入内存后驻留在内存中，任何部分都不会被唤出直至作业结束  局部性原理 高速缓存是计算机科学中唯一重要的思想。事实上告诉缓存技术极大的影响了计算机系统的设计 -- Bill Joy「SUN 公司 CEO」  时间局部性： 如果程序某条指令一旦执行，不久之后可能会再">
@@ -141,6 +141,7 @@
 </code></pre></blockquote>
 <p>时间局部性： 如果程序某条指令一旦执行，不久之后可能会再次被执行；如果某个数据被访问过，不久以后它可能再次被访问</p>
 <p>空间局部性：一旦程序访问某个储存单元，不久之后其附近的单元也将被访问。</p>
+<a id="more"></a>
 <p>基于局部性原理，程序装入内存时，可以先装入一部分内存，其余部分留在外存。在程序运行过程中，当访问信息不存在时，操作系统将需要信息调入内存；另一方面操作系统将暂时不适用的内容放到外存之中。这样系统好像为用户提供了一个大的多的储存器，称为<strong>虚拟储存器</strong></p>
 <p>之所以称为虚拟储存器，是因为这种储存器并不存在，只是由于系统提供了部分装入请求和置换功能后，给用户感觉是一个比实际物理内存大的多的存储器。</p>
 <h4 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h4><h5 id="最佳置换算法「OPT」"><a href="#最佳置换算法「OPT」" class="headerlink" title="最佳置换算法「OPT」"></a>最佳置换算法「OPT」</h5><p>最佳置换算法选择被淘汰页面是以后用不使用的，或者在最长时间未被访问的页面，这样可以保证最低的缺页率。</p>
