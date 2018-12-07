@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>数据库之SQL | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="数据库">
+  
+  
+  
+  
+  <meta name="description" content="[TOC] SQL初级SQL概览SQL最早版本是由IBM开发的，最初被叫做Sequel。其发展至今被称为SQL（结构化查询语言），最新的SQL标准是SQL：2008 SQL语言有以下部分：  数据定义语言（DDL） 数据操纵语言（DML） 完整性 保存在数据库中的数据必须满足完整性约束 视图定义  事务控制 嵌入SQL和动态SQL 授权  SQL数据定义基本类型 char(n) 固定长度字符串，用">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库之SQL">
+<meta property="og:url" content="http://yoursite.com/2018/12/07/数据库之SQL/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="[TOC] SQL初级SQL概览SQL最早版本是由IBM开发的，最初被叫做Sequel。其发展至今被称为SQL（结构化查询语言），最新的SQL标准是SQL：2008 SQL语言有以下部分：  数据定义语言（DDL） 数据操纵语言（DML） 完整性 保存在数据库中的数据必须满足完整性约束 视图定义  事务控制 嵌入SQL和动态SQL 授权  SQL数据定义基本类型 char(n) 固定长度字符串，用">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-12-07T13:14:20.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库之SQL">
+<meta name="twitter:description" content="[TOC] SQL初级SQL概览SQL最早版本是由IBM开发的，最初被叫做Sequel。其发展至今被称为SQL（结构化查询语言），最新的SQL标准是SQL：2008 SQL语言有以下部分：  数据定义语言（DDL） 数据操纵语言（DML） 完整性 保存在数据库中的数据必须满足完整性约束 视图定义  事务控制 嵌入SQL和动态SQL 授权  SQL数据定义基本类型 char(n) 固定长度字符串，用">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-数据库之SQL" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      数据库之SQL
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/07/数据库之SQL/" class="article-date">
+	  <time datetime="2018-12-07T13:14:07.000Z" itemprop="datePublished">十二月 7, 2018</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h2 id="SQL初级"><a href="#SQL初级" class="headerlink" title="SQL初级"></a>SQL初级</h2><h3 id="SQL概览"><a href="#SQL概览" class="headerlink" title="SQL概览"></a>SQL概览</h3><p>SQL最早版本是由IBM开发的，最初被叫做Sequel。其发展至今被称为SQL（结构化查询语言），最新的SQL标准是SQL：2008</p>
+<p>SQL语言有以下部分：</p>
+<ul>
+<li>数据定义语言（DDL）</li>
+<li>数据操纵语言（DML）</li>
+<li>完整性 保存在数据库中的数据必须满足完整性约束</li>
+<li>视图定义 </li>
+<li>事务控制</li>
+<li>嵌入SQL和动态SQL</li>
+<li>授权</li>
+</ul>
+<h3 id="SQL数据定义"><a href="#SQL数据定义" class="headerlink" title="SQL数据定义"></a>SQL数据定义</h3><h4 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h4><ul>
+<li><p><code>char(n)</code> 固定长度字符串，用户指定长度。如果字符长度不到n，在字符串后面补空格使其至n个字符串长度</p>
+</li>
+<li><p><code>varchar(n)</code> 变长字符串</p>
+</li>
+<li><p><code>int</code> 整数类型</p>
+</li>
+<li><p><code>smallint</code> 小整数类型</p>
+</li>
+<li><p><code>numeric(p,d)</code> 定点数，精度有用户指定</p>
+</li>
+<li><p><code>float(n)</code> 精度至少为n的浮点数 </p>
+</li>
+</ul>
+<h4 id="基本模式"><a href="#基本模式" class="headerlink" title="基本模式"></a>基本模式</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department</span><br><span class="line">(dept_name <span class="built_in">varchar</span>(<span class="number">20</span>),</span><br><span class="line">building <span class="built_in">varchar</span>(<span class="number">15</span>),</span><br><span class="line">budget <span class="built_in">numeric</span>(<span class="number">12</span>,<span class="number">2</span>),</span><br><span class="line">primary <span class="keyword">key</span>(dept_name));</span><br></pre></td></tr></table></figure>
+<p>这里简单讨论几个完整性约束</p>
+<ul>
+<li>primary key (A1,A2…Am) <strong>primary key</strong> 声明属性构成关系主码，主码必须非空且唯一。</li>
+<li>foreign key(A1,A2…Am) reference : × <strong>foreign key</strong> 表示声明关系中的任意元组必须在对应的外键属性上取值</li>
+<li>not null 非空</li>
+</ul>
+<p>SQL禁止破坏完整性约束的任何数据库更新，例如主码上的空值和重复将会被SQL标记错误并阻止更新</p>
+<p>插入、删除和修改 的基本模式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除模式,（保留关系，只删满足条件的数据）</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> student</span><br><span class="line"><span class="comment"># 删除模式，（表结构整体删除）</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> r</span><br><span class="line"><span class="comment"># 修改表结构</span></span><br><span class="line"><span class="comment"># 表增加一列</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">add</span> A D</span><br><span class="line"><span class="comment"># 表删除一列</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">drop</span> A</span><br><span class="line"><span class="comment"># 修改某一列属性（不改名）</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">modify</span> A D &lt;Y&gt;</span><br><span class="line"><span class="comment"># 修改某一列属性 （改名）</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">change</span> A1 A2 D &lt;Y&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="SQL查询基本结构"><a href="#SQL查询基本结构" class="headerlink" title="SQL查询基本结构"></a>SQL查询基本结构</h3><p>SQL的基本查询结构由三个基本的子句组成：<code>select</code> <code>from</code> <code>where</code> 我们对其进行一个总结</p>
+<ul>
+<li><code>select</code> 子句用于列出查询结果中需要的属性</li>
+<li><code>from</code> 子句是一个查询求值中需要访问的关系列表</li>
+<li><code>where</code> 子句一个作用在<code>from</code>关系中的谓词</li>
+</ul>
+<p>其基本的查询有如下形式</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> A1,A2,...,An</span><br><span class="line"><span class="keyword">from</span> r1,r2,...,rm</span><br><span class="line"><span class="keyword">where</span> P</span><br></pre></td></tr></table></figure>
+<p>为了较好的理解这个关系的顺序是 <code>from</code> –&gt; <code>where</code> –&gt; <code>select</code></p>
+<p>首先通过<code>from</code>子句定义了一个在子句中列出关系的笛卡尔积，一般来说这个结果可能是一个相当大的关系，这样的笛卡尔积一般是没有意义的。而where子句谓词用来限制from子句所建立的集合，只留下对答案有意义的集合，最后我们可以用select限制结果中需要的子集</p>
+<h4 id="自然连接"><a href="#自然连接" class="headerlink" title="自然连接"></a>自然连接</h4><p>组合信息是一种通用的过程，SQL支持一种被称为自然连接的运算。自然连接运算作用于两个关系，并产生一个关系作为结果。不同于两个关系上的笛卡尔积将第一个关系的每个元组与第二个关系的所有元组都进行连接；自然连接只考虑两个关系模式中都出现且属性相同的元素对。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> A1,A2,...An </span><br><span class="line"><span class="keyword">from</span> r1 <span class="keyword">join</span> r2, ... <span class="keyword">join</span> rn</span><br><span class="line"><span class="keyword">where</span> P;</span><br></pre></td></tr></table></figure>
+<h4 id="附加基本运算"><a href="#附加基本运算" class="headerlink" title="附加基本运算"></a>附加基本运算</h4><h5 id="更名运算"><a href="#更名运算" class="headerlink" title="更名运算"></a>更名运算</h5><h5 id="字符串运算"><a href="#字符串运算" class="headerlink" title="字符串运算"></a>字符串运算</h5><p>字符串可以使用like来实现模式匹配</p>
+<ul>
+<li><code>%</code> 匹配任意子串</li>
+<li><code>_</code>  匹配任意一个字符</li>
+</ul>
+<h5 id="排序运算"><a href="#排序运算" class="headerlink" title="排序运算"></a>排序运算</h5><h5 id="where子句谓词"><a href="#where子句谓词" class="headerlink" title="where子句谓词"></a>where子句谓词</h5><h5 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h5><p>SQL在关系上的<code>union</code>、<code>intersect</code> 、<code>except</code> 分别对应了∪、∩ 及 -</p>
+<h4 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h4><h5 id="基本聚集"><a href="#基本聚集" class="headerlink" title="基本聚集"></a>基本聚集</h5><h5 id="分组聚集"><a href="#分组聚集" class="headerlink" title="分组聚集"></a>分组聚集</h5><p>有时候我们不仅希望聚集函数作用力在单个元组集上，也希望作用到一组元组集合上，可以采用group by子句</p>
+<p>并利用 having子句限定元组的条件</p>
+<h4 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a>嵌套查询</h4><h4 id="数据库修改"><a href="#数据库修改" class="headerlink" title="数据库修改"></a>数据库修改</h4><h5 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> r</span><br><span class="line"><span class="keyword">where</span> P;</span><br></pre></td></tr></table></figure>
+<p>插入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> r</span><br><span class="line"><span class="keyword">values</span> (A1,A2,...)</span><br></pre></td></tr></table></figure>
+<h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> instructor </span><br><span class="line"><span class="keyword">set</span> salary  = salary * <span class="number">1.05</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h3><p><code>SQL</code> 语言分为数据定义语言（DDL）和数据操纵语言（DML）</p>
+<ul>
+<li><p>DDL： 定义关系模式、删除、修改关系模式</p>
+<p><code>create</code>  <code>alter</code> <code>drop</code></p>
+</li>
+<li><p>DML: 包括查询语言、插入、修改、删除元组的命令</p>
+<p><code>select</code> <code>insert</code> <code>delete</code> <code>update</code></p>
+</li>
+</ul>
+<h3 id="连接表达式"><a href="#连接表达式" class="headerlink" title="连接表达式"></a>连接表达式</h3><p>参与连接的任何一个或两个关系中的某些元组可能会以某种方式丢失，<strong>外链接</strong>以创建包含空值元组的方式保留了在连接中丢失的元组。</p>
+<p>一般的，外链接有三种类型：</p>
+<ul>
+<li>左外连接： 只保留出现在左外连接运算之前（左边）关系中的元组</li>
+<li>右外连接：只保留出现在右外连接之后（后边）关系中的元组</li>
+<li>全外连接：保留出现在两个关系中的元组</li>
+</ul>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><strong>事务</strong> 由查询和更新语句的序列组成，SQL标准规定当一条SQL语句被执行，就隐式的开始了一个事务，下列SQL之一会结束一个事务</p>
+<ul>
+<li>Commit work: 提交当前事务，将该事务所做功能新在数据库中持久保存。事务被提交后，一个新的事务自动刚开始</li>
+<li>Rollback work：回滚当前事务，即撤销事务中所有的SQL语句对数据库的更新。这样数据库就恢复到执行事务第一条语句前的状态</li>
+</ul>
+<p>当系统检测到错误时，事务回滚是有用的。而事务提交就像存盘，一旦commit他的影响就不能用rollback来撤销。数据库保证在发生SQL语句错误、断电、系统崩溃这样的故障情况下，如果事务没有完成commit，其影响将被回滚。如果断电和系统崩溃，回滚会在重启后进行。</p>
+<p>一个事务在完成所有步骤后的提交行为，或者在不完成所有动作情况下回滚其动作，这种方式数据库提供了了对事务的 <strong>原子性</strong> 抽象，原子性也就是不可分割性，事务的影响被反映到数据库中，或是任何影响都没有。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/07/操作系统之进程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">操作系统之进程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL初级"><span class="nav-number">1.</span> <span class="nav-text">SQL初级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL概览"><span class="nav-number">1.1.</span> <span class="nav-text">SQL概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL数据定义"><span class="nav-number">1.2.</span> <span class="nav-text">SQL数据定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本类型"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本模式"><span class="nav-number">1.2.2.</span> <span class="nav-text">基本模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL查询基本结构"><span class="nav-number">1.3.</span> <span class="nav-text">SQL查询基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自然连接"><span class="nav-number">1.3.1.</span> <span class="nav-text">自然连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附加基本运算"><span class="nav-number">1.3.2.</span> <span class="nav-text">附加基本运算</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#更名运算"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">更名运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串运算"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">字符串运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#排序运算"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">排序运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#where子句谓词"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">where子句谓词</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#集合运算"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">集合运算</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚集函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">聚集函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本聚集"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">基本聚集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分组聚集"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">分组聚集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套查询"><span class="nav-number">1.3.4.</span> <span class="nav-text">嵌套查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库修改"><span class="nav-number">1.3.5.</span> <span class="nav-text">数据库修改</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#删除"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更新"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小节"><span class="nav-number">1.4.</span> <span class="nav-text">小节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接表达式"><span class="nav-number">1.5.</span> <span class="nav-text">连接表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">1.6.</span> <span class="nav-text">事务</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

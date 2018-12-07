@@ -3,22 +3,29 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Page 1 | MapleStory</title>
+  <title>操作系统之进程 | MapleStory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="操作系统">
   
   
   
-  <meta name="description" content="CS:Dalian University of technology">
-<meta property="og:type" content="website">
-<meta property="og:title" content="MapleStory">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  
+  <meta name="description" content="[TOC] Introduction本节总结了操作系统的相关概念，操作系统的知识点基本上是围绕着进程展开。 进程进程的概念与特征 进程是程序的一次执行 进程是一个程序及数据在处理机上顺序执行时所发生的活动 进程是系统进行资源分配和调度的一个独立单位。进程的独立运行由进程控制块（PCB）控制和管理。程序段、相关数据、PCB三部分构成了进程映像。进程映像是静态的进程。  进程具有动态性（有着创建、活动">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统之进程">
+<meta property="og:url" content="http://yoursite.com/2018/12/07/操作系统之进程/index.html">
 <meta property="og:site_name" content="MapleStory">
-<meta property="og:description" content="CS:Dalian University of technology">
+<meta property="og:description" content="[TOC] Introduction本节总结了操作系统的相关概念，操作系统的知识点基本上是围绕着进程展开。 进程进程的概念与特征 进程是程序的一次执行 进程是一个程序及数据在处理机上顺序执行时所发生的活动 进程是系统进行资源分配和调度的一个独立单位。进程的独立运行由进程控制块（PCB）控制和管理。程序段、相关数据、PCB三部分构成了进程映像。进程映像是静态的进程。  进程具有动态性（有着创建、活动">
 <meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://github.com/CyC2018/CS-Notes/raw/master/pics/ProcessState.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/07/操作系统之进程/d160ec2e-cfe2-4640-bda7-62f53e58b8c0.png">
+<meta property="og:updated_time" content="2018-12-07T13:12:24.492Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapleStory">
-<meta name="twitter:description" content="CS:Dalian University of technology">
+<meta name="twitter:title" content="操作系统之进程">
+<meta name="twitter:description" content="[TOC] Introduction本节总结了操作系统的相关概念，操作系统的知识点基本上是围绕着进程展开。 进程进程的概念与特征 进程是程序的一次执行 进程是一个程序及数据在处理机上顺序执行时所发生的活动 进程是系统进行资源分配和调度的一个独立单位。进程的独立运行由进程控制块（PCB）控制和管理。程序段、相关数据、PCB三部分构成了进程映像。进程映像是静态的进程。  进程具有动态性（有着创建、活动">
+<meta name="twitter:image" content="https://github.com/CyC2018/CS-Notes/raw/master/pics/ProcessState.png">
   
   <link rel="icon" href="/css/images/favicon.ico">
   
@@ -49,7 +56,7 @@
 </html>
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -92,9 +99,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main">
-  
-    <article id="post-欢迎来到Eyc的博客!" class="article article-type-post" itemscope="" itemprop="blogPost">
+          <section id="main" style="float:none;"><article id="post-操作系统之进程" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -102,180 +107,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/11/欢迎来到Eyc的博客!/">欢迎来到Eyc的博客！</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/11/欢迎来到Eyc的博客!/" class="article-date">
-	  <time datetime="2018-11-11T12:06:38.000Z" itemprop="datePublished">十一月 11, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到我的博客！</p>
-<p><img src="http://img.hb.aicdn.com/e30e0d59e7445610b13a1c7cc5a16e34d1ea98341d360-2deL0X_fw658" width="40%"></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-数据库之SQL" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/07/数据库之SQL/">数据库之SQL</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/07/数据库之SQL/" class="article-date">
-	  <time datetime="2018-12-07T13:14:07.000Z" itemprop="datePublished">十二月 7, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h2 id="SQL初级"><a href="#SQL初级" class="headerlink" title="SQL初级"></a>SQL初级</h2><h3 id="SQL概览"><a href="#SQL概览" class="headerlink" title="SQL概览"></a>SQL概览</h3><p>SQL最早版本是由IBM开发的，最初被叫做Sequel。其发展至今被称为SQL（结构化查询语言），最新的SQL标准是SQL：2008</p>
-<p>SQL语言有以下部分：</p>
-<ul>
-<li>数据定义语言（DDL）</li>
-<li>数据操纵语言（DML）</li>
-<li>完整性 保存在数据库中的数据必须满足完整性约束</li>
-<li>视图定义 </li>
-<li>事务控制</li>
-<li>嵌入SQL和动态SQL</li>
-<li>授权</li>
-</ul>
-<h3 id="SQL数据定义"><a href="#SQL数据定义" class="headerlink" title="SQL数据定义"></a>SQL数据定义</h3><h4 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h4><ul>
-<li><p><code>char(n)</code> 固定长度字符串，用户指定长度。如果字符长度不到n，在字符串后面补空格使其至n个字符串长度</p>
-</li>
-<li><p><code>varchar(n)</code> 变长字符串</p>
-</li>
-<li><p><code>int</code> 整数类型</p>
-</li>
-<li><p><code>smallint</code> 小整数类型</p>
-</li>
-<li><p><code>numeric(p,d)</code> 定点数，精度有用户指定</p>
-</li>
-<li><p><code>float(n)</code> 精度至少为n的浮点数 </p>
-</li>
-</ul>
-<h4 id="基本模式"><a href="#基本模式" class="headerlink" title="基本模式"></a>基本模式</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department</span><br><span class="line">(dept_name <span class="built_in">varchar</span>(<span class="number">20</span>),</span><br><span class="line">building <span class="built_in">varchar</span>(<span class="number">15</span>),</span><br><span class="line">budget <span class="built_in">numeric</span>(<span class="number">12</span>,<span class="number">2</span>),</span><br><span class="line">primary <span class="keyword">key</span>(dept_name));</span><br></pre></td></tr></table></figure>
-<p>这里简单讨论几个完整性约束</p>
-<ul>
-<li>primary key (A1,A2…Am) <strong>primary key</strong> 声明属性构成关系主码，主码必须非空且唯一。</li>
-<li>foreign key(A1,A2…Am) reference : × <strong>foreign key</strong> 表示声明关系中的任意元组必须在对应的外键属性上取值</li>
-<li>not null 非空</li>
-</ul>
-<p>SQL禁止破坏完整性约束的任何数据库更新，例如主码上的空值和重复将会被SQL标记错误并阻止更新</p>
-<p>插入、删除和修改 的基本模式：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除模式,（保留关系，只删满足条件的数据）</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> student</span><br><span class="line"><span class="comment"># 删除模式，（表结构整体删除）</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> r</span><br><span class="line"><span class="comment"># 修改表结构</span></span><br><span class="line"><span class="comment"># 表增加一列</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">add</span> A D</span><br><span class="line"><span class="comment"># 表删除一列</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">drop</span> A</span><br><span class="line"><span class="comment"># 修改某一列属性（不改名）</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">modify</span> A D &lt;Y&gt;</span><br><span class="line"><span class="comment"># 修改某一列属性 （改名）</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> r <span class="keyword">change</span> A1 A2 D &lt;Y&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="SQL查询基本结构"><a href="#SQL查询基本结构" class="headerlink" title="SQL查询基本结构"></a>SQL查询基本结构</h3><p>SQL的基本查询结构由三个基本的子句组成：<code>select</code> <code>from</code> <code>where</code> 我们对其进行一个总结</p>
-<ul>
-<li><code>select</code> 子句用于列出查询结果中需要的属性</li>
-<li><code>from</code> 子句是一个查询求值中需要访问的关系列表</li>
-<li><code>where</code> 子句一个作用在<code>from</code>关系中的谓词</li>
-</ul>
-<p>其基本的查询有如下形式</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> A1,A2,...,An</span><br><span class="line"><span class="keyword">from</span> r1,r2,...,rm</span><br><span class="line"><span class="keyword">where</span> P</span><br></pre></td></tr></table></figure>
-<p>为了较好的理解这个关系的顺序是 <code>from</code> –&gt; <code>where</code> –&gt; <code>select</code></p>
-<p>首先通过<code>from</code>子句定义了一个在子句中列出关系的笛卡尔积，一般来说这个结果可能是一个相当大的关系，这样的笛卡尔积一般是没有意义的。而where子句谓词用来限制from子句所建立的集合，只留下对答案有意义的集合，最后我们可以用select限制结果中需要的子集</p>
-<h4 id="自然连接"><a href="#自然连接" class="headerlink" title="自然连接"></a>自然连接</h4><p>组合信息是一种通用的过程，SQL支持一种被称为自然连接的运算。自然连接运算作用于两个关系，并产生一个关系作为结果。不同于两个关系上的笛卡尔积将第一个关系的每个元组与第二个关系的所有元组都进行连接；自然连接只考虑两个关系模式中都出现且属性相同的元素对。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> A1,A2,...An </span><br><span class="line"><span class="keyword">from</span> r1 <span class="keyword">join</span> r2, ... <span class="keyword">join</span> rn</span><br><span class="line"><span class="keyword">where</span> P;</span><br></pre></td></tr></table></figure>
-<h4 id="附加基本运算"><a href="#附加基本运算" class="headerlink" title="附加基本运算"></a>附加基本运算</h4><h5 id="更名运算"><a href="#更名运算" class="headerlink" title="更名运算"></a>更名运算</h5><h5 id="字符串运算"><a href="#字符串运算" class="headerlink" title="字符串运算"></a>字符串运算</h5><p>字符串可以使用like来实现模式匹配</p>
-<ul>
-<li><code>%</code> 匹配任意子串</li>
-<li><code>_</code>  匹配任意一个字符</li>
-</ul>
-<h5 id="排序运算"><a href="#排序运算" class="headerlink" title="排序运算"></a>排序运算</h5><h5 id="where子句谓词"><a href="#where子句谓词" class="headerlink" title="where子句谓词"></a>where子句谓词</h5><h5 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h5><p>SQL在关系上的<code>union</code>、<code>intersect</code> 、<code>except</code> 分别对应了∪、∩ 及 -</p>
-<h4 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h4><h5 id="基本聚集"><a href="#基本聚集" class="headerlink" title="基本聚集"></a>基本聚集</h5><h5 id="分组聚集"><a href="#分组聚集" class="headerlink" title="分组聚集"></a>分组聚集</h5><p>有时候我们不仅希望聚集函数作用力在单个元组集上，也希望作用到一组元组集合上，可以采用group by子句</p>
-<p>并利用 having子句限定元组的条件</p>
-<h4 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a>嵌套查询</h4><h4 id="数据库修改"><a href="#数据库修改" class="headerlink" title="数据库修改"></a>数据库修改</h4><h5 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> r</span><br><span class="line"><span class="keyword">where</span> P;</span><br></pre></td></tr></table></figure>
-<p>插入</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> r</span><br><span class="line"><span class="keyword">values</span> (A1,A2,...)</span><br></pre></td></tr></table></figure>
-<h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> instructor </span><br><span class="line"><span class="keyword">set</span> salary  = salary * <span class="number">1.05</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h3><p><code>SQL</code> 语言分为数据定义语言（DDL）和数据操纵语言（DML）</p>
-<ul>
-<li><p>DDL： 定义关系模式、删除、修改关系模式</p>
-<p><code>create</code>  <code>alter</code> <code>drop</code></p>
-</li>
-<li><p>DML: 包括查询语言、插入、修改、删除元组的命令</p>
-<p><code>select</code> <code>insert</code> <code>delete</code> <code>update</code></p>
-</li>
-</ul>
-<h3 id="连接表达式"><a href="#连接表达式" class="headerlink" title="连接表达式"></a>连接表达式</h3><p>参与连接的任何一个或两个关系中的某些元组可能会以某种方式丢失，<strong>外链接</strong>以创建包含空值元组的方式保留了在连接中丢失的元组。</p>
-<p>一般的，外链接有三种类型：</p>
-<ul>
-<li>左外连接： 只保留出现在左外连接运算之前（左边）关系中的元组</li>
-<li>右外连接：只保留出现在右外连接之后（后边）关系中的元组</li>
-<li>全外连接：保留出现在两个关系中的元组</li>
-</ul>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p><strong>事务</strong> 由查询和更新语句的序列组成，SQL标准规定当一条SQL语句被执行，就隐式的开始了一个事务，下列SQL之一会结束一个事务</p>
-<ul>
-<li>Commit work: 提交当前事务，将该事务所做功能新在数据库中持久保存。事务被提交后，一个新的事务自动刚开始</li>
-<li>Rollback work：回滚当前事务，即撤销事务中所有的SQL语句对数据库的更新。这样数据库就恢复到执行事务第一条语句前的状态</li>
-</ul>
-<p>当系统检测到错误时，事务回滚是有用的。而事务提交就像存盘，一旦commit他的影响就不能用rollback来撤销。数据库保证在发生SQL语句错误、断电、系统崩溃这样的故障情况下，如果事务没有完成commit，其影响将被回滚。如果断电和系统崩溃，回滚会在重启后进行。</p>
-<p>一个事务在完成所有步骤后的提交行为，或者在不完成所有动作情况下回滚其动作，这种方式数据库提供了了对事务的 <strong>原子性</strong> 抽象，原子性也就是不可分割性，事务的影响被反映到数据库中，或是任何影响都没有。</p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-操作系统之进程" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/07/操作系统之进程/">操作系统之进程</a>
+      操作系统之进程
     </h1>
   
 
@@ -289,6 +121,10 @@
 
        
       
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
     </div>
     <div class="article-entry" itemprop="articleBody">
       
@@ -473,611 +309,69 @@
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
 
       
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-HTTP" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
         
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/11/HTTP/">HTTP</a>
-    </h1>
-  
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/11/HTTP/" class="article-date">
-	  <time datetime="2018-11-11T11:54:23.000Z" itemprop="datePublished">十一月 11, 2018</time>
-	</a>
+		       if (typeof LivereTower === 'function') { return; }
 
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
 
-          
-          <div class="entry-summary">
-          HTTPHTTP方法客户端发送的请求报文第一行包含了方法字段
-
-GET
-获取资源，绝大多数请求是GET方法
-
-HEAD
-获取报文首部，和get方法一样但是不返回报文实体部分。主要用户URL有效性及资源更新日期时间
-
-POST
-POST主要用来传输数据
-
-PUT
-上传文件（由于本身不带验证机制，存在安全机制一般不用）
-
-PATCH
-部分修改资源
-
-DELETE
-与PUT功能相反，同样不带验证机制
-
-OPTIONS
-查询URL支持的方法
-
-CONNECT
-要求在与代理服务器通信时建立隧道，使用SSl和TSL 
-
-TRACE
-追踪路径，服务器会把通信路径返回客户端（通常不会用，易受攻击）
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
 
 
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/11/HTTP/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
 
       
     </footer>
     <hr class="entry-footer-hr">
   </div>
   
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-TCP与UDP" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/11/TCP与UDP/">TCP与UDP</a>
-    </h1>
+    <a href="/2018/12/07/数据库之SQL/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          数据库之SQL
+        
+      </div>
+    </a>
   
+  
+    <a href="/2018/11/11/欢迎来到Eyc的博客!/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">欢迎来到Eyc的博客！</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/11/TCP与UDP/" class="article-date">
-	  <time datetime="2018-11-11T11:49:28.000Z" itemprop="datePublished">十一月 11, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          TCPTCP 的连接与断开TCP与UDP部分感觉与网络考研书上讲的比较接近，重点内容包括TCP的三次握手、四次挥手、TCP可靠传输、流量控制、拥塞控制
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/11/TCP与UDP/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
   
 </article>
 
 <!-- Table of Contents -->
 
-  
-    <article id="post-Python测试" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
     
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">2.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的概念与特征"><span class="nav-number">2.1.</span> <span class="nav-text">进程的概念与特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的状态"><span class="nav-number">2.2.</span> <span class="nav-text">进程的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制"><span class="nav-number">2.3.</span> <span class="nav-text">进程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的创建"><span class="nav-number">2.3.1.</span> <span class="nav-text">进程的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引起进程创建的事件"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">引起进程创建的事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的创建过程"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">进程的创建过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的终止"><span class="nav-number">2.3.2.</span> <span class="nav-text">进程的终止</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引起进程终止的事件"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">引起进程终止的事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的终止过程"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">进程的终止过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的阻塞与唤醒"><span class="nav-number">2.3.3.</span> <span class="nav-text">进程的阻塞与唤醒</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的阻塞"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">进程的阻塞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的唤醒"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">进程的唤醒</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的挂起与激活"><span class="nav-number">2.3.4.</span> <span class="nav-text">进程的挂起与激活</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的挂起"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">进程的挂起</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程的激活"><span class="nav-number">2.3.4.2.</span> <span class="nav-text">进程的激活</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程通信"><span class="nav-number">2.4.</span> <span class="nav-text">进程通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享储存"><span class="nav-number">2.4.1.</span> <span class="nav-text">共享储存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息传递"><span class="nav-number">2.4.2.</span> <span class="nav-text">消息传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管道通信"><span class="nav-number">2.4.3.</span> <span class="nav-text">管道通信</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">2.5.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的概念与特征"><span class="nav-number">2.5.1.</span> <span class="nav-text">线程的概念与特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的属性"><span class="nav-number">2.5.2.</span> <span class="nav-text">线程的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的实现"><span class="nav-number">2.5.3.</span> <span class="nav-text">线程的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程与线程的比较"><span class="nav-number">2.6.</span> <span class="nav-text">进程与线程的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调度"><span class="nav-number">2.6.1.</span> <span class="nav-text">调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拥有资源"><span class="nav-number">2.6.2.</span> <span class="nav-text">拥有资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发性"><span class="nav-number">2.6.3.</span> <span class="nav-text">并发性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建和开销"><span class="nav-number">2.6.4.</span> <span class="nav-text">创建和开销</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程调度"><span class="nav-number">2.7.</span> <span class="nav-text">进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调度层次"><span class="nav-number">2.7.1.</span> <span class="nav-text">调度层次</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#作业调度"><span class="nav-number">2.7.1.1.</span> <span class="nav-text">作业调度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#中级调度"><span class="nav-number">2.7.1.2.</span> <span class="nav-text">中级调度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程调度-1"><span class="nav-number">2.7.1.3.</span> <span class="nav-text">进程调度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度算法"><span class="nav-number">2.7.2.</span> <span class="nav-text">调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#先来先服务（FCFS）算法"><span class="nav-number">2.7.2.1.</span> <span class="nav-text">先来先服务（FCFS）算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#短作业优先（SJF）算法"><span class="nav-number">2.7.2.2.</span> <span class="nav-text">短作业优先（SJF）算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优先级调度算法"><span class="nav-number">2.7.2.3.</span> <span class="nav-text">优先级调度算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高响应比优先"><span class="nav-number">2.7.2.4.</span> <span class="nav-text">高响应比优先</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#时间片轮转调度算法"><span class="nav-number">2.7.2.5.</span> <span class="nav-text">时间片轮转调度算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多级反馈队列调度算法"><span class="nav-number">2.7.2.6.</span> <span class="nav-text">多级反馈队列调度算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程同步"><span class="nav-number">2.8.</span> <span class="nav-text">进程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#临界区"><span class="nav-number">2.8.1.</span> <span class="nav-text">临界区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步与互斥"><span class="nav-number">2.8.2.</span> <span class="nav-text">同步与互斥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量"><span class="nav-number">2.8.3.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用信号量实现生产者-消费者问题"><span class="nav-number">2.8.4.</span> <span class="nav-text">使用信号量实现生产者-消费者问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管程"><span class="nav-number">2.8.5.</span> <span class="nav-text">管程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读者-写者问题"><span class="nav-number">2.8.6.</span> <span class="nav-text">读者-写者问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#哲学家进餐问题"><span class="nav-number">2.8.7.</span> <span class="nav-text">哲学家进餐问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁"><span class="nav-number">2.9.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁四个必要条件："><span class="nav-number">2.9.1.</span> <span class="nav-text">死锁四个必要条件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁的处理策略"><span class="nav-number">2.9.2.</span> <span class="nav-text">死锁的处理策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#鸵鸟策略"><span class="nav-number">2.9.2.1.</span> <span class="nav-text">鸵鸟策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁预防"><span class="nav-number">2.9.2.2.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁避免"><span class="nav-number">2.9.2.3.</span> <span class="nav-text">死锁避免</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁检测和接触"><span class="nav-number">2.9.3.</span> <span class="nav-text">死锁检测和接触</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁检测"><span class="nav-number">2.9.3.1.</span> <span class="nav-text">死锁检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁解除"><span class="nav-number">2.9.3.2.</span> <span class="nav-text">死锁解除</span></a></li></ol></li></ol></li></ol></li></ol>
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/10/Python测试/">Python测试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/10/Python测试/" class="article-date">
-	  <time datetime="2018-11-10T09:49:22.000Z" itemprop="datePublished">十一月 10, 2018</time>
-	</a>
-
-       
-      
     </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          测试测试指通过运行程序以确定它是否按预期工作。我们通常需要将代码和规范结合起来，进行各种路径探索，并在基础上探究一种启发式方法。基于代码探索的路径启发式方法称为白盒测试，基于规范路径的启发式方法称为黑盒测试
-测试一般分为两个阶段。第一个阶段称为单元测试。这个阶段测试者构建并执行测试，来确定代码每个独立单元是否正常工作。第二个阶段称为集成测试，用来确定整个程序是否能按预期进行。实际工作中需要不断重复这两个阶段
-调试是一种需要学习的技能，好消息是学会调试并不难
-人们至少花费了40年建立被称为‘调试器’的工具，所有流行的Python IDE中都带有调试器工具，这些调试工具帮助人们找到程序中的错误,但事实上帮助并不大。更重要的是接近问题，经验丰富的程序员可能根本不用调试工具，也许他们认为最重要的调试工具是 print()
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/10/Python测试/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Python面向对象" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/10/Python面向对象/">Python面向对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/10/Python面向对象/" class="article-date">
-	  <time datetime="2018-11-10T08:48:28.000Z" itemprop="datePublished">十一月 10, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          类与面向对象编程面向对象编程——Object Oriented Programming，简称OOP，是一种程序设计思想。OOP把对象作为程序的基本单元，一个对象包含了数据和操作数据的函数。
-面向过程的程序设计把计算机程序视为一系列的命令集合，即一组函数的顺序执行。为了简化程序设计，面向过程把函数继续切分为子函数，即把大块函数通过切割成小块函数来降低系统的复杂度。
-而面向对象的程序设计把计算机程序视为一组对象的集合，而每个对象都可以接收其他对象发过来的消息，并处理这些消息，计算机程序的执行就是一系列消息在各个对象之间传递。
-在Python中，所有数据类型都可以视为对象，当然也可以自定义对象。自定义的对象数据类型就是面向对象中的类（Class）的概念。
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/10/Python面向对象/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Python异常与断言" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/10/Python异常与断言/">Python异常与断言</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/10/Python异常与断言/" class="article-date">
-	  <time datetime="2018-11-10T08:13:57.000Z" itemprop="datePublished">十一月 10, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          异常与断言异常“异常”通常被定义为“不符合规范的东西”但是在Python中，异常十分常见，简直到处都是。实际上，Python库中所有的模块都使用了异常
-
-我们经常将异常当做致命错误处理，异常发生时程序会终止，我们回到代码试图搞清楚为什么出错，程序因为一个异常被抛出而终止时，我们称程序抛出了一个未处理异常
-很多时候，异常是程序员应该预料到的事情，比如程序试图打开一个不存在的文件。
-
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/10/Python异常与断言/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Python调试" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/10/Python调试/">Python调试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/10/Python调试/" class="article-date">
-	  <time datetime="2018-11-10T08:02:05.000Z" itemprop="datePublished">十一月 10, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          本教程内容主要来源于《Python编程导论》 6-8章  
-供2018年小学期 Python数据科学 课程使用  PowerBy 刘相 
-调试调试是一种需要学习的技能，好消息是学会调试并不难
-人们至少花费了40年建立被称为‘调试器’的工具，所有流行的Python IDE中都带有调试器工具，这些调试工具帮助人们找到程序中的错误,但事实上帮助并不大。更重要的是接近问题，经验丰富的程序员可能根本不用调试工具，也许他们认为最重要的调试工具是 print()
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/10/Python调试/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-面经问题总结" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/09/面经问题总结/">面经问题总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/09/面经问题总结/" class="article-date">
-	  <time datetime="2018-11-09T14:07:10.000Z" itemprop="datePublished">十一月 9, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          计算机网络1 http是长连接还是短连接，head里面有什么参数 ；put 和 post 有什么区别 ；http页面缓存机制 ；302code 含义
-2 socket 编程 tcp三次握手 四次挥手 三次握手和四次挥手画图 为什么3次握手 2次挥手后客户端在做什么
-3 访问一个网站的全过程
-4 一个用户登录的全部逻辑
-5 UDP、TCP、HTTP拥塞控制算法、慢启动算法
-
-        
-          <p class="article-more-link">
-            <a href="/2018/11/09/面经问题总结/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面试基础/">面试基础</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next</a>
-  </nav>
-
+  </aside>
 </section>
-          <aside id="sidebar">
-  
-    <div style="margin: 20px 0;">
-	<div id="search-form-wrap">
-
-    <form class="search-form">
-        <label style="width: 72%;">
-            <span class="screen-reader-text">Search for:</span>
-            <input type="search" class="search-field" style="height: 36px; width: 100%;" placeholder=" Search…" value="" name="s" title="Search for:">
-        </label>
-        <input type="submit" class="search-form-submit" value="Search">
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something...">
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
-
-</div>
-</div>
-  
-    
-  <div class="widget_athemes_tabs">
-    <ul id="widget-tab" class="clearfix widget-tab-nav">
-      <li class="active"><a>Recent Posts</a></li>
-    </ul>
-    <div class="widget">
-      <ul>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/12/07/数据库之SQL/">数据库之SQL</a></h6>
-              <span>十二月 7, 2018</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/12/07/操作系统之进程/">操作系统之进程</a></h6>
-              <span>十二月 7, 2018</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/11/11/欢迎来到Eyc的博客!/">欢迎来到Eyc的博客！</a></h6>
-              <span>十一月 11, 2018</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/11/11/HTTP/">HTTP</a></h6>
-              <span>十一月 11, 2018</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/11/11/TCP与UDP/">TCP与UDP</a></h6>
-              <span>十一月 11, 2018</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/11/10/Python测试/">Python测试</a></h6>
-              <span>十一月 10, 2018</span>
-            </div>
-
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统/">操作系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试基础/">面试基础</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/other/" style="font-size: 15px;">other</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/计算机网络/" style="font-size: 15px;">计算机网络</a> <a href="/tags/面试基础/" style="font-size: 10px;">面试基础</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">9</span></li></ul>
-    </div>
-  </div>
-
-
-  
-</aside>
         
       </div>
 

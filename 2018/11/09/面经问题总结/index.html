@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="MapleStory">
 <meta property="og:description" content="计算机网络1 http是长连接还是短连接，head里面有什么参数 ；put 和 post 有什么区别 ；http页面缓存机制 ；302code 含义 2 socket 编程 tcp三次握手 四次挥手 三次握手和四次挥手画图 为什么3次握手 2次挥手后客户端在做什么 3 访问一个网站的全过程 4 一个用户登录的全部逻辑 5 UDP、TCP、HTTP拥塞控制算法、慢启动算法">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-11-10T08:29:21.916Z">
+<meta property="og:updated_time" content="2018-12-07T13:10:22.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面经问题总结">
 <meta name="twitter:description" content="计算机网络1 http是长连接还是短连接，head里面有什么参数 ；put 和 post 有什么区别 ；http页面缓存机制 ；302code 含义 2 socket 编程 tcp三次握手 四次挥手 三次握手和四次挥手画图 为什么3次握手 2次挥手后客户端在做什么 3 访问一个网站的全过程 4 一个用户登录的全部逻辑 5 UDP、TCP、HTTP拥塞控制算法、慢启动算法">
@@ -164,6 +164,35 @@
 <p>11 死锁是什么，为什么会产生死锁，怎么解决死锁问题，预防死锁、避免死锁</p>
 <p>12 进程的同步进制有哪些？ 进程的通信机制有哪些？</p>
 <p>13 进程的状态转换图及转换事件</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>1 数据库建立索引的原则有哪些</p>
+<p>2 B+树与数据库索引</p>
+<p>3 </p>
+<p>4 聚簇索引和非聚簇索引，一个连环索引对 a 升序排列，对 b 降序排雷，这个时候可以使用索引吗？</p>
+<p>5 数据库加行锁怎么加？ DML语句？</p>
+<p>6 group by, having, order by limit 执行顺序</p>
+<p>7 left join 和 inner join 的区别</p>
+<p>8 <code>mysql</code> 的非运算如何去掉 not in 和 ！= 这样的过滤条件</p>
+<p>9  聚簇索引和非聚簇索引，能不能对 like 出的东西加索引，能不能函数加索引</p>
+<p>10 数据库事务的隔离级别，如何对数据库加锁，内连接和外连接</p>
+<p>11 <code>mysql</code> 的索引</p>
+<p>12 数据库如果有一张表特别大怎么办？（索引优化、加缓存、读写分离、业务拆分）</p>
+<p>13 哪些字段可以建索引</p>
+<p>14 <code>mysql</code> 储存引擎</p>
+<p>15 数据库死锁的概念</p>
+<p>16 数据库引擎有哪些，有什么区别，索引分别是怎么实现的？</p>
+<p>17 介绍下数据库的索引</p>
+<p>18 乐观锁和悲观锁</p>
+<p>19 数据库索引，不同引擎的内部实现，B+树的具体性质</p>
+<p>20 数据库索引，底层实现、<code>mysql</code> 两种引擎的区别，数据库查询特别慢怎么优化</p>
+<p>21 主要使用的数据类型、数据库引擎了解吗，有什么区别</p>
+<p>22 数据库事务、事务的隔离级别</p>
+<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><p>1 (1)写sql，Table T Sid：学号 Cid：课程编号 score：成绩，q1：查询平均成绩大于60分的同学的学号和平均成绩 q2：查询所有课程成绩小于60的同学的学号 </p>
+<p>2 给一张表，找出成绩在10-15名学生</p>
+<h4 id="分布式数据库"><a href="#分布式数据库" class="headerlink" title="分布式数据库"></a>分布式数据库</h4><p>1 <code>redis</code> 是线程安全的吗？ 为什么是单线程 </p>
+<p>2 介绍 <code>redis</code> </p>
+<p>3 <code>redis</code> 和 <code>mysql</code> 的不同，应用场景</p>
+<p>4 用户什么格式的数据格式和用 <code>redis</code> 储存</p>
+<p>5 <code>redis</code> <code>mybatis</code> 二级缓存</p>
 
       
     </div>
@@ -232,7 +261,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.</span> <span class="nav-text">计算机网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作系统"><span class="nav-number">2.</span> <span class="nav-text">操作系统</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.</span> <span class="nav-text">计算机网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作系统"><span class="nav-number">2.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">3.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL"><span class="nav-number">4.</span> <span class="nav-text">SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式数据库"><span class="nav-number">4.1.</span> <span class="nav-text">分布式数据库</span></a></li></ol></li></ol>
     
     </div>
   </aside>
