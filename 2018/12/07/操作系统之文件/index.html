@@ -162,7 +162,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello, world\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 <code>unix</code> 上, 编译器把源文件转换为目标文件</p>
 <p><code>gcc -o hello hello.c</code></p>
-<p><img src="b396d726-b75f-4a32-89a2-03a7b6e19f6f.jpg" alt="img"></p>
+<p><img src="/2018/12/07/操作系统之文件/b396d726-b75f-4a32-89a2-03a7b6e19f6f.jpg" alt="img"></p>
 <ul>
 <li>预处理阶段：预处理以 # 开头的预处理命令</li>
 <li>编译阶段：翻译成汇编文件</li>
@@ -174,7 +174,7 @@
 <li>符号解析：每个符号对应一个函数，一个全局变量或静态变量，符号解析的目的是将每个符号引用与一个符号定义关联起来</li>
 <li>重定位：链接器通过吧每个符号定义与一个内存位置关联起来，修改对这些符号的引用，使他们指向这个内存位置</li>
 </ul>
-<p><img src="47d98583-8bb0-45cc-812d-47eefa0a4a40.jpg" alt="img"></p>
+<p><img src="/2018/12/07/操作系统之文件/47d98583-8bb0-45cc-812d-47eefa0a4a40.jpg" alt="img"></p>
 <h3 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h3><ul>
 <li>可执行目标文件：直接在内存中执行</li>
 <li>可重定向目标文件：可以其他重定向文件在链接阶段合并，传建一个可执行目标文件</li>
@@ -190,7 +190,7 @@
 <li>在给定的文件系统中一个库只有一个文件，所有引用库的可执行目标都共享这个文件，他不会被复制到他的可执行文件中</li>
 <li>内存中共享的副本可以被不同正在运行的进程共享</li>
 </ul>
-<p><img src="76dc7769-1aac-4888-9bea-064f1caa8e77.jpg" alt="img"></p>
+<p><img src="/2018/12/07/操作系统之文件/76dc7769-1aac-4888-9bea-064f1caa8e77.jpg" alt="img"></p>
 
       
     </div>
