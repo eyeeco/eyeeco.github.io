@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>数据库系统原理 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="数据库">
+  
+  
+  
+  
+  <meta name="description" content="[TOC] 数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚 事务的ACID特性 原子性（Atomicity） 事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可  一致性（Consistency） 数据在事务的执行前后都保持一致性">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库系统原理">
+<meta property="og:url" content="http://yoursite.com/2018/12/23/数据库系统原理/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="[TOC] 数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚 事务的ACID特性 原子性（Atomicity） 事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可  一致性（Consistency） 数据在事务的执行前后都保持一致性">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/6675d713-8b59-4067-ad16-fdd538d4bb43.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/88ff46b3-028a-4dbb-a572-1f062b8b96d3.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/dd782132-d830-4c55-9884-cfac0a541b8e.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/c8d18ca9-0b09-441a-9a0c-fb063630d708.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png">
+<meta property="og:updated_time" content="2018-12-23T07:20:37.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库系统原理">
+<meta name="twitter:description" content="[TOC] 数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚 事务的ACID特性 原子性（Atomicity） 事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可  一致性（Consistency） 数据在事务的执行前后都保持一致性">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/23/数据库系统原理/6675d713-8b59-4067-ad16-fdd538d4bb43.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-数据库系统原理" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      数据库系统原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/23/数据库系统原理/" class="article-date">
+	  <time datetime="2018-12-23T07:16:31.000Z" itemprop="datePublished">十二月 23, 2018</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h2 id="数据库系统原理"><a href="#数据库系统原理" class="headerlink" title="数据库系统原理"></a>数据库系统原理</h2><h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚</p>
+<h4 id="事务的ACID特性"><a href="#事务的ACID特性" class="headerlink" title="事务的ACID特性"></a>事务的ACID特性</h4><ol>
+<li><p>原子性（Atomicity）</p>
+<p>事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可</p>
+</li>
+<li><p>一致性（Consistency）</p>
+<p>数据在事务的执行前后都保持一致性状态，在一致性状态下，所有事务对一个数据的读取结构都是相同的</p>
+</li>
+<li><p>隔离性（Isolation）</p>
+<p>一个事务所做的修改在最终提交以前对其他事务不可见</p>
+</li>
+<li><p>持久性（Durability）</p>
+<p>一旦事务提交，则其所做修改会永远保存到数据库中，即使系统崩溃事务执行结果也不能丢失，使用重做日志来保障持久性</p>
+</li>
+</ol>
+<a id="more"></a>
+<p>事务的ACID特性比较简单，但是并不容易理解，他们并不平级</p>
+<ul>
+<li>只有满足一致性，事务的执行结果才是正确的的</li>
+<li>在无并发的情况下，事务串行执行，隔离性一定能满足。此时只要满足原子性，一致性即可满足</li>
+<li>并发的情况下，多个事务并行执行，事务不仅满足原子性，还要满足隔离性 才能满足一致性</li>
+<li>事务满足持久性是为了维护数据库崩溃的情况</li>
+</ul>
+<p><img src="6675d713-8b59-4067-ad16-fdd538d4bb43.png" width="80%/"></p>
+<h4 id="事务的自动提交-AUTO-COMMIT"><a href="#事务的自动提交-AUTO-COMMIT" class="headerlink" title="事务的自动提交 AUTO_COMMIT"></a>事务的自动提交 AUTO_COMMIT</h4><p>MySQL默认采用自动的提交模式，即，如果不显示使用<code>START TRANSACTION</code>来开始一个事务，每个查询都会被当做一个事务自动提交</p>
+<h4 id="事务的模型抽象"><a href="#事务的模型抽象" class="headerlink" title="事务的模型抽象"></a>事务的模型抽象</h4><p>成功完成的事务称为已提交，而非成功完成的事务被中止了，为了确保数据的原子性，中止事务对数据库状态不可以造成影响，因此这些影响必须被撤销。一旦中止事务的影响被撤销，我们称事务已<strong>回滚</strong> ，数据库通过日志来支持回滚操作</p>
+<p>一个简单事务抽象模型包括：</p>
+<ul>
+<li>活动的：初始状态，事务执行时处于这个状态</li>
+<li>部分提交的：最后一条语句执行后</li>
+<li>失败的：发现正常的执行不能继续后</li>
+<li>中止的：事务回滚并恢复到事务开始执行的前后</li>
+<li>提交的：成功完成后</li>
+</ul>
+<h4 id="事务的隔离性"><a href="#事务的隔离性" class="headerlink" title="事务的隔离性"></a>事务的隔离性</h4><p>事务处理系统通常允许多个事务并发的执行，并发有两条无法拒绝的理由</p>
+<ul>
+<li>提高吞吐量和资源利用率</li>
+<li>减少等待时间</li>
+</ul>
+<p>数据库中并发的动机和多道程序设计的动机是相同的，而为提升效率的同时，我们必须控制事务的交互，来保证数据库的一致性，这被称为系统的<strong>并发控制</strong> </p>
+<p>在并发执行时，通过保证所执行的任何调度效果都与没有并发效果一样，我们可以保持数据库的一致性。调度在某种意义上等价于一个串行调度，这种调度被称为<strong>可串行化调度</strong></p>
+<h3 id="事务的并发"><a href="#事务的并发" class="headerlink" title="事务的并发"></a>事务的并发</h3><h4 id="可串行化"><a href="#可串行化" class="headerlink" title="可串行化"></a>可串行化</h4><p>串行化顺序可以通过拓扑排序得到。</p>
+<p>对于优先图来说，读写、写读、写写被称为一条边，考察这个有向图中是否有环，无环的优先图被称为可串行化调度</p>
+<h4 id="并发一致性问题"><a href="#并发一致性问题" class="headerlink" title="并发一致性问题"></a>并发一致性问题</h4><p>在并发环境下，事务的隔离性很难保证，因此可能出现并发一致性问题</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>图例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>丢失修改</td>
+<td>T<sub>1</sub>和T<sub>2</sub> 两个事务都对一个事务进行修改，T<sub>1</sub>先修改T<sub>2</sub>随后修改，T<sub>2</sub>的修改覆盖了T<sub>1</sub>的修改</td>
+<td><img src="88ff46b3-028a-4dbb-a572-1f062b8b96d3.png" width="100%/"></td>
+</tr>
+<tr>
+<td>读脏数据</td>
+<td>T<sub>1</sub>修改了一个数据，T<sub>2</sub>最后读取了这个数据。如果T<sub>1</sub>撤销了这次修改，那么T<sub>2</sub>读取的数据是脏数据</td>
+<td><img src="dd782132-d830-4c55-9884-cfac0a541b8e.png"></td>
+</tr>
+<tr>
+<td>不可重复读</td>
+<td>T<sub>2</sub>读取了一个数据，T<sub>1</sub>对其进行了修改，如果T<sub>2</sub>再次读取这个数据，此时读取结果和第一次不同</td>
+<td><img src="c8d18ca9-0b09-441a-9a0c-fb063630d708.png"></td>
+</tr>
+<tr>
+<td>幻影读</td>
+<td>T<sub>1</sub>读取某个范围内的数据，T<sub>2</sub> 在这个范围内插入新的数据，T<sub>1</sub>再次读取这个范围内的数据，此时读取的结果和第一次读取的不同</td>
+<td><img src="72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h4><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可串行化</td>
+<td>即可串行化调度</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>只允许读取已提交数据，事务两次读取的间隙其他事务不得更新</td>
+</tr>
+<tr>
+<td>已提交读</td>
+<td>只允许读取已提交的数据，允许同一事务读数据的前后不一致</td>
+</tr>
+<tr>
+<td>未提交读</td>
+<td>允许读取未提交数据</td>
+</tr>
+</tbody>
+</table>
+<h4 id="事务的隔离级别与对应的并发问题"><a href="#事务的隔离级别与对应的并发问题" class="headerlink" title="事务的隔离级别与对应的并发问题"></a>事务的隔离级别与对应的并发问题</h4><table>
+<thead>
+<tr>
+<th>隔离级别/并发问题</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻影读</th>
+<th>加锁读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未提交读</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>提交读</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>可串行化</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<h4 id="隔离级别的实现"><a href="#隔离级别的实现" class="headerlink" title="隔离级别的实现"></a>隔离级别的实现</h4><h5 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h5><p>通过封锁来实保证事务的可串行化。通过共享、排他锁及两阶段封锁协议来保证串行化下的并发读</p>
+<h5 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h5><p>另一类用来实现隔离性的技术为为每一个事务分配一个时间戳，系统维护两个时间戳来保证冲突情况下按照顺序访问数据项</p>
+<h5 id="多版本和快照隔离"><a href="#多版本和快照隔离" class="headerlink" title="多版本和快照隔离"></a>多版本和快照隔离</h5><p>快照隔离中，我们可以想象每个事务开始时尤其自身的数据库版本或快照，它从这个私有的版本中读取数据，因此它和其他事务的更新隔开。事务的更新只在私有数据库中进行，只有提交时才将信息保存，写入数据库。</p>
+<h3 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h3><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>锁一般被分为两种</p>
+<ul>
+<li>共享锁：简称为S锁，又称为读锁</li>
+<li>排他锁：简称为X锁，又称为写锁</li>
+</ul>
+<p>这两种锁有以下规定</p>
+<ul>
+<li>一个事务数据对象加了X锁，就可以对数据A进行读取和更新，加锁期间其他事务不能获得A的锁</li>
+<li>一个事务数据对象加了S锁，可以对A进行读取操作，加锁期间其他事务可以对其加S锁，但是不能加X锁</li>
+</ul>
+<h4 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h4><p>使用意向锁来支持多粒度的封锁</p>
+<p>在行级锁、表级锁的情况下，事务想要对表A加X锁，就要检测其他事务是否对表A和表A的任意一行加了锁，那么就需要对A的每一行都检测，这非常耗时</p>
+<p>在X/S锁之外引入了IX、IS，IX和IS都是表锁，用来表示一个事务想在某个表上加X或S锁，有以下规定：</p>
+<ul>
+<li>一个事务在获得某个数据行的S锁之前，必须先获得表的IS锁或更强的锁</li>
+<li>一个数据在获得某个数据航的X锁之前，必须获得表的IX锁</li>
+</ul>
+<p>通过引入意向锁，输入想要对某个表A加锁，只需检测事务是否对表A加了x/Ix/S/IS锁</p>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>X</th>
+<th>IX</th>
+<th>S</th>
+<th>IS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>IX</td>
+<td>×</td>
+<td>√</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>S</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>IS</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>任意IX/IS 之间都是相容的，因为它只表示要加锁，并没有真正的加锁</li>
+<li>S锁只与S和IS兼容</li>
+</ul>
+<h4 id="两阶段封锁协议"><a href="#两阶段封锁协议" class="headerlink" title="两阶段封锁协议"></a>两阶段封锁协议</h4><p>保证事务可串行化的一个协议是两阶段封锁协议，该协议分两个阶段</p>
+<ul>
+<li>增长阶段：事务可以获得锁，但是不能释放锁</li>
+<li>缩减阶段：事务可以释放锁，但是不能获得新锁</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/07/操作系统之文件/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">操作系统之文件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库系统原理"><span class="nav-number">1.</span> <span class="nav-text">数据库系统原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">1.1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的ACID特性"><span class="nav-number">1.1.1.</span> <span class="nav-text">事务的ACID特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的自动提交-AUTO-COMMIT"><span class="nav-number">1.1.2.</span> <span class="nav-text">事务的自动提交 AUTO_COMMIT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的模型抽象"><span class="nav-number">1.1.3.</span> <span class="nav-text">事务的模型抽象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的隔离性"><span class="nav-number">1.1.4.</span> <span class="nav-text">事务的隔离性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的并发"><span class="nav-number">1.2.</span> <span class="nav-text">事务的并发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可串行化"><span class="nav-number">1.2.1.</span> <span class="nav-text">可串行化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发一致性问题"><span class="nav-number">1.2.2.</span> <span class="nav-text">并发一致性问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的隔离级别"><span class="nav-number">1.2.3.</span> <span class="nav-text">事务的隔离级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的隔离级别与对应的并发问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">事务的隔离级别与对应的并发问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离级别的实现"><span class="nav-number">1.2.5.</span> <span class="nav-text">隔离级别的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#锁"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#时间戳"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">时间戳</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多版本和快照隔离"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">多版本和快照隔离</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发控制"><span class="nav-number">1.3.</span> <span class="nav-text">并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">1.3.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#意向锁"><span class="nav-number">1.3.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两阶段封锁协议"><span class="nav-number">1.3.3.</span> <span class="nav-text">两阶段封锁协议</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
