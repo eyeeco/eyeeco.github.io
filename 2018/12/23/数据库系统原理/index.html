@@ -20,11 +20,12 @@
 <meta property="og:description" content="[TOC] 数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚 事务的ACID特性 原子性（Atomicity） 事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可  一致性（Consistency） 数据在事务的执行前后都保持一致性">
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/6675d713-8b59-4067-ad16-fdd538d4bb43.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/20181208104248.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/88ff46b3-028a-4dbb-a572-1f062b8b96d3.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/dd782132-d830-4c55-9884-cfac0a541b8e.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/c8d18ca9-0b09-441a-9a0c-fb063630d708.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/23/数据库系统原理/72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png">
-<meta property="og:updated_time" content="2018-12-23T07:20:37.636Z">
+<meta property="og:updated_time" content="2018-12-23T07:35:14.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库系统原理">
 <meta name="twitter:description" content="[TOC] 数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚 事务的ACID特性 原子性（Atomicity） 事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可  一致性（Consistency） 数据在事务的执行前后都保持一致性">
@@ -155,7 +156,7 @@
 <li>并发的情况下，多个事务并行执行，事务不仅满足原子性，还要满足隔离性 才能满足一致性</li>
 <li>事务满足持久性是为了维护数据库崩溃的情况</li>
 </ul>
-<p><img src="6675d713-8b59-4067-ad16-fdd538d4bb43.png" width="80%/"></p>
+<p><img src="/2018/12/23/数据库系统原理/6675d713-8b59-4067-ad16-fdd538d4bb43.png" alt="事务特性"></p>
 <h4 id="事务的自动提交-AUTO-COMMIT"><a href="#事务的自动提交-AUTO-COMMIT" class="headerlink" title="事务的自动提交 AUTO_COMMIT"></a>事务的自动提交 AUTO_COMMIT</h4><p>MySQL默认采用自动的提交模式，即，如果不显示使用<code>START TRANSACTION</code>来开始一个事务，每个查询都会被当做一个事务自动提交</p>
 <h4 id="事务的模型抽象"><a href="#事务的模型抽象" class="headerlink" title="事务的模型抽象"></a>事务的模型抽象</h4><p>成功完成的事务称为已提交，而非成功完成的事务被中止了，为了确保数据的原子性，中止事务对数据库状态不可以造成影响，因此这些影响必须被撤销。一旦中止事务的影响被撤销，我们称事务已<strong>回滚</strong> ，数据库通过日志来支持回滚操作</p>
 <p>一个简单事务抽象模型包括：</p>
@@ -166,6 +167,7 @@
 <li>中止的：事务回滚并恢复到事务开始执行的前后</li>
 <li>提交的：成功完成后</li>
 </ul>
+<p><img src="/2018/12/23/数据库系统原理/20181208104248.png" alt="事务"></p>
 <h4 id="事务的隔离性"><a href="#事务的隔离性" class="headerlink" title="事务的隔离性"></a>事务的隔离性</h4><p>事务处理系统通常允许多个事务并发的执行，并发有两条无法拒绝的理由</p>
 <ul>
 <li>提高吞吐量和资源利用率</li>
@@ -188,22 +190,22 @@
 <tr>
 <td>丢失修改</td>
 <td>T<sub>1</sub>和T<sub>2</sub> 两个事务都对一个事务进行修改，T<sub>1</sub>先修改T<sub>2</sub>随后修改，T<sub>2</sub>的修改覆盖了T<sub>1</sub>的修改</td>
-<td><img src="88ff46b3-028a-4dbb-a572-1f062b8b96d3.png" width="100%/"></td>
+<td><img src="/2018/12/23/数据库系统原理/88ff46b3-028a-4dbb-a572-1f062b8b96d3.png" alt="事务"></td>
 </tr>
 <tr>
 <td>读脏数据</td>
 <td>T<sub>1</sub>修改了一个数据，T<sub>2</sub>最后读取了这个数据。如果T<sub>1</sub>撤销了这次修改，那么T<sub>2</sub>读取的数据是脏数据</td>
-<td><img src="dd782132-d830-4c55-9884-cfac0a541b8e.png"></td>
+<td><img src="/2018/12/23/数据库系统原理/dd782132-d830-4c55-9884-cfac0a541b8e.png" alt="事务"></td>
 </tr>
 <tr>
 <td>不可重复读</td>
 <td>T<sub>2</sub>读取了一个数据，T<sub>1</sub>对其进行了修改，如果T<sub>2</sub>再次读取这个数据，此时读取结果和第一次不同</td>
-<td><img src="c8d18ca9-0b09-441a-9a0c-fb063630d708.png"></td>
+<td><img src="/2018/12/23/数据库系统原理/c8d18ca9-0b09-441a-9a0c-fb063630d708.png" alt="事务"></td>
 </tr>
 <tr>
 <td>幻影读</td>
 <td>T<sub>1</sub>读取某个范围内的数据，T<sub>2</sub> 在这个范围内插入新的数据，T<sub>1</sub>再次读取这个范围内的数据，此时读取的结果和第一次读取的不同</td>
-<td><img src="72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png"></td>
+<td><img src="/2018/12/23/数据库系统原理/72fe492e-f1cb-4cfc-92f8-412fb3ae6fec.png" alt="事务"></td>
 </tr>
 </tbody>
 </table>
