@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521436409.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521564754.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521705851.png">
-<meta property="og:updated_time" content="2019-01-03T14:00:14.428Z">
+<meta property="og:updated_time" content="2019-01-03T14:02:05.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP(二轮复习)">
 <meta name="twitter:description" content="网络模型1 七层网络模型国际标注化组织ISO于1981年 正式推荐了一个网络体系结构–七层参考模型，也被叫做开放系统互连模型 这七层网络模型在传输过程中还会对数据进行封装，过程如图所示  在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包">
@@ -145,6 +145,7 @@
 <p><img src="/2019/01/03/TCP-二轮复习/1546400692624.png" alt="1546400692624"></p>
 <p>在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包看成一个整体（应用层数据）进行封装，及加上表示层报头（PH）。下层分别加上自己的报头，其中数据链路层还会封装一个链尾，形成一帧数据。</p>
 <p>当一帧数据通过物理层传输到目标主机物理层时，主机递交到数据链路层，同样经历上述相反的过程一层一层解包拿到数据。</p>
+<a id="more"></a>
 <h3 id="2-五层网络模型"><a href="#2-五层网络模型" class="headerlink" title="2 五层网络模型"></a>2 五层网络模型</h3><p>大学教科书一般采用了一个五层的网络模型</p>
 <p>1 应用层 : 确定进程之间的通信性质以满足用户需求。</p>
 <p>2 运输层：负责主机间不同进程的通信。即TCP与UDP</p>
