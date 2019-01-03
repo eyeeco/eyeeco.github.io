@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>TCP(二轮复习) | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="计算机网络">
+  
+  
+  
+  
+  <meta name="description" content="网络模型1 七层网络模型国际标注化组织ISO于1981年 正式推荐了一个网络体系结构–七层参考模型，也被叫做开放系统互连模型 这七层网络模型在传输过程中还会对数据进行封装，过程如图所示  在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP(二轮复习)">
+<meta property="og:url" content="http://yoursite.com/2019/01/03/TCP-二轮复习/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="网络模型1 七层网络模型国际标注化组织ISO于1981年 正式推荐了一个网络体系结构–七层参考模型，也被叫做开放系统互连模型 这七层网络模型在传输过程中还会对数据进行封装，过程如图所示  在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546400647297.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546400692624.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546401865049.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546432241898.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546434083082.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546435092120.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546517441968.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546518775080.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546519840167.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546519870527.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521264844.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521436409.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521564754.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546521705851.png">
+<meta property="og:updated_time" content="2019-01-03T14:00:14.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP(二轮复习)">
+<meta name="twitter:description" content="网络模型1 七层网络模型国际标注化组织ISO于1981年 正式推荐了一个网络体系结构–七层参考模型，也被叫做开放系统互连模型 这七层网络模型在传输过程中还会对数据进行封装，过程如图所示  在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/03/TCP-二轮复习/1546400647297.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-TCP-二轮复习" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      TCP(二轮复习)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/03/TCP-二轮复习/" class="article-date">
+	  <time datetime="2019-01-03T13:48:07.000Z" itemprop="datePublished">一月 3, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><h3 id="1-七层网络模型"><a href="#1-七层网络模型" class="headerlink" title="1 七层网络模型"></a>1 七层网络模型</h3><p>国际标注化组织ISO于1981年 正式推荐了一个网络体系结构–七层参考模型，也被叫做开放系统互连模型<img src="/2019/01/03/TCP-二轮复习/1546400647297.png" alt=""></p>
+<p>这七层网络模型在传输过程中还会对数据进行封装，过程如图所示</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546400692624.png" alt="1546400692624"></p>
+<p>在ISO七层网络模型中，当一台主机需要传送用户数据时，数据先进入应用层。在应用层中，数据被加上应用层报头（AH），形成应用层协议数据单元（PDU），然后被递交到表示层。表示层不关心上层应用数据格式而是把整个数据包看成一个整体（应用层数据）进行封装，及加上表示层报头（PH）。下层分别加上自己的报头，其中数据链路层还会封装一个链尾，形成一帧数据。</p>
+<p>当一帧数据通过物理层传输到目标主机物理层时，主机递交到数据链路层，同样经历上述相反的过程一层一层解包拿到数据。</p>
+<h3 id="2-五层网络模型"><a href="#2-五层网络模型" class="headerlink" title="2 五层网络模型"></a>2 五层网络模型</h3><p>大学教科书一般采用了一个五层的网络模型</p>
+<p>1 应用层 : 确定进程之间的通信性质以满足用户需求。</p>
+<p>2 运输层：负责主机间不同进程的通信。即TCP与UDP</p>
+<p>3 网络层：负责分组交换不同主机间的通信 IP数据报</p>
+<p>4 数据链路层：负责将网络层的IP数据报组装成帧</p>
+<p>5 物理层：透明的传输比特流</p>
+<h3 id="3-四层网络模型"><a href="#3-四层网络模型" class="headerlink" title="3 四层网络模型"></a>3 四层网络模型</h3><p>不论是七层还是五层，都是学术上的概念，实际应用的网络模型是一个四层的TCP/IP模型。</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546401865049.png" alt="1546401865049"></p>
+<p>TCP|IP 被组织成四个概念层，其中三个与ISO中模型对应。TCP、IP协议簇不包含链路层和物理层，其需要与其他协议协同工作。</p>
+<ol>
+<li>网络接口层</li>
+</ol>
+<p>网络接口层包括用于IP数据在已有网络介质上的传输协议。实际上TCP、IP并不定义与ISO链路物理层相对应的功能，相反它定义了ARP这样的协议，提供TCP、IP与硬件间的接口</p>
+<ol>
+<li>网间层</li>
+</ol>
+<p>网间层对应网络层，本层包含IP、RIP协议，负责数据包装、寻址、路由</p>
+<ol>
+<li>传输层</li>
+</ol>
+<p>网间层对应OSI参考模型的传输层，它提供两种端到端的通信服务。其中TCP提供可靠的数据流传输服务，UDP提供不可靠的数据报服务。</p>
+<ol>
+<li>应用层</li>
+</ol>
+<p>应用层对应应用层和表示层。</p>
+<h2 id="TCP头部"><a href="#TCP头部" class="headerlink" title="TCP头部"></a>TCP头部</h2><p><img src="/2019/01/03/TCP-二轮复习/1546432241898.png" alt="1546432241898"></p>
+<p>TCP头部里每一个字段都为管理TCP连接和控制起了重要作用</p>
+<ol>
+<li>16位端口号：告知报文段来自哪里，传到哪里。进行TCP通信时，客户端通常使用临时端口号，服务器则使用知名端口号</li>
+<li>32位序号：一次TCP通信（TCP连接建立到断开）过程中传输字节流中字节的标号，序号值被初始化为某随机值，之后该传输方向上TCP报文的序号值加上该随机值的偏移</li>
+<li>32位确认号：用作对一方发来TCP报文段的相应。其值是TCP报文段值加1 </li>
+<li>4位头部长度 标识TCP头部有多少（4字节），这样TCP首部最大是60字节</li>
+<li>6位标志位包含如下几项</li>
+</ol>
+<p>1）URG 紧急指针是否有效</p>
+<p>2）ACK 确认号是否有效</p>
+<p>3）PSH 提示接收端立即从缓冲区读走数据</p>
+<p>4）RST 表示要求重新建立连接</p>
+<p>5） SYN 标识请求开始一个连接 （同步报文段）</p>
+<p>6）FIN标志 表示通知对方要关闭连接了 （结束报文段）</p>
+<ol>
+<li>16位窗口大小 TCP控制流量的手段，接受窗口（告诉对方TCP缓冲区还能容纳的字节数）</li>
+<li>16位验校和 检验TCP报文段在传输过程中是否损坏</li>
+<li>16位紧急指针 正偏移量 </li>
+</ol>
+<p>有几点需要注意 TCP包没有IP地址，这属于网络层、一个TCP连接需要4个元组（略）来保证是同一连接。 <code>SequenceNubmer</code>是包序号，来解决网络包乱序问题ACK用于确认不丢包 Window是滑动窗口用来解决流控问题</p>
+<h2 id="TCP状态流转"><a href="#TCP状态流转" class="headerlink" title="TCP状态流转"></a>TCP状态流转</h2><p>首先了解注明的三次握手与四次挥手</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546434083082.png" alt="1546434083082"></p>
+<ol>
+<li>TCP建立连接</li>
+</ol>
+<p>1） 第一次握手：建立连接时，客户端发送SYN包（SYN=J）到服务器，并且进入SYN_SEND状态等待服务器确认</p>
+<p>2） 第二次握手：服务器收到SYN包，确认客户端的SYN（ACK=J+1）同时也发送一个自己的SYN包（SYN=K）即SYN+ACK包，服务器进入SYN_RECV状态</p>
+<p>3） 第三次握手：客户端收到SYN+ACK包，向服务器发送确认包ACK（ACK=K+1）发送完毕客户端和服务器进入ESTABLISHED状态</p>
+<ol>
+<li>TCP断开连接</li>
+</ol>
+<p>TCP有个特殊的概念叫半关闭，这个概念是说TCP连接是全双工连接，因此关闭连接必须关闭两个方向上的连接。客户机给服务器发送一个FIN的TCP报文，然后服务器回一个ACK报文，并且发送一个FIN报文，之后客户端再回ACK就结束了。</p>
+<p>在建立连接的时候，通信双方要确认最大报文长度，一般这个SYN是MTU减去IP和TCP的首部长度，对于以太网一般可以达到1460字节，当然非本地IP只有536字节，中间传输的MSS更小的话这个值更小</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546435092120.png" alt="1546435092120"></p>
+<p>2MSL 等待状态 （TIMEWAIT）发送了最后一个ACK后，防止最后一次的数据报没有达到对方那里。这个状态保证了双方都可以正常结束，由于socket（IP和端口对）使得应用程序在这个时间（2MSL）无法使用同一个服务。这对于客户端无所谓，但是服务程序（<code>httpd</code>）总要用一个端口来服务。而这个时间，启动<code>httpd</code>会出现错误（插口被使用）。为了避免这个错误，服务器给出了平静时间的概念，虽然可以重新启动服务器，但是要平静的等待2MSL才能进行下一次连接</p>
+<p>FIN_WAIT_2 状态 这是注明的半关闭状态，这个状态应用程序还可可以接受数据但是不能发送数据。还有一种可能是 客户端一直 FIN_WAIT_2 ，服务器一直 CLOSE_WAIT 状态 直到应用层来关闭这个状态</p>
+<p>RST 同时打开和同时关闭，概率很小</p>
+<h2 id="TCP超时重传"><a href="#TCP超时重传" class="headerlink" title="TCP超时重传"></a>TCP超时重传</h2><p>本节讨论异常网络状况下，TCP如何控制数据保证其承诺的可靠服务</p>
+<ol>
+<li>数据顺利到对端，对端顺利响应ACK</li>
+<li>数据包中途丢失</li>
+<li>数据包顺利达到，但是ACK报文丢失</li>
+<li>数据报数据达到，但是对异常未响应</li>
+</ol>
+<p><img src="/2019/01/03/TCP-二轮复习/1546517441968.png" alt="1546517441968"></p>
+<p>出现这些异常情况时，TCP就会超时重传。TCP每发一个报文段，就对这个报文段设一个计时器，如果确认的时间到了而没有收到确认，就会重传报文段，这被称为超时重传</p>
+<p>利用<code>tcpdump</code>调试出以下信息</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546518775080.png" alt="1546518775080"></p>
+<p>可以看出重传时间为2、4、8、6（可能是被终止了）</p>
+<p>客户端一直没有得到ACK报文，客户端会一直重传，影响重传效率的是RTO。RTO指发送数据后，传送数据等待ACK的时间。RTO非常重要。</p>
+<ol>
+<li>设长了，重发慢，没有效率</li>
+<li>设短了，重发快，网络拥塞</li>
+</ol>
+<p>如果底层传输特性已知，则重传相对简单，但是TCP体层完全异构，因此TCP必须适应时延差异。</p>
+<p>RFC973规定了经典的自适应算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SRTT = α * SRTT + (1 - α) * RTT</span><br><span class="line">RTO = min(UBOUND, max(LBOUND，β * SRTT))</span><br></pre></td></tr></table></figure>
+<p>但是这个算法有个问题，主要是由于ACK传输导致的RTT多义性问题</p>
+<p>1987年出现了一种<code>carn</code>算法,  忽略重传，不采样重传的RTT。</p>
+<p>该算法规定，一但发生重传，就对现有的RTO翻倍。</p>
+<p>当不发生重传时，才根据上式计算平均往返时间RTT和重传时间</p>
+<h2 id="TCP滑动窗口"><a href="#TCP滑动窗口" class="headerlink" title="TCP滑动窗口"></a>TCP滑动窗口</h2><p>TCP滑动窗口主要有两个作用 1. 提供TCP的可靠性 2. 提供TCP的流控特性 同时滑动窗口还体现了TCP面向字节流的设计</p>
+<p>对于TCP会话的发送方，任何时候其缓存数据可以分为四类： </p>
+<ol>
+<li>已经发送并受到对方的ACK</li>
+<li>已经发送但未收到ACK</li>
+<li>未发送但是对方允许发送</li>
+<li>不允许发送</li>
+</ol>
+<p>其中，已经发送还未收到ACK和未发送但是对方允许发送的部分称为发送窗口</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546519840167.png" alt="1546519840167"></p>
+<p>当对方接收到ACK后续的确认字节时，便会滑动</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546519870527.png" alt="1546519870527"></p>
+<p>对于TCP的接收方，某一时刻其有三种状态 1 已接收 2 未接受准备接受 3 未准备接受</p>
+<p>TCP是双工的协议，会话的双方可以同时接受、发送数据。TCP会话双方都各自维护一个发送窗口和接收窗口。滑动窗口实现面向流的可靠性来源于“确认重传机制”，TCP滑动窗口的可靠性也来源于确认重传。发送窗口只有收到对方对于本段ACK的确认，才会移动左边界。前面还有字节未接受的情况下，窗口不会移动。</p>
+<h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2><p>计算机中带宽、交换节点中的缓存、处理机都是网络资源。某段时间，网络需求超过了可用部分，网络性能就会变坏，这被称为拥塞。拥塞控制就是防止过多的网络流量注入到网络中。TCP拥塞控制由四个核心算法组成：慢开始、拥塞避免、快速重传和快速恢复</p>
+<h3 id="慢开始和拥塞避免"><a href="#慢开始和拥塞避免" class="headerlink" title="慢开始和拥塞避免"></a>慢开始和拥塞避免</h3><p>发送方维持一个拥塞窗口的状态变量，拥塞窗口取决于网络的拥塞程度，发送方让自己的发送窗口等于拥塞窗口</p>
+<p>慢开始的思路就是一开始不发送大量的数据，先探测网络的拥塞程度。由小至大的增加拥塞窗口</p>
+<ol>
+<li>当主机发送数据时，如果将较大的发送窗口全部注入到网络中，可能引起拥塞</li>
+<li>可以试探一下，由小至大增大拥塞窗口的数量</li>
+</ol>
+<p>（这里用报文段说明，实际上拥塞窗口以字节为单位）</p>
+<p>慢开始从1开始指数增长，为了防止其增长过大， 设置一个门限，当其达到门限时，变为拥塞避免算法</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546521264844.png" alt="1546521264844"></p>
+<p>拥塞避免算法是使得拥塞窗口缓慢增长，每经过一个RTT就将 拥塞窗口加一</p>
+<ol>
+<li>TCP连接初始化，拥塞窗口设为1</li>
+<li>执行慢开始算法，<code>cwind</code>指数增长，直到<code>cwind=ssthress</code>时，开始拥塞避免算法</li>
+<li>当网络拥塞时， 将<code>ssthress</code>设为当前的一半，<code>cwind</code>重新设为1 开始</li>
+</ol>
+<p><img src="/2019/01/03/TCP-二轮复习/1546521436409.png" alt="1546521436409"></p>
+<h3 id="快重传和快恢复"><a href="#快重传和快恢复" class="headerlink" title="快重传和快恢复"></a>快重传和快恢复</h3><p>快重传要求接收方收到一个失序的报文段后立即发出重复确认（为使发送方尽早知道报文段未传到对方）快重传规定只有一连收到3个重复确认就立即重传对方尚未收到的报文段，而不必继续等待。</p>
+<p><img src="/2019/01/03/TCP-二轮复习/1546521564754.png" alt="1546521564754"></p>
+<p>快重传还配合有快恢复，主要思想包括</p>
+<ol>
+<li>一旦收到三个重复确认，执行乘法减小，<code>ssthresh</code>门限减半，但是并不执行慢开始</li>
+<li>将<code>cwind</code>设为<code>ssthresh</code>， 然后执行拥塞避免算法</li>
+</ol>
+<p><img src="/2019/01/03/TCP-二轮复习/1546521705851.png" alt="1546521705851"></p>
+<p>整体上，TCP拥塞窗口的原则是加法增大、乘法减小。可以看出TCP较好的保证了流之间的公平性，一旦丢包就减半退让。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/03/STL剖析（vector-string）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">STL剖析(vector,string)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络模型"><span class="nav-number">1.</span> <span class="nav-text">网络模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-七层网络模型"><span class="nav-number">1.1.</span> <span class="nav-text">1 七层网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-五层网络模型"><span class="nav-number">1.2.</span> <span class="nav-text">2 五层网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-四层网络模型"><span class="nav-number">1.3.</span> <span class="nav-text">3 四层网络模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP头部"><span class="nav-number">2.</span> <span class="nav-text">TCP头部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP状态流转"><span class="nav-number">3.</span> <span class="nav-text">TCP状态流转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP超时重传"><span class="nav-number">4.</span> <span class="nav-text">TCP超时重传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP滑动窗口"><span class="nav-number">5.</span> <span class="nav-text">TCP滑动窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">6.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慢开始和拥塞避免"><span class="nav-number">6.1.</span> <span class="nav-text">慢开始和拥塞避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快重传和快恢复"><span class="nav-number">6.2.</span> <span class="nav-text">快重传和快恢复</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
