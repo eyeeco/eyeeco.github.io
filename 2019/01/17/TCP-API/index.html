@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>TCP API | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="计算机网络">
+  
+  
+  
+  
+  <meta name="description" content="TCP 网络编程API网络通信概要网络进程如何通信？首要解决如何标识一个进程，本地可以用PID来解决，而网络中用IP+端口号来唯一标识一个进程。这样利用(IP、端口号、PID)可以唯一标识一个网络中的进程。 socket起源于UNINX，UNINX哲学之一就是一切皆文件，有一个打开、读写、关闭的模式来操作。socket就是该模式的一个实现，socket就是一种特殊的文件。 使用TCP/IP的协议应">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP API">
+<meta property="og:url" content="http://yoursite.com/2019/01/17/TCP-API/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="TCP 网络编程API网络通信概要网络进程如何通信？首要解决如何标识一个进程，本地可以用PID来解决，而网络中用IP+端口号来唯一标识一个进程。这样利用(IP、端口号、PID)可以唯一标识一个网络中的进程。 socket起源于UNINX，UNINX哲学之一就是一切皆文件，有一个打开、读写、关闭的模式来操作。socket就是该模式的一个实现，socket就是一种特殊的文件。 使用TCP/IP的协议应">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/TCP-API/1546948869237.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/TCP-API/1547125473936.png">
+<meta property="og:updated_time" content="2019-01-17T13:23:28.586Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP API">
+<meta name="twitter:description" content="TCP 网络编程API网络通信概要网络进程如何通信？首要解决如何标识一个进程，本地可以用PID来解决，而网络中用IP+端口号来唯一标识一个进程。这样利用(IP、端口号、PID)可以唯一标识一个网络中的进程。 socket起源于UNINX，UNINX哲学之一就是一切皆文件，有一个打开、读写、关闭的模式来操作。socket就是该模式的一个实现，socket就是一种特殊的文件。 使用TCP/IP的协议应">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/17/TCP-API/1546948869237.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-TCP-API" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      TCP API
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/17/TCP-API/" class="article-date">
+	  <time datetime="2019-01-17T13:22:03.000Z" itemprop="datePublished">一月 17, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="TCP-网络编程API"><a href="#TCP-网络编程API" class="headerlink" title="TCP 网络编程API"></a>TCP 网络编程API</h2><h3 id="网络通信概要"><a href="#网络通信概要" class="headerlink" title="网络通信概要"></a>网络通信概要</h3><p>网络进程如何通信？首要解决如何标识一个进程，本地可以用PID来解决，而网络中用IP+端口号来唯一标识一个进程。这样利用(IP、端口号、PID)可以唯一标识一个网络中的进程。</p>
+<p>socket起源于UNINX，UNINX哲学之一就是一切皆文件，有一个打开、读写、关闭的模式来操作。socket就是该模式的一个实现，socket就是一种特殊的文件。</p>
+<p>使用TCP/IP的协议应用程序采用应用编程接口 UNINX BSD关键字来实现网络进程通信，目前几乎所有的应用程序都是使用socket，网络通信无处不在。其基本模式包括：</p>
+<p><img src="/2019/01/17/TCP-API/1546948869237.png" alt="1546948869237"> </p>
+<ol>
+<li>服务器根据地址类型（IPV4、IPV6）创建socket</li>
+<li>服务器为socket绑定IP地址和端口号</li>
+<li>服务器socket监听端口号请求，随时准备接受客户端的连接，这时候服务器socket并未打开</li>
+<li>客户端创建socket</li>
+<li>客户端打开socket，根据服务器IP和端口号试图连接服务器socket</li>
+<li>服务器socket接收到客户端socket请求，被动打开开始接受客户端请求，直到客户端返回连接信息。这时候socket进入阻塞状态</li>
+<li>客户端连接成功，向服务器发送连接状态信息</li>
+<li>服务器accept方法返回，连接成功。</li>
+<li>服务器向socket写入信息</li>
+<li>服务器读取信息</li>
+<li>客户端关闭</li>
+<li>服务器关闭</li>
+</ol>
+<p>仔细研究会发现，服务器和客户端连接的部分就是三次握手。</p>
+<h3 id="网络编程API"><a href="#网络编程API" class="headerlink" title="网络编程API"></a>网络编程API</h3><h4 id="1-socket函数"><a href="#1-socket函数" class="headerlink" title="1. socket函数"></a>1. socket函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span></span><br></pre></td></tr></table></figure>
+<p>socket 函数对应于普通文件的打开操作，普通文件返回一个描述字，而socket创建一个socket描述符，它唯一标识一个socket。</p>
+<p>当调用socket时, 返回的描述他存在与协议族空间中，但是没有具体地址，如果想要赋予地址需要使用bind()函数。如果不绑定，系统会在使用时随机生成一个。</p>
+<h4 id="2-bind函数"><a href="#2-bind函数" class="headerlink" title="2. bind函数"></a>2. bind函数</h4><p>bind() 函数把一个地址族中特定的地址赋给socket</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *addr, <span class="keyword">socklen_t</span> addrlen)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="3-listen-和-connect-函数"><a href="#3-listen-和-connect-函数" class="headerlink" title="3. listen 和 connect 函数"></a>3. listen 和 connect 函数</h4><p>这两个函数相对应，服务器调用listen函数来监听端口，而客户端调用connect函数去发出连接请求</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">int</span> backlog)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">const</span> struct sockaddr *addr, <span class="keyword">docklen_t</span> addrlen)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="4-accept-函数"><a href="#4-accept-函数" class="headerlink" title="4. accept 函数"></a>4. accept 函数</h4><p>TCP 服务器依次调用socket()、bind()、listen()之后，就会监指定的socket地址了。而TCP客户端调用socket()、connect()之后就会向TCP服务器发送一个连接请求。TCP连接接收到这个请求之后，就会调用accept()函数接受请求，这样连接就建立了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sockfd, struct sockaddr *addr, <span class="keyword">socklen_t</span> *addrlen)</span></span></span><br></pre></td></tr></table></figure>
+<p>注意：accept第一个参数为socket描述字，服务器调用socket生成的，称为监听socket关键字；而accept返回的是已连接socket关键字。一个服务器通常只创建一个监听socket描述字，这个描述子在服务器生命周期一直存在。内核为每个服务器接受的客户创建一个已连接socket关键字，当完成服务后就会关闭。</p>
+<h4 id="5-read-和-write-函数"><a href="#5-read-和-write-函数" class="headerlink" title="5. read 和 write 函数"></a>5. read 和 write 函数</h4><p>read()函数从<code>fd</code>中读取内容，write写入内容。成功时返回字节数</p>
+<h4 id="6-close函数"><a href="#6-close函数" class="headerlink" title="6. close函数"></a>6. close函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int close(int fd);</span><br></pre></td></tr></table></figure>
+<h3 id="TCP-协议选项"><a href="#TCP-协议选项" class="headerlink" title="TCP 协议选项"></a>TCP 协议选项</h3><h4 id="1-SO-REUSEADDR"><a href="#1-SO-REUSEADDR" class="headerlink" title="1. SO_REUSEADDR"></a>1. SO_REUSEADDR</h4><p>一般来说一个端口释放后，大约两分钟才能再次使用（处于TIME_WAIT状态），而使用该选项可以使端口被释放后立即被使用（处于TIME_WAIT状态的端口）。</p>
+<h4 id="2-TCP-NODELAY-TCP-CHORK"><a href="#2-TCP-NODELAY-TCP-CHORK" class="headerlink" title="2. TCP_NODELAY/TCP_CHORK"></a>2. TCP_NODELAY/TCP_CHORK</h4><p>网络拥塞领域，有一个非常著名的算法叫做Nagle算法， 这是以其发明人的名字命名的。John Nagle 首次用该算法解决福特公司的网络拥塞问题。该问题具体描述是：如果应用程序每次产生1Byte的数据，而这个1Byte的数据又以数据报的形式发送给网络服务器，那么很容易使得网络过载。所以传送1Byte的包却要花费40Byte的包头（IP20字节、TCP20字节）这种有效载荷利用低下的情况被称为愚蠢窗后症候群。</p>
+<p>针对这问题，Nagle算法改进：如果发送少量字符包（小于MSS的包被称为小包，大于MSS的包被称为大包）发送端只会发送第一个小包，将后面的小包缓存起来。直到接收到前一个数据报的ACK为止，或当前字符较紧急，积攒了较多的数据。</p>
+<p>TCP中Nagle算法默认启用，但是不使用任何情况。而TCP_NODELAY/TCP_CHORK字段控制了包的Nagle化。例如TCP_NODELAY便是直接把包发出去，这样用户体验会更好。</p>
+<h4 id="3-SO-LINGER"><a href="#3-SO-LINGER" class="headerlink" title="3. SO_LINGER"></a>3. SO_LINGER</h4><p>linger是延缓的意思，这里的延缓指close操作。默认close立即返回，但是当缓冲区还有部分数据时，系统会尝试将数据发送给对方。</p>
+<h4 id="4-TCP-DEAFER-ACCPET"><a href="#4-TCP-DEAFER-ACCPET" class="headerlink" title="4. TCP_DEAFER_ACCPET"></a>4. TCP_DEAFER_ACCPET</h4><p>实际上是接收到第一个数据包后，才会创建连接</p>
+<h4 id="5-SO-KEEPALIVE"><a href="#5-SO-KEEPALIVE" class="headerlink" title="5.SO_KEEPALIVE"></a>5.SO_KEEPALIVE</h4><p>SO_KEEPALIVE用来检测对方主机是否崩溃，避免服务器永远阻塞于TCP连接的输入</p>
+<p>设置该选项后，如果2h内任何一方没有数据交换，TCP就会自动向对方发送一个保持存活探测，</p>
+<ol>
+<li>对方接受正常，以ACK回应</li>
+<li>对方已崩溃且重新启动，以RST响应，套接口错误置为restart，套接口本身被关闭</li>
+<li>对方无响应，再次发送8个探测分节，11min15s 后无响应就放弃。</li>
+</ol>
+<h3 id="网络字节序与主机序"><a href="#网络字节序与主机序" class="headerlink" title="网络字节序与主机序"></a>网络字节序与主机序</h3><p>关于字节序再次讨论。不同的CPU有不同的字节序类型，这些字节序是整数在内存中的保存顺序，称为主机序。最常见的两种 1 小端， 低序的字节存在起始位置  2 大端 ， 高字节的存在起始位置</p>
+<p>小端法 地址低位存在值的低位，高位存值的高位。这种方式符合人的思维方式。</p>
+<p>大端法 地址低位存高位的值。它很直观不需要考虑对应关系，只需要内存地址写出去即可</p>
+<p><img src="/2019/01/17/TCP-API/1547125473936.png" alt="1547125473936"> </p>
+<p>为什么要注意字节问题呢？C++编译平台的储存是由编译平台的CPU确定的，而JAVA编写的程序唯一采用大端法。所有网络协议都是大端法。其也被称为网络字节序。</p>
+<h3 id="封包和解包"><a href="#封包和解包" class="headerlink" title="封包和解包"></a>封包和解包</h3><p>TCP是一个流协议，所谓流就行没有界限的一串数据。但是通信程序是需要独立的数据包发送。</p>
+<p>设想这样几种情况</p>
+<ol>
+<li>先接收到data1 后接到 data2</li>
+<li>先接收到data1 的部分数据，后接到data1的余下部分与 data2全部</li>
+<li>先接收到了data1全部数据和部分data2数据，后接受到data余下数据</li>
+<li>一次接受data1和data2全部数据</li>
+</ol>
+<p>1是理想情况 而2、3、4即使粘包的情况，这时就需要拆包将受到的数据拆成独立的数据包。这种情况可能有这么几种原因。</p>
+<p>1 由Nagle算法造成的粘包</p>
+<p>2 接收端不及时接受造成的粘包</p>
+<p>具体的解决办法便是封包和拆包。封包是给一段数据加上包头，这样数据就分为包头、包体两部分。包头包含了一个结构体成员变量表示了包体的长度，这样另一方便可以通过这个长度进行拆包；</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/03/编译与调试（C-）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">编译与调试（C++）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-网络编程API"><span class="nav-number">1.</span> <span class="nav-text">TCP 网络编程API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络通信概要"><span class="nav-number">1.1.</span> <span class="nav-text">网络通信概要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络编程API"><span class="nav-number">1.2.</span> <span class="nav-text">网络编程API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-socket函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. socket函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-bind函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. bind函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-listen-和-connect-函数"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. listen 和 connect 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-accept-函数"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. accept 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-read-和-write-函数"><span class="nav-number">1.2.5.</span> <span class="nav-text">5. read 和 write 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-close函数"><span class="nav-number">1.2.6.</span> <span class="nav-text">6. close函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-协议选项"><span class="nav-number">1.3.</span> <span class="nav-text">TCP 协议选项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-SO-REUSEADDR"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. SO_REUSEADDR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-TCP-NODELAY-TCP-CHORK"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. TCP_NODELAY/TCP_CHORK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-SO-LINGER"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. SO_LINGER</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-TCP-DEAFER-ACCPET"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. TCP_DEAFER_ACCPET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-SO-KEEPALIVE"><span class="nav-number">1.3.5.</span> <span class="nav-text">5.SO_KEEPALIVE</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络字节序与主机序"><span class="nav-number">1.4.</span> <span class="nav-text">网络字节序与主机序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封包和解包"><span class="nav-number">1.5.</span> <span class="nav-text">封包和解包</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
