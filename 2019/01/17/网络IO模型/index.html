@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>网络IO模型 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="计算机网络">
+  
+  
+  
+  
+  <meta name="description" content="网络IO模型IO是计算机体系中重要的一部分。IO有两种操作，同步IO和异步IO。同步IO是指必须等待IO操作完成后控制权才能返回给用户进程。异步IO指的是，无需等待IO操作完成，就将控制权返回给用户进程。 网络中的IO常见如下情况：  输入操作：等待数据到达套接字接受缓冲区 输出操作：等待套接字发送缓存区有足够的空间容纳将要发送的数据 服务器接受连接请求：等待新的用户请求到来 客户端发送连接请求：">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络IO模型">
+<meta property="og:url" content="http://yoursite.com/2019/01/17/网络IO模型/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="网络IO模型IO是计算机体系中重要的一部分。IO有两种操作，同步IO和异步IO。同步IO是指必须等待IO操作完成后控制权才能返回给用户进程。异步IO指的是，无需等待IO操作完成，就将控制权返回给用户进程。 网络中的IO常见如下情况：  输入操作：等待数据到达套接字接受缓冲区 输出操作：等待套接字发送缓存区有足够的空间容纳将要发送的数据 服务器接受连接请求：等待新的用户请求到来 客户端发送连接请求：">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547039428437.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547041474708.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547123108986.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547123933843.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547124238726.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547124446666.png">
+<meta property="og:updated_time" content="2019-01-17T13:28:02.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络IO模型">
+<meta name="twitter:description" content="网络IO模型IO是计算机体系中重要的一部分。IO有两种操作，同步IO和异步IO。同步IO是指必须等待IO操作完成后控制权才能返回给用户进程。异步IO指的是，无需等待IO操作完成，就将控制权返回给用户进程。 网络中的IO常见如下情况：  输入操作：等待数据到达套接字接受缓冲区 输出操作：等待套接字发送缓存区有足够的空间容纳将要发送的数据 服务器接受连接请求：等待新的用户请求到来 客户端发送连接请求：">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/17/网络IO模型/1547039428437.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-网络IO模型" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      网络IO模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/17/网络IO模型/" class="article-date">
+	  <time datetime="2019-01-17T13:25:57.000Z" itemprop="datePublished">一月 17, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网络IO模型"><a href="#网络IO模型" class="headerlink" title="网络IO模型"></a>网络IO模型</h2><p>IO是计算机体系中重要的一部分。IO有两种操作，同步IO和异步IO。同步IO是指必须等待IO操作完成后控制权才能返回给用户进程。异步IO指的是，无需等待IO操作完成，就将控制权返回给用户进程。</p>
+<p>网络中的IO常见如下情况：</p>
+<ol>
+<li>输入操作：等待数据到达套接字接受缓冲区</li>
+<li>输出操作：等待套接字发送缓存区有足够的空间容纳将要发送的数据</li>
+<li>服务器接受连接请求：等待新的用户请求到来</li>
+<li>客户端发送连接请求：等待服务器送回客户SYN对应的ACK</li>
+</ol>
+<a id="more"></a>
+<h3 id="4种IO模型"><a href="#4种IO模型" class="headerlink" title="4种IO模型"></a>4种IO模型</h3><h4 id="1-阻塞IO模型"><a href="#1-阻塞IO模型" class="headerlink" title="1. 阻塞IO模型"></a>1. 阻塞IO模型</h4><p>在Linux中，默认所有的socket都是阻塞的。</p>
+<p><img src="/2019/01/17/网络IO模型/1547039428437.png" alt="阻塞IO模型"></p>
+<p>阻塞和非阻塞的概念描述的是用户线程调用内核IO的操作方式：阻塞是指IO操作彻底完成后才返回到用户空间，非阻塞是指IO调用后立即返回给用户一个状态值。</p>
+<p>当进程调用了<code>recvform</code>这个系统调用后，系统内核开始了IO的第一阶段，准备数据。对于网络IO来说，很多数据在一开始没到达时(还没收到一个完整的TCP包) 系统内核等待数据的到来。而用户进程整个会被阻塞。阻塞IO模型的特点就是在 IO执行的两个阶段（等待数据、拷贝数据）被阻塞。</p>
+<p>大部分socket接口都是阻塞型的。所谓阻塞型是指系统调用不返回结果，让当前线程一直阻塞。这给网络编程带来了一个重要的问题，如果调用send()时，线程处于阻塞状态，无法响应任何网络请求。</p>
+<p>一个简单的改进方案是在服务器端使用多线程。多线程目的是让每个链接都拥有独立的线程。这样一个阻塞的连接不会影响其他连接。传统意义上进程开销远大于线程，所以客户端较多时多线程，单个服务占用资源较多选择安全的多进程。<code>pthread_create()</code>创建新线程，<code>fork()</code> 创建新进程</p>
+<p>在socket设计之初，一个句柄就可以被accept()多次。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> fd, struct sockaddr *addr, <span class="keyword">socklen_t</span> *addrlen)</span></span></span><br></pre></td></tr></table></figure>
+<p>调用<code>accept</code>正是从 请求队里中抽出第一个连接信息，创建一个与<code>fd</code>同类的新socket返回句柄。如果当前没有请求，accept便会阻塞至有新的请求进入。</p>
+<p>上述多线程的服务器模型似乎完美解决了多个客户机应答的需求，但是并不是这样。这主要是因为相应成千上百路的需求对于多进程、多线程都会严重占用系统资源。即使是考虑到线程池和连接池。</p>
+<p>线程池旨在降低创建和销毁线程的频率，维护一定数量的线程，并让空闲的线程重新承担新的执行任务。</p>
+<p>连接池位置连接的缓存池，尽量重用已有的连接，降低创建和关闭连接 的频率。</p>
+<p>这样两种方法广泛应用于大型系统，然而池终有上限，当请求大大超过上限时，池效果并不好。现实中面临上千、上万次的用户请求，多次按成模型会遇到瓶颈。</p>
+<h4 id="2-非阻塞IO模型"><a href="#2-非阻塞IO模型" class="headerlink" title="2. 非阻塞IO模型"></a>2. 非阻塞IO模型</h4><p>Linux下可以设置socket使其为非阻塞状态。</p>
+<p><img src="/2019/01/17/网络IO模型/1547041474708.png" alt="1547041474708"></p>
+<p>如图所示，当用户发出read操作时，如果内核数据还没准备好，它不会block用户进程而是返回一个错误。从用户进程角度讲，read后不需要等待而是得到一个结果。当用户进程判断其为错误时，就知道它还没准备好，这样便可以再次read操作。</p>
+<p>所以非阻塞IO中，用户需要不断询问kernel是否准备好数据。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fcnt1(fd, F_SETFL, O_NONBLOCK);</span><br></pre></td></tr></table></figure>
+<p>在非阻塞状态下<code>recv()</code>被调用后立即返回。</p>
+<p><code>recv()</code>大于0表示数据接收完毕，返回接收字节数。0表示断开；-1表示没完成或系统错误。</p>
+<p>实际操作系统提供了更高效的接口，例如 <code>select()</code> 多路复用</p>
+<h4 id="3-多路IO复用模型"><a href="#3-多路IO复用模型" class="headerlink" title="3. 多路IO复用模型"></a>3. 多路IO复用模型</h4><p>多路IO复用有时也被称为事件驱动IO，它的基本原理是有一个函数（select）不断的轮询所有的（socket），当某个socket数据到达了，就通知用户进程。</p>
+<p><img src="/2019/01/17/网络IO模型/1547123108986.png" alt="1547123108986"></p>
+<p>当用户调用了select，那么整个进程会被阻塞，而同时内核会监视所有的socket，当某一个socket数据准备好了，select就会返回。这个时候用户进程再进行read操作将数据从内核拷贝到用户进程。</p>
+<p>这个模型其实和阻塞IO没有太大的区别，事实上还更冗余，因为需要调用两个系统调用（select、<code>recvfrom</code>）而阻塞IO只需要调用一个 <code>recvfrom</code> 即可。但是select优势在于它可以处理多个连接。多以如果连接数并不高的情况下，<code>select、epoll</code> 不一定比阻塞IO的性能更好。</p>
+<p>多路IO复用中，每一个socket一般都设置为非阻塞，而整个用户进程其实是被阻塞的，只不过进程是被select这个进程阻塞，而不是被socket IO阻塞。</p>
+<p><img src="/2019/01/17/网络IO模型/1547123933843.png" alt="1547123933843"></p>
+<p>这种模型的特征在于每个周期探测一次或一组事件，一个特定的时间会出发某个特定的响应，也被称为“事件驱动模型”。相比其他模型，select() 事件只用单线程执行、占用资源少，不消耗太多CPU资源，同时能为多客户端提供服务。</p>
+<p>但是这个模型有很多问题，首先select() 接口本身需要消耗时间去轮询句柄，很多操作系统提供了更方便的接口 Linux 是 <code>epoll</code>  BSD提供了 <code>kqueue</code> </p>
+<h4 id="4-异步IO模型"><a href="#4-异步IO模型" class="headerlink" title="4. . 异步IO模型"></a>4. . 异步IO模型</h4><p><img src="/2019/01/17/网络IO模型/1547124238726.png" alt="1547124238726"></p>
+<p>当用户发起read操作后，立刻就去其他工作；另一个方面，内核收到一个请求后会立刻返回。然后内核等待数据准备完成，然后拷贝到用户内存中，再向用户进程发送一个信号。</p>
+<p>调用阻塞IO会一直阻塞IO直到操作完成，而非阻塞IO在内核准备数据的情况下就会立刻返回。二者的区别在于同步IO进行IO时会阻塞进程。按照这个定义，阻塞IO、非阻塞IO、多路IO复用都属于同步IO。 </p>
+<p><img src="/2019/01/17/网络IO模型/1547124446666.png" alt="1547124446666"></p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select函数是socket编程中一个重要的函数，可以完成非阻塞工作程序，可以监视文件描述符的变化情况。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> maxfdp, fdp_set *readfds, fd_set *writefds, fd_set *errorfds, struct timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这里涉及到两个结构体 <code>fd_set</code> 和 <code>timeval</code> 这个里<code>fd_set</code>理解为一个集合，存放文件描述符，及文件句柄。当然UNINX下任何设备、管道、FIFO都是文件形式，所以socket 就是一个文件。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/17/TCP-API/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TCP API</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络IO模型"><span class="nav-number">1.</span> <span class="nav-text">网络IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4种IO模型"><span class="nav-number">1.1.</span> <span class="nav-text">4种IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-阻塞IO模型"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 阻塞IO模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-非阻塞IO模型"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 非阻塞IO模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-多路IO复用模型"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 多路IO复用模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-异步IO模型"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. . 异步IO模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">1.2.</span> <span class="nav-text">select</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
