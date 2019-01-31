@@ -140,6 +140,62 @@
 <!-- Table of Contents -->
 
   
+    <article id="post-多线程编程-C" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/31/多线程编程-C/">多线程编程(C++)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/31/多线程编程-C/" class="article-date">
+	  <time datetime="2019-01-31T03:54:56.000Z" itemprop="datePublished">一月 31, 2019</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+
+          
+          <div class="entry-summary">
+          多线程早期计算机只允许一个程序独占资源，一次只能执行一个程序。计算力是一种宝贵的资源。
+这种背景下，多程序并发执行的需求十分迫切，由此产生了进程的概念。进程在多数早期操作系统中是执行工作的基本单元。进程是包含程序和资源的集合，每个程序与其他程序一起参与调度，竞争CPU、内存等系统资源。每次进程切换都存在资源的保存和恢复，这被称为上下文切换。进程的引入解决了多用户支持的问题，但是产生了新的问题：进程频繁切换引起的额外开销严重影响系统性能。进程通信要求复杂的系统级实现。
+例如一个简单的GUI任务，通常一个任务支持界面交互、一个任务支持后台运算。如果每个任务都由一个进程来实现会相当的低效。对每一个进程来说，系统资源看上去都是独占的，比如内存空间。这样演化利用分配给统一个进程实现多个任务的方法。同一个进程内部的线程共享进程的所有资源。共享这些内存空间，比如定义个全局变量，A将其赋值为1，B看到这个变量也是1。线程很方便的支持了进程内部的并发，避免了频繁切换的开销。
+
+        
+          <p class="article-more-link">
+            <a href="/2019/01/31/多线程编程-C/#more">Continue Reading →</a>
+          </p>
+        </div>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-网络IO模型" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -617,75 +673,6 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
 <!-- Table of Contents -->
 
   
-    <article id="post-数据库系统原理" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/23/数据库系统原理/">数据库系统原理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/23/数据库系统原理/" class="article-date">
-	  <time datetime="2018-12-23T07:16:31.000Z" itemprop="datePublished">十二月 23, 2018</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-          <div class="entry-summary">
-          [TOC]
-数据库系统原理事务事务指满足ACID特性的一组操作，可以通过commit 提交，也可以通过rollback回滚
-事务的ACID特性
-原子性（Atomicity）
-事务被视为不可分割的最小单元，事务的所有操作要么全部成功提交，要么全部失败回滚,回归可以使用回滚日志来实现，回滚事务记录着执行的修改操作，回滚时反向执行即可
-
-一致性（Consistency）
-数据在事务的执行前后都保持一致性状态，在一致性状态下，所有事务对一个数据的读取结构都是相同的
-
-隔离性（Isolation）
-一个事务所做的修改在最终提交以前对其他事务不可见
-
-持久性（Durability）
-一旦事务提交，则其所做修改会永远保存到数据库中，即使系统崩溃事务执行结果也不能丢失，使用重做日志来保障持久性
-
-
-
-        
-          <p class="article-more-link">
-            <a href="/2018/12/23/数据库系统原理/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -753,6 +740,18 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2019/01/31/多线程编程-C/">多线程编程(C++)</a></h6>
+              <span>一月 31, 2019</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2019/01/17/网络IO模型/">网络IO模型</a></h6>
               <span>一月 17, 2019</span>
             </div>
@@ -807,18 +806,6 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/12/23/C-常用编程技术/">C++常用编程技术</a></h6>
-              <span>十二月 23, 2018</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -831,7 +818,7 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统/">操作系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试基础/">面试基础</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/操作系统/">操作系统</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试基础/">面试基础</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -841,7 +828,7 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 12.5px;">C++</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/STL/" style="font-size: 10px;">STL</a> <a href="/tags/other/" style="font-size: 12.5px;">other</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/操作系统/" style="font-size: 12.5px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/计算机网络/" style="font-size: 20px;">计算机网络</a> <a href="/tags/面试基础/" style="font-size: 10px;">面试基础</a>
+      <a href="/tags/C/" style="font-size: 12.5px;">C++</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/STL/" style="font-size: 10px;">STL</a> <a href="/tags/other/" style="font-size: 12.5px;">other</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/计算机网络/" style="font-size: 20px;">计算机网络</a> <a href="/tags/面试基础/" style="font-size: 10px;">面试基础</a>
     </div>
   </div>
 
@@ -851,7 +838,7 @@ C++允许同一函数名定义多个函数，但这些函数必须参数个数�
     <h3 class="widget-title">Archives</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">9</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">9</span></li></ul>
     </div>
   </div>
 

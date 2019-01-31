@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>多线程编程(C++) | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="操作系统">
+  
+  
+  
+  
+  <meta name="description" content="多线程早期计算机只允许一个程序独占资源，一次只能执行一个程序。计算力是一种宝贵的资源。 这种背景下，多程序并发执行的需求十分迫切，由此产生了进程的概念。进程在多数早期操作系统中是执行工作的基本单元。进程是包含程序和资源的集合，每个程序与其他程序一起参与调度，竞争CPU、内存等系统资源。每次进程切换都存在资源的保存和恢复，这被称为上下文切换。进程的引入解决了多用户支持的问题，但是产生了新的问题：进程">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程编程(C++)">
+<meta property="og:url" content="http://yoursite.com/2019/01/31/多线程编程-C/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="多线程早期计算机只允许一个程序独占资源，一次只能执行一个程序。计算力是一种宝贵的资源。 这种背景下，多程序并发执行的需求十分迫切，由此产生了进程的概念。进程在多数早期操作系统中是执行工作的基本单元。进程是包含程序和资源的集合，每个程序与其他程序一起参与调度，竞争CPU、内存等系统资源。每次进程切换都存在资源的保存和恢复，这被称为上下文切换。进程的引入解决了多用户支持的问题，但是产生了新的问题：进程">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2019-01-31T03:56:40.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程编程(C++)">
+<meta name="twitter:description" content="多线程早期计算机只允许一个程序独占资源，一次只能执行一个程序。计算力是一种宝贵的资源。 这种背景下，多程序并发执行的需求十分迫切，由此产生了进程的概念。进程在多数早期操作系统中是执行工作的基本单元。进程是包含程序和资源的集合，每个程序与其他程序一起参与调度，竞争CPU、内存等系统资源。每次进程切换都存在资源的保存和恢复，这被称为上下文切换。进程的引入解决了多用户支持的问题，但是产生了新的问题：进程">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-多线程编程-C" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      多线程编程(C++)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/31/多线程编程-C/" class="article-date">
+	  <time datetime="2019-01-31T03:54:56.000Z" itemprop="datePublished">一月 31, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>早期计算机只允许一个程序独占资源，一次只能执行一个程序。计算力是一种宝贵的资源。</p>
+<p>这种背景下，多程序并发执行的需求十分迫切，由此产生了进程的概念。进程在多数早期操作系统中是执行工作的基本单元。进程是包含程序和资源的集合，每个程序与其他程序一起参与调度，竞争CPU、内存等系统资源。每次进程切换都存在资源的保存和恢复，这被称为上下文切换。进程的引入解决了多用户支持的问题，但是产生了新的问题：进程频繁切换引起的额外开销严重影响系统性能。进程通信要求复杂的系统级实现。</p>
+<p>例如一个简单的GUI任务，通常一个任务支持界面交互、一个任务支持后台运算。如果每个任务都由一个进程来实现会相当的低效。对每一个进程来说，系统资源看上去都是独占的，比如内存空间。这样演化利用分配给统一个进程实现多个任务的方法。同一个进程内部的线程共享进程的所有资源。共享这些内存空间，比如定义个全局变量，A将其赋值为1，B看到这个变量也是1。线程很方便的支持了进程内部的并发，避免了频繁切换的开销。</p>
+<a id="more"></a>
+<h3 id="多线程-1"><a href="#多线程-1" class="headerlink" title="多线程"></a>多线程</h3><p>一个程序的运行中，只有一个控制权存在。但函数被调用时，该函数获得控制权成为激活函数，各个函数像是连在一条线上，计算机流水线执行操作，这样叫做单线程序。</p>
+<p>多线程就是允许一个进程存在多个控制权，同时有多一个函数处于激活状态。单线程中函数会被压栈，只有栈顶函数被调用，而多线程则会在内存中存在多个栈。</p>
+<h3 id="多线程的创建与结束"><a href="#多线程的创建与结束" class="headerlink" title="多线程的创建与结束"></a>多线程的创建与结束</h3><p>线程的创建与结束</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span> *thread, <span class="keyword">const</span> <span class="keyword">pthread_attr_t</span> *attr, <span class="keyword">void</span> *(*start_routine) (<span class="keyword">void</span> *), <span class="keyword">void</span> *arg)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><code>pthread_t</code> 实际上就是 <code>unsigned long int</code> . 第一个参数指向线程标识符，第二个参数设置线程属性，第三个参数是线程运行函数的起始地址， 最后一个参数是运行函数的参数。</p>
+<p>若创建成功则返回0， 否则返回错误号。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">arg_type</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">100</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">say_hello</span><span class="params">(<span class="keyword">void</span>* args)</span></span>&#123;</span><br><span class="line">    arg_type arg_temp = *(arg_type*)args;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello from thread, info: %d, %s\n pthread=%lu\n"</span>,arg_temp.a, arg_temp.b, pthread_self());</span><br><span class="line">    pthread_exit((<span class="keyword">void</span>*)<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tid;</span><br><span class="line">    arg_type arg_temp;</span><br><span class="line">    arg_temp.a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">char</span> temp[<span class="number">100</span>] = <span class="string">"To be number one"</span>;</span><br><span class="line">    <span class="built_in">strncpy</span>(arg_temp.b, temp, <span class="keyword">sizeof</span>(temp));</span><br><span class="line">    <span class="keyword">int</span> iRet = pthread_create(&amp;tid, <span class="literal">NULL</span>, say_hello, &amp;arg_temp);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"pthread_create error"</span>);</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Thread id in process: %lu\n"</span>, tid);</span><br><span class="line">    <span class="keyword">void</span> *retval;</span><br><span class="line">    iRet = pthread_join(tid, &amp;retval);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"pthread_join error"</span>);</span><br><span class="line">	<span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"retavl\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="线程的属性"><a href="#线程的属性" class="headerlink" title="线程的属性"></a>线程的属性</h3><p>线程有一组属性可以在线程被创建时指定，该属性封装在一个对象中，对象的类型为pthread_attr_t</p>
+<p>属性值不能直接设置，必须使用相关的函数操作，这个函数必须在 <code>pthread_create</code> 之前调用并通过<code>pthread_attr_destory</code>释放，主要属性包括：作用域、栈尺寸、栈地址、优先级、分离状态、调度策略和参数。</p>
+<p>POSIX.1 之定义一系列属性，主要如下表</p>
+<ol>
+<li>分离状态：若线程终止，线程处于分离状态，系统不保留线程的终止状态；当不需要线程的终止状态时，可以分类线程。</li>
+<li>栈地址：设置和获取线程的栈地址</li>
+<li>栈大小：系统中有很多线程时，可能需要减少每个线程栈的默认大小，防止进程的地址空间不够用。</li>
+<li>栈保护区大小：在线程顶留出一段空间，防止栈溢出。</li>
+<li>线程优先级，新线程的默认优先级是0</li>
+<li>继承父进程的优先级：新线程不继承父进程的优先级</li>
+<li>调度策略</li>
+<li>争用范围</li>
+<li>线程并行级别，POSIX 标准定义了3中调度策略：先入先出策略（FIFO）、循环策略（RR）和自定义策略（OTHER）。FIFO是基于队列的调度程序，对于每个优先级使用不同的队列。</li>
+</ol>
+<p>FIFO ：如果继承具有有效的用户ID为0，则争用范围为系统的先入先出属于实时调度类，如果这些线程未被更高级的线程抢占，则会继续处理该线程，直到线程放弃或阻塞为止。</p>
+<h3 id="多线程同步"><a href="#多线程同步" class="headerlink" title="多线程同步"></a>多线程同步</h3><p>多线程相当于一个并发系统，一般通知执行多个任务，如果多个任务可以共享资源，就需要解决同步问题。</p>
+<p>线程火车票</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> total_ticket_num = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sell_ticket</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> id = *(<span class="keyword">int</span>*)arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">20</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(total_ticket_num &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            sleep(<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"from id: %d, sell the tikect %dth ticket\n"</span>, id, <span class="number">20</span>-total_ticket_num+<span class="number">1</span>);</span><br><span class="line">            total_ticket_num--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iRet;</span><br><span class="line">    <span class="keyword">pthread_t</span> tids[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> iRet = pthread_create(&amp;tids[i], <span class="literal">NULL</span>, &amp;sell_ticket, &amp;i);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"pthread_create error, iRet=%d\n"</span>,iRet); <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">void</span> *retval;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">        iRet = pthread_join(tids[i], &amp;retval);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"pthread_join error, iRet=%d\n"</span>,iRet); <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"retval=%ld\n"</span>, (<span class="keyword">long</span>)retval);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，如果只有一个线程执行上面的程序，没有问题。但是如果多个线程都执行就会出现问题。其根本原因在于各个线程都可以对 <code>total_ticket_num</code> 进行写入。</p>
+<p>这里if会判断是否有剩余票，如果有则卖。但是不同的线程之间会存在时间窗口，其他线程可能在这个窗口进行卖票操作，导致卖票的条件不成立，但是线程已经进行了判断，所以无法知道 <code>total_ticket_num</code> 发生了变化。</p>
+<p>在并发的情况下，指令的先后顺序由内核决定。同一个线程内部指令按照先后顺序执行，但不同的线程很难说哪一个先执行。如果运行的结果依赖于不同线程执行的先后顺序，就会造成竞争条件。这样条件下计算机的计算结果未知。所以应该避免竞争条件的形成。</p>
+<p>对于多线程程序来说，同步是指在某一定时间内只允许一个线程访问资源。可以通过互斥锁、条件变量、读写锁和信号量来同步资源。</p>
+<h3 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h3><p>互斥锁 是一个特殊的变量，他有lock和unlock两个状态。互斥锁一般被设置为全局变量。打开的互斥锁可以由某个线程获得，一旦获得互斥锁会被锁上，只有该线程有权打开。</p>
+<p>火车票系统的互斥系统可以被这样表示</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mutex_x = PTHREAD_MUTEX_INITIALZER;</span><br><span class="line"><span class="keyword">int</span> total_ticket_num = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sell_ticket</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> id = *(<span class="keyword">int</span>*)arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">20</span>; i++)&#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex_x);</span><br><span class="line">        <span class="keyword">if</span>(total_ticket_num &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            sleep(<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"from id: %d, sell the tikect %dth ticket\n"</span>, id, <span class="number">20</span>-total_ticket_num+<span class="number">1</span>);</span><br><span class="line">            total_ticket_num--;</span><br><span class="line">        &#125;</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex_x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iRet;</span><br><span class="line">    <span class="keyword">pthread_t</span> tids[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> iRet = pthread_create(&amp;tids[i], <span class="literal">NULL</span>, &amp;sell_ticket, &amp;i);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"pthread_create error, iRet=%d\n"</span>,iRet); <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">void</span> *retval;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">        iRet = pthread_join(tids[i], &amp;retval);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"pthread_join error, iRet=%d\n"</span>,iRet); <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"retval=%ld\n"</span>, (<span class="keyword">long</span>)retval);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个执行<code>pthread_mutex_lock()</code>的线程会首先获得<code>mutex_x</code> ，其他线程必须等待，直到第一个线程释放后，其他线程才可以获得锁并继续执行。</p>
+<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>互斥是线程程序必备的工具，但是并非万能。例如，如果线程等待共享数据某个条件出现，它可能重复对互斥对象锁定和解锁，每次都会检查共享数据结构，这样查询效率很低。</p>
+<p>每次检查之间，可以使线程短暂的进入睡眠，但是这样无法立即响应。真正需要的一种方法是：当线程满足某些条件时使得线程进入睡眠状态，一旦条件满足就唤醒睡眠的线程。这正是条件变量的任务。</p>
+<p>条件变量通过允许线程阻塞和等待另一个线程信号方法弥补互斥锁的不足，他常常和互斥锁一起使用。使用时条件变量被用于阻塞一个线程，一旦某个线程改变了条件变量，它将通知相应的条件变量唤醒一个或多个阻塞的线程，这些线程会重新测试是否满足条件。</p>
+<p>条件变量例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pthread_cond_t</span> qready = PTHREAD_COND_INITIALIZER;</span><br><span class="line"><span class="keyword">pthread_mutex_t</span> qlock = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">func1</span><span class="params">(<span class="keyword">void</span>* args)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"func1 start"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    pthread_mutex_lock(&amp;qlock);</span><br><span class="line">    <span class="keyword">while</span>(x&lt;y)&#123;</span><br><span class="line">        pthread_cond_wait(&amp;qready, &amp;qlock);</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_mutex_unlock(&amp;qlock);</span><br><span class="line">    sleep(<span class="number">3</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"func1 end"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">func2</span><span class="params">(<span class="keyword">void</span>* args)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"func2 start"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    pthread_mutex_lock(&amp;qlock);</span><br><span class="line">    x = <span class="number">20</span>;</span><br><span class="line">    y = <span class="number">10</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"has change x and y"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    pthread_mutex_unlock(&amp;qlock);</span><br><span class="line">    <span class="keyword">if</span>(x&gt;y)&#123;</span><br><span class="line">        pthread_cond_signal(&amp;qready);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"func2 end"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tid1, tid2;</span><br><span class="line">    <span class="keyword">int</span> iRet;</span><br><span class="line">    iRet = pthread_create(&amp;tid1, <span class="literal">NULL</span>, func1, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread 1 create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">2</span>);</span><br><span class="line">    iRet = pthread_create(&amp;tid2, <span class="literal">NULL</span>, func2, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread 1 create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>某些程序存在读者写者问题，对某些资源的访问可能有两种情况，一种是排他性的，必须独占，这被称为写操作；一种是可以共享的，被称为读操作。</p>
+<ol>
+<li>读写锁比互斥锁具有更高的适应性与并行性，可以有多个线程同时占用读写锁，但是只有一个线程占用写模式的读写锁。</li>
+</ol>
+<ul>
+<li>当读写锁是 写加锁 状态时，其他试图加锁的程序都会被阻塞</li>
+<li>当读写锁在 读加锁状态是，所有读模式加速线程可以被授权，但是写模式加锁会被阻塞</li>
+<li>读写锁在 读加锁 模式时，如果有试图写加锁的请求，后续的读模式会被阻塞， 以避免长期的读模式占用，而  等待写模式的请求则长期阻塞。</li>
+</ul>
+<p>读写锁最适用于对数据 读操作多于写操作的场合，应为读模式可以共享，而写模式只能由某个线程独占，因而读写锁也叫 共享-独占锁。</p>
+<p>处理读者、写者问题两种常见的步骤是强读者同步和强写者同步。强读者同步给于读更高的优先权，强写着同步给与写更高的优先权。航班订票–强写者同步  图书馆查询–强读者同步</p>
+<p>读写者例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> THREADNUM 5</span></span><br><span class="line"><span class="keyword">pthread_rwlock_t</span> rwlock;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">readers</span><span class="params">(<span class="keyword">void</span> *args)</span></span>&#123;</span><br><span class="line">    pthread_rwlock_rdlock(&amp;rwlock);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"reader %ld got the lock\n"</span>, (<span class="keyword">long</span>)args);</span><br><span class="line">    pthread_rwlock_unlock(&amp;rwlock);</span><br><span class="line">    pthread_exit((<span class="keyword">void</span>*)<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">writers</span><span class="params">(<span class="keyword">void</span> *args)</span></span>&#123;</span><br><span class="line">    pthread_rwlock_wrlock(&amp;rwlock);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"reader %ld got the lock\n"</span>, (<span class="keyword">long</span>)args);</span><br><span class="line">    pthread_rwlock_unlock(&amp;rwlock);</span><br><span class="line">    pthread_exit((<span class="keyword">void</span>*)<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iRet, i;</span><br><span class="line">    <span class="keyword">pthread_t</span> writer_id, reader_id;</span><br><span class="line">    <span class="keyword">pthread_attr_t</span> attr;</span><br><span class="line">    <span class="keyword">int</span> nreadercount = <span class="number">1</span>, nwritercount = <span class="number">1</span>;</span><br><span class="line">    iRet = pthread_rwlock_init(&amp;rwlock, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"ERROR"</span>);</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_attr_init(&amp;attr);</span><br><span class="line">    pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;THREADNUM; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i%<span class="number">3</span>)&#123;</span><br><span class="line">            pthread_create(&amp;reader_id, &amp;attr, readers, (<span class="keyword">void</span>*)nreadercount);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"create reader %d\n"</span>, nreadercount++);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            pthread_create(&amp;reader_id, &amp;attr, writers, (<span class="keyword">void</span>*)nwritercount);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"create writer %d\n"</span>, nwritercount++);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>线程还可以通过信号量通信，信号量和互斥锁的区别: 互斥锁只允许 一个线程进入临界区，而信号量允许多个线程进入临界区，原理同互斥锁</p>
+<h3 id="多线程重入"><a href="#多线程重入" class="headerlink" title="多线程重入"></a>多线程重入</h3><p>前面介绍的各种同步方式，其实就是为了解决“函数不可重入”问题。所谓“可重入”函数是指多于一个任务并发使用而不必担心错误的函数。而不可重入函数只能由一个函数独占，除非确保函数互斥。</p>
+<ol>
+<li>可重入函数有以下特点</li>
+</ol>
+<ul>
+<li>不为连续调用持有静态数据</li>
+<li>不返回指向静态的指针</li>
+<li>所有的户数都由函数的调用者提供</li>
+<li>使用本地数据，或者通过制作全局数据的本地副本来保护全局数据</li>
+<li>如果必须访问全局变量，利用互斥锁、信号量来保护全局变量</li>
+<li>绝不调用任何不可重用函数</li>
+</ul>
+<ol>
+<li>不可重用函数有以下特点</li>
+</ol>
+<ul>
+<li>函数中存在静态变量，无论是全局还是局部静态变量</li>
+<li>函数返回静态变量、</li>
+<li>函数中掉用了不可重用函数</li>
+<li>函数体使用了静态数据结构</li>
+<li>函数体掉用了malloc或free函数</li>
+<li>函数体内掉用了其他标准的IO函数</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/17/网络IO模型/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">网络IO模型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number">1.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程-1"><span class="nav-number">1.1.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程的创建与结束"><span class="nav-number">1.2.</span> <span class="nav-text">多线程的创建与结束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的属性"><span class="nav-number">1.3.</span> <span class="nav-text">线程的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程同步"><span class="nav-number">1.4.</span> <span class="nav-text">多线程同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步锁"><span class="nav-number">1.5.</span> <span class="nav-text">同步锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件变量"><span class="nav-number">1.6.</span> <span class="nav-text">条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">1.7.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">1.8.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程重入"><span class="nav-number">1.9.</span> <span class="nav-text">多线程重入</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
