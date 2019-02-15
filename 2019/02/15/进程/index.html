@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>进程 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="操作系统">
+  
+  
+  
+  
+  <meta name="description" content="进程程序与进程进程结构一般由三部分组成：代码段、数据段和堆栈段。代码段用于存放程序代码数据，数个进程可以共享一个代码段。而数据段存放程序的全局变量、常量和静态变量。堆栈段中栈用于函数调用，它存放着函数参数、函数内部定义的局部变量。对斩断还包含了进程控制块（PCB）。PCB处于进程核心堆栈底部，不需要额外分配空间。PCB是进程存在的唯一标识。系统通过PCB的存在而感知进程的存在。 程序如何转换为进程">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程">
+<meta property="og:url" content="http://yoursite.com/2019/02/15/进程/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="进程程序与进程进程结构一般由三部分组成：代码段、数据段和堆栈段。代码段用于存放程序代码数据，数个进程可以共享一个代码段。而数据段存放程序的全局变量、常量和静态变量。堆栈段中栈用于函数调用，它存放着函数参数、函数内部定义的局部变量。对斩断还包含了进程控制块（PCB）。PCB处于进程核心堆栈底部，不需要额外分配空间。PCB是进程存在的唯一标识。系统通过PCB的存在而感知进程的存在。 程序如何转换为进程">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2019-02-15T13:50:41.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进程">
+<meta name="twitter:description" content="进程程序与进程进程结构一般由三部分组成：代码段、数据段和堆栈段。代码段用于存放程序代码数据，数个进程可以共享一个代码段。而数据段存放程序的全局变量、常量和静态变量。堆栈段中栈用于函数调用，它存放着函数参数、函数内部定义的局部变量。对斩断还包含了进程控制块（PCB）。PCB处于进程核心堆栈底部，不需要额外分配空间。PCB是进程存在的唯一标识。系统通过PCB的存在而感知进程的存在。 程序如何转换为进程">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-进程" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      进程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/15/进程/" class="article-date">
+	  <time datetime="2019-02-15T13:48:56.000Z" itemprop="datePublished">二月 15, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="程序与进程"><a href="#程序与进程" class="headerlink" title="程序与进程"></a>程序与进程</h3><p>进程结构一般由三部分组成：代码段、数据段和堆栈段。代码段用于存放程序代码数据，数个进程可以共享一个代码段。而数据段存放程序的全局变量、常量和静态变量。堆栈段中栈用于函数调用，它存放着函数参数、函数内部定义的局部变量。对斩断还包含了进程控制块（PCB）。PCB处于进程核心堆栈底部，不需要额外分配空间。PCB是进程存在的唯一标识。系统通过PCB的存在而感知进程的存在。</p>
+<p>程序如何转换为进程？ 一般情况下linux下C++的生成分为四个阶段：预编译、编译、汇编、连接。编译器g++经过预编译、编译、汇编3个步骤将源程序将文件转换为目标文件。最后形成可执行程序。当程序执行时，操作系统将可执行程序复制到内存中</p>
+<p>1 内核将程序将程序读入内存、为程序分配内存空间</p>
+<p>2 内核为进程分配进程标识符（PID）及其他资源</p>
+<p>3 内很为进程保存 PID 及其他信息，把进程放入运行队列中等待执行，程序转化为进城后就可以被调度执行。</p>
+<a id="more"></a>
+<h3 id="进程的创建与结束"><a href="#进程的创建与结束" class="headerlink" title="进程的创建与结束"></a>进程的创建与结束</h3><p>进程创建有两种方式：一种由操作系统创建，一种由父进程创建</p>
+<p>系统启动时， 操作系统会创建一些进程，他们承担管理和分配系统资源的任务，这些进程被称为系统进程。系统允许一个进程创建新进程（子进程），子进程还可以创建新的进程，形成树型结构。整个linux的所有进程也是一个树形结构。树根由系统自动构造，即内核态下的0号进程，它是所有进程的祖先。0号进程创建1号进程，负责执行内核部分的初始化及系统配置，并创建告诉缓存和虚拟储存管理的内核线程。随后1号进程调用 execve() 运行可执行程序 init , 并演化成用户态的1号进程 它按照init/initab 的要求完成启动工作，创建若干终端注册进程getty() 用于用户的登录。 </p>
+<h4 id="进程的创建-–-fork"><a href="#进程的创建-–-fork" class="headerlink" title="进程的创建 – fork"></a>进程的创建 – fork</h4><p>linux系统允许任何一个用户创建子进程，创建成功后，子进程在系统中并独立于父进程。该子进程接受系统调度，与父进程有相同的权利。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@include &lt;unistd.h&gt;</span><br><span class="line"><span class="keyword">pid_t</span> fork(<span class="keyword">void</span>);</span><br></pre></td></tr></table></figure>
+<p>父进程和子进程：除了0号进程，linux系统中其他任何一个进程都是其他进程创建的。而相对的 ，fork 函数的调用方是父进程， 而创建的新进程是子进程。</p>
+<p>fork 函数不需要参数，返回值是一个进程标识符</p>
+<p>1 对于父进程，fork函数返回创建子进程ID</p>
+<p>2 子进程 fork 函数返回0</p>
+<p>3 创建出错的话 fork 函数返回 -1</p>
+<p>fork函数创建一个新的进程，并从内核中为其分配一个可用的进程标识符PID，之后为其分配进程空间，并将父进程空间的内容中复制到子进程空间， 包括数据段和堆栈段，和父进程共享代码段。这时候系统中多了一个进程父进程和子进程都接受系统的调度，fork函数返回两次（分别在父进程和子进程中返回）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">pid_t</span> pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span>(pid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        perror(<span class="string">"fail to fork"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pid ==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Subprocess, PID: %u"</span>, getpid());</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Parentprocess, PID: %u"</span>, getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子进程和父进程共享数据段和堆栈段中的内容。例子略</p>
+<p>事实上，子进程完全复制了父进程的地址空间，包括堆栈段和数据段。但是，子进程并未复制代码段，而是公用代码段。</p>
+<h4 id="进程的结束-–-exit"><a href="#进程的结束-–-exit" class="headerlink" title="进程的结束 – exit"></a>进程的结束 – exit</h4><h4 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h4><p>在linux中 正常情况下子进程是通过父进程创建的， 子进程和父进程的运行是一个异步的过程。父进程无法预料子进程在何时结束，于是就产生了孤儿进程和僵尸进程。</p>
+<p>孤儿进程，是指一个父进程退出后，它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程将被init进程（进程号为1） 到进程所收养，并由init进程完成状态收集工作。</p>
+<p>僵尸进程，是指一个进程使用fork创建子进程，如果子进程退出，而父进程没有用wait或waitpid调用子进程的状态信息，子进程的进程描述符仍在系统中，这种进程被称为僵尸进程。</p>
+<p>简单理解为，孤儿是父进程已退出而子进程未退出；而僵尸进程是父进程未退出而子进程先退出。</p>
+<p>为了避免僵尸进程，需要父进程通过wait函数来回收子进程 </p>
+<h4 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h4><p>linux系统中在系统引导时会开启很多服务，这些服务就叫做守护进程。为了增加灵活性，root可以选择开启的模式，这些模式叫做运行级别。守护进程是脱离于终端在后台运行的进程，守护进程脱离终端是为了避免进程在执行过程中在终端上显示并且不会被终端的信息打断。</p>
+<p>守护进程是一个生存期较长的进程，通常独立于控制终端并且周期性的执行某种任务或等待处理某些发生的事件。说话进程常常在系统引导装入时启动，linux系统有很多的守护进程，大多数服务都是通过守护进程实现的。如作业规划进程、打印进程。</p>
+<p>在 linux 中每一个与用户交流的界面称为终端，每一个终端开始的进程都会依附于该终端，这个终端就被称为 进程的控制终端，当控制终端被关闭时，相应的进程都会被自动关闭。但是守护进程可以突破这种限制，它从被执行时开始运转，整个系统关闭时才推出。如果想让某个进程不因为用户或终端等变化受到影响，那么就需把一个进程变成一个守护进程。</p>
+<p>创建一个守护进程的步骤如下所示：</p>
+<p>1 创建子进程，父进程退出。</p>
+<p>这是编写守护进程的第一步。由于守护进程脱离终端控制，因此在第一步完成后就会在终端里造成程序已经运行完毕的假象。之后所有的工作都在子进程完成，而与用户终端脱钩。</p>
+<p>2 子进程中创建会话</p>
+<p>这个步骤是创建守护进程最重要的一步，虽然他的实现十分简单，但是他的意义重大。这里使用的系统函数setid， 这里有两个概念：进程组和会话期</p>
+<p>1) 进程组： 一个或多个进程的集合。进程组由进程组ID来唯一标识，除了进程号以外，进程组ID也是一个进程的必备属性，每个进程组都有一个组长进程，组长进程号等于进程组ID，而且进程组ID不会因为组成进程的退出而受到影响。</p>
+<p>2) 会话周期： 会话期是一个或多个进程组的集合。通常一个会话开始于用户登录，终止于用户退出，再次期间运行的所有进程都输入这个会话期。</p>
+<p>setid 函数用于创建一个新的会话，并担任该会话组的组长，调用 setid 有三个作用： 1 让进程摆脱原会话的控制 2 让进程摆脱原进程组的控制 3 让进程摆脱原控制终端的控制。</p>
+<p>那么 创建守护进程为什么需要setid函数？ 这是由于创建守护进程的第一步掉用了fork函数来创建子进程，再将父进程退出。由于调用fork函数时子进程全盘拷贝了父进程的会话期、进程组、控制终端等，虽然父进程退出了，但是会话期、进程组、控制终端等还没有改变，所以还不是真正意义上的独立。</p>
+<p>3) 改变当前目录为根目录</p>
+<p>这一步骤也是必要的步骤，使用 fork 创建的子进程集成了父进程的工作目录，由于进程的运行过程中当前的目录是不能卸载的，这对于以后的使用造成诸多麻烦。通常的做法是将 “/” 变为守护进程的当前工作目录，这样就可以避免上述问题。</p>
+<p>4) 重设文件权限掩码</p>
+<p>文件权限掩码是指屏蔽掉文件权限中的对应位。</p>
+<p>5) 关闭文件描述符</p>
+<p>同文件权限码一样， 用fork函数创建的子进程会从父进程哪里继承一些已经打开的文件，这些文件节能永远不会被守护进程读写，但是他们一样消耗系统资源。所以需要关闭来自继承的文件描述符。 </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXFILE 65535</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">pid_t</span> pc;</span><br><span class="line">    <span class="keyword">int</span> i, fd, len;</span><br><span class="line">    <span class="keyword">char</span>* buf = <span class="string">"this is a Dameon\n"</span>;</span><br><span class="line">    len = <span class="built_in">strlen</span>(buf);</span><br><span class="line">    pc = fork();</span><br><span class="line">    <span class="keyword">if</span>(pc&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error fock\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pc&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    setsid();</span><br><span class="line">    chdir(<span class="string">"/"</span>);</span><br><span class="line">    umask(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;MAXFILE; i++)&#123;</span><br><span class="line">        close(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        if(fd = open('/temp/demeon.log',O_CREAT|O_WRONLY|O_APPEND,0600))&lt;0)&#123;</span><br><span class="line">            perror(<span class="string">"open"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        write(fd, buf, len+<span class="number">1</span>);</span><br><span class="line">        close(fd);</span><br><span class="line">        sleep(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/31/多线程编程-C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">多线程编程(C++)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序与进程"><span class="nav-number">1.1.</span> <span class="nav-text">程序与进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的创建与结束"><span class="nav-number">1.2.</span> <span class="nav-text">进程的创建与结束</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的创建-–-fork"><span class="nav-number">1.2.1.</span> <span class="nav-text">进程的创建 – fork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的结束-–-exit"><span class="nav-number">1.2.2.</span> <span class="nav-text">进程的结束 – exit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#僵尸进程"><span class="nav-number">1.2.3.</span> <span class="nav-text">僵尸进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#守护进程"><span class="nav-number">1.2.4.</span> <span class="nav-text">守护进程</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
