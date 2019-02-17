@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>HTTP复习 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="计算机网络">
+  
+  
+  
+  
+  <meta name="description" content="HTTP 复习协议是计算机通信网络中两台计算机之间进行通信所必须共同遵守的规定或规则。HTTP协议是一种详细规定了浏览器和万维网服务器之间相互通信的规则，通过因特网传送万维网文档和数据的协议。HTTP协议可以使浏览器更加高效的运行，使网络的传输效率更高。它不仅保证计算机快速正确的传输超文本文档，还确定哪一部分先显示。 HTTP由于其灵活简单快速的特点，应用非常广泛。浏览器网页是HTTP主要的应用，">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP复习">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/HTTP复习/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="HTTP 复习协议是计算机通信网络中两台计算机之间进行通信所必须共同遵守的规定或规则。HTTP协议是一种详细规定了浏览器和万维网服务器之间相互通信的规则，通过因特网传送万维网文档和数据的协议。HTTP协议可以使浏览器更加高效的运行，使网络的传输效率更高。它不仅保证计算机快速正确的传输超文本文档，还确定哪一部分先显示。 HTTP由于其灵活简单快速的特点，应用非常广泛。浏览器网页是HTTP主要的应用，">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/HTTP复习/1550403200729.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/17/HTTP复习/1550404398950.png">
+<meta property="og:updated_time" content="2019-02-17T12:01:48.014Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP复习">
+<meta name="twitter:description" content="HTTP 复习协议是计算机通信网络中两台计算机之间进行通信所必须共同遵守的规定或规则。HTTP协议是一种详细规定了浏览器和万维网服务器之间相互通信的规则，通过因特网传送万维网文档和数据的协议。HTTP协议可以使浏览器更加高效的运行，使网络的传输效率更高。它不仅保证计算机快速正确的传输超文本文档，还确定哪一部分先显示。 HTTP由于其灵活简单快速的特点，应用非常广泛。浏览器网页是HTTP主要的应用，">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/17/HTTP复习/1550403200729.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-HTTP复习" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      HTTP复习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/17/HTTP复习/" class="article-date">
+	  <time datetime="2019-02-17T11:59:06.000Z" itemprop="datePublished">二月 17, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="HTTP-复习"><a href="#HTTP-复习" class="headerlink" title="HTTP 复习"></a>HTTP 复习</h2><p>协议是计算机通信网络中两台计算机之间进行通信所必须共同遵守的规定或规则。HTTP协议是一种详细规定了浏览器和万维网服务器之间相互通信的规则，通过因特网传送万维网文档和数据的协议。HTTP协议可以使浏览器更加高效的运行，使网络的传输效率更高。它不仅保证计算机快速正确的传输超文本文档，还确定哪一部分先显示。</p>
+<p>HTTP由于其灵活简单快速的特点，应用非常广泛。浏览器网页是HTTP主要的应用，但其不只是用于网页浏览。只要通信的双方都使用他就可以通信。比如QQ软件就用到了HTTP协议。</p>
+<h3 id="HTTP工作流程"><a href="#HTTP工作流程" class="headerlink" title="HTTP工作流程"></a>HTTP工作流程</h3><p>在网路的七层模型中，HTTP在应用层也就是传输层以上，其基于TCP协议。</p>
+<p>HTTP的默认端口号为80， 而HTTPS的默认端口号是443</p>
+<p>HTTP是基于传输层的TCP协议，而TCP是一个端到端面向连接的协议。所谓的端到端可以理解为进程到进程的通信，所以HTTP在开始传输之前，首先要建立TCP连接，而TCP连接的过程需要三次握手。在TCP的三次握手后，建立了TCP连接。此时HTTP就可以进行传输了。一个HTTP操作称为一个事务，可以分为以下几步：</p>
+<ol>
+<li>首先客户机与服务器需要建立连接。只要单机某个超级链接，HTTP工作即开始</li>
+<li>建立连接后，客户机发送一个请求给服务器，请求的格式为：同一资源标识符（URL），协议版本号，后面是MIME信息，包括（请求修饰符、客户机信息和可能的内容）</li>
+<li>服务器接到请求后，给与一个相应的响应信息，其格式为一个状态行、包括信息的协议版本号、一个成功或错误的状态码、后面是MIME信息（服务器信息、实体信息、可能的内容）</li>
+<li>客户端接受服务器返回的信息通过浏览器返回在用户显示屏上，然后客户机与服务器断开连接。</li>
+</ol>
+<p>如果上述几步中某一步出现错误，那么产生的错误信息返回客户端，由显示屏输出。HTTP协议永远都是客户端发起请求，服务器响应。</p>
+<h3 id="HTTP-协议结构"><a href="#HTTP-协议结构" class="headerlink" title="HTTP 协议结构"></a>HTTP 协议结构</h3><p>HTTP 协议无论是请求报文还是回应报文，都包含以下四个部分。</p>
+<ol>
+<li>报文头： GET <a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a> HTTP/1.1</li>
+<li>0个或多个请求头 Accept-Language: en</li>
+<li>空行</li>
+<li>可选的消息体</li>
+</ol>
+<p>HTTP协议是基于行的协议，每一行以\r\n 为分隔符。报文头通常表明报文的类型，且报文头只占一行；请求头附带一些特殊信息，每一个请求头占一行 name:value </p>
+<h4 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h4><p>HTTP/1.1 协议中定了 9 种方法来表明Request-URL 指定资源的不同的操作方式</p>
+<ol>
+<li>OPTIONS 返回服务器针对特定资源的HTTP请求方法</li>
+<li>HEAD 向服务器索要与GET请求一致的相应，而响应体不会被返回</li>
+<li>GET 向特定资源发出请求（GET可能会被爬虫随意访问）</li>
+<li>POST 向指定资源提交数据处理的请求（提交表单、上传文件）数据被包含在请求体中。POST可能会导致新建资源或已有资源的修改</li>
+<li>PUT 向指定资源上传最新内容</li>
+<li>DELETE 请求服务器删除 REQUEST_URL 所标识的资源</li>
+<li>TRACE 回显服务器收到的请求</li>
+<li>CONNECT 预留给连接方式改为管道的代理服务器</li>
+<li>PATCH 局部修改某一资源</li>
+</ol>
+<p>当请求的资源不支持请求方法时， 服务器返回405（Method Not Allowed）服务器不认识或不支持方法时， 返回501（Not Implemented）</p>
+<h4 id="常见的请求头"><a href="#常见的请求头" class="headerlink" title="常见的请求头"></a>常见的请求头</h4><p>Host：（发送请求，请求头是必须的）主要用于执行被请求资源的Internet主机和端口号，它从HTTP的URL中提取出来，</p>
+<p>Connection: 它的值通常有两个，keep-alive 和close。 HTTP 是一个请求响应模式的典型范例，即客户端向服务器发送一个请求信息，服务器来响应这个信息。在之前的HTTP版本中，每个请求被创建一个新的到服务器端的连接，在这个连接上发送请求，然后接受请求。keep-alive被用来解决效率了低的问题。keep-alive 使客户端到服务端的连接持续有效，当出现了后续请求时， keep-alive避免了建立或者重新建立。对于市面上大部分服务器keep-alive都被支持，但是对于负担较重的网站，保留的客户端会影响性能。</p>
+<p>Accept：浏览器可以接受的MIME类型。 Accept：text/html, 如果不能接受将返回406错误</p>
+<p>Cache-control: 指定请求和响应遵循缓存机制。缓存指令是单向的，且独立。  </p>
+<p>Accept-Encoding：浏览器生命可接受的编码方法，通常说明是否支持压缩。</p>
+<p>Accept-Language：浏览器声明接受语言</p>
+<p>Accept-Charset：浏览器可以接受的字符集，默认任何字符集都可以接收</p>
+<p>User-agent：用于告诉HTTP服务器，客户端使用操作系统浏览器的名称和版本。</p>
+<h4 id="HTTP回应报文"><a href="#HTTP回应报文" class="headerlink" title="HTTP回应报文"></a>HTTP回应报文</h4><p>第一行是报头，第一个字段表明HTTP协议版本们可以直接以请求报文为准；第二个字段是status code， 也就是返回码，相当于请求结果</p>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>在网络上，两个实体间的通信容易被窃听。</p>
+<blockquote>
+<p>当你学习网络安全后、你发现网络再也不安全了</p>
+</blockquote>
+<p>初级的防御手段，是双方都约定一个加密的算法，把加密后的数据进行传输，收到数据方再进行解密。这里涉及一个概念，对称加密和非对称加密</p>
+<ol>
+<li>对称加密：对称加密是指加密秘钥和解密秘钥是一样的，通常有AES和TEA加密算法，它的特点是计算量小，有又一定的破解门槛。</li>
+<li>非对称加密：加密的秘钥和解密的秘钥不一样，秘钥成对出现。加密解密使用不同的秘钥（公钥加密需要私钥解密，私钥加密需要公钥加密）它的特点是计算量大，常用的有RSA、ECC等算法。基于性能考虑，一般使用非对称加密得到秘钥， 再用对称秘钥进行加密。</li>
+</ol>
+<p>HTTP协议可以轻松抓包并获取协议，是不安全的协议。而HTTPS是安全为目标的HTTP通道，简单来说是HTTP的安全版。</p>
+<h5 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h5><p>TLS协议可用于保护运行于TCP之上的任何协议通信，如HTTP、FTP 等更高级的协议。最常见的是通过TLS来保护HTTP通信。</p>
+<p><img src="/2019/02/17/HTTP复习/1550403200729.png" alt="1550403200729"></p>
+<p>主要过程如下所述</p>
+<ol>
+<li>客户端浏览器向服务器传送TLS协议的版本号、加密算法种类、产生的随机数以及其他信息</li>
+<li>服务器向客户端传送TLS版本号、加密算法的种类、随机数及其他信息</li>
+<li>客户端利用服务器传送的信息验证服务器的合法性，服务器的合法性包括：整数过期、CA是否可靠、发型整数是否能解开数字签名，如果验证不能通过，服务将断开；否则继续下一步</li>
+<li>用户随机产生一个对称密码，然后用公钥进行加密，并传给服务器</li>
+<li>【A】如果服务器要求客户端验证身份，用户生成一个随机数并签名一起传送</li>
+<li>【A】如果服务器要求验证客户端身份，服务器检验客户整数和签名随机数的合法性。</li>
+<li>服务器和客户端使用相同的主密码，即“通话密码”。</li>
+<li>客户端向服务器发送信息，指明后续的通话使用7中的密码为对称秘钥</li>
+<li>服务器相客户端发送信息，指明7中的密码为对称秘钥，握手结束</li>
+</ol>
+<p>这样TLS的握手就结束了，TLS的安全通道数据通信开始，客户和服务器开始使用相同的秘钥进行通信。</p>
+<p>这样基于TLS的HTTPS也有了这样的特点1。 客户端产生的秘钥只有客户端和服务器能得到 2 加密的数据只有客户端和服务器能得到明文 3 客户端到服务器的通信是安全的。</p>
+<h4 id="HTTP和HTTPS有以下区别"><a href="#HTTP和HTTPS有以下区别" class="headerlink" title="HTTP和HTTPS有以下区别"></a>HTTP和HTTPS有以下区别</h4><ol>
+<li>HTTPS协议需要CA申请证书，需要交费</li>
+<li>HTTP是超文本传输协议，明文传输， HTTPS是ssl加密传输</li>
+<li>80 和443</li>
+<li>HTTP连接很简单，无状态， HTTPS经过SSL+HTTP协议构建的，加密传输、身份认证。</li>
+<li>HTTPS耗性能，安全性要求低用HTTP</li>
+</ol>
+<h3 id="CGI"><a href="#CGI" class="headerlink" title="CGI"></a>CGI</h3><p>CGI 是HTTP 中重要的技术之一，有着不可替代的作用。CGI是一个web服务器的标注接口。通过CGI接口Web服务器就能获取客户端提交的信息转交给服务器端的CGI程序处理，最后结果返回给客户端。</p>
+<p><img src="/2019/02/17/HTTP复习/1550404398950.png" alt="1550404398950"></p>
+<p>服务器和客户端之间的通信，是浏览器和服务端web服务器的HTTP通信，所以只需知道浏览器执行哪个CGI程序即可。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/15/进程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-复习"><span class="nav-number">1.</span> <span class="nav-text">HTTP 复习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP工作流程"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-协议结构"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP 协议结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP请求方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTP请求方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的请求头"><span class="nav-number">1.2.2.</span> <span class="nav-text">常见的请求头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP回应报文"><span class="nav-number">1.2.3.</span> <span class="nav-text">HTTP回应报文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS"><span class="nav-number">1.3.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TLS"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">TLS</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP和HTTPS有以下区别"><span class="nav-number">1.3.1.</span> <span class="nav-text">HTTP和HTTPS有以下区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CGI"><span class="nav-number">1.4.</span> <span class="nav-text">CGI</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
