@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[后台开发工程师总结系列] 7.Redis简介 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="后开开发">
+  
+  
+  
+  
+  <meta name="description" content="Redis特点Redis 本质上是一个Key-value类型的内存数据库，很像memcached， 整个数据库在内存中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保护，因为是存内存操作，Redis性能十分出色，每秒可以处理10万次的读写操作，是已知性能最快的DB。 Redis性能出色之处不仅仅是性能，Redis最大魅力是支持多种数据结构，Redis单个value的最大限制是1GB,">
+<meta name="keywords" content="后开开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[后台开发工程师总结系列] 7.Redis简介">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-7-Redis简介/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="Redis特点Redis 本质上是一个Key-value类型的内存数据库，很像memcached， 整个数据库在内存中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保护，因为是存内存操作，Redis性能十分出色，每秒可以处理10万次的读写操作，是已知性能最快的DB。 Redis性能出色之处不仅仅是性能，Redis最大魅力是支持多种数据结构，Redis单个value的最大限制是1GB,">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2019-03-09T09:07:05.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[后台开发工程师总结系列] 7.Redis简介">
+<meta name="twitter:description" content="Redis特点Redis 本质上是一个Key-value类型的内存数据库，很像memcached， 整个数据库在内存中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保护，因为是存内存操作，Redis性能十分出色，每秒可以处理10万次的读写操作，是已知性能最快的DB。 Redis性能出色之处不仅仅是性能，Redis最大魅力是支持多种数据结构，Redis单个value的最大限制是1GB,">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-后台开发工程师总结系列-7-Redis简介" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      [后台开发工程师总结系列] 7.Redis简介
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/09/后台开发工程师总结系列-7-Redis简介/" class="article-date">
+	  <time datetime="2019-03-09T09:06:44.000Z" itemprop="datePublished">三月 9, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>Redis 本质上是一个Key-value类型的内存数据库，很像memcached， 整个数据库在内存中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保护，因为是存内存操作，Redis性能十分出色，每秒可以处理10万次的读写操作，是已知性能最快的DB。</p>
+<p>Redis性能出色之处不仅仅是性能，Redis最大魅力是支持多种数据结构，Redis单个value的最大限制是1GB, 而memcached只能保证1MB的数据。Redis 可以用LIST做双向链表实现一个轻量级的高性能消息服务队列。</p>
+<p>Redis的主要缺点是数据库容量收到物理内存的限制，不能用做海量数据的高性能读写</p>
+<a id="more"></a>
+<h4 id="redis的好处"><a href="#redis的好处" class="headerlink" title="redis的好处"></a>redis的好处</h4><ul>
+<li>速度快，数据存在内存中，类似hashmap， 查找时间复杂度O(1)</li>
+<li>支持丰富的数据类型 string、lsit、set、zset、hash</li>
+<li>支持事务，操作都是原子性的</li>
+<li>丰富的特性，可以用于缓存、消息</li>
+</ul>
+<h4 id="memchached-与-Redis-的区别"><a href="#memchached-与-Redis-的区别" class="headerlink" title="memchached 与 Redis 的区别"></a>memchached 与 Redis 的区别</h4><ul>
+<li>储存方式，Memched数据都在内存中，断电后会挂掉。Redis有数据的持久性</li>
+<li>数据支持类型上：Memcached 对数据类型支持简单，而Redis有复杂的数据类型</li>
+<li>底层的模型不同，与客户端的通信协议不同，Redis 直接构建了VM机制</li>
+</ul>
+<h4 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h4><p>跳跃表是一种有序的数据结构，它在每个节点中维护多个指向其他节点的指针，从而达到快速访问节点的目的。跳跃表支持平均（logN）最坏（N）复杂度的节点查找，还可以通过顺序操作来批量处理节点。</p>
+<p>在大部分情况下，跳跃表效率可以和平衡树媲美，而且其实现比平衡树简单，很多程序用跳表代替平衡树。</p>
+<p>Redis跳表用zskiplistNode 和 zskiplist 来定义</p>
+<p>最左边是一个zskiplit结构，它包含了以下部分：</p>
+<ul>
+<li>header: 指向跳跃表的头结点</li>
+<li>tail：指向跳跃表的尾节点</li>
+<li>level：目前跳表中，层数最大节点的层数</li>
+<li>length：跳跃表所含节点的数量</li>
+</ul>
+<p>而每一个zskiplistNode含有如下结构</p>
+<ul>
+<li>层：节点中L1、L2、L3标记各个层。每个层带有两个属性，前进和跨度。</li>
+<li>后退指针：指向前一个节点，逆序遍历使用</li>
+<li>分值：各个节点中1、2、3都是分值，从小到大排列</li>
+<li>各个节点保存了成员对象</li>
+</ul>
+<h4 id="Redis的-RDB-和-AOF"><a href="#Redis的-RDB-和-AOF" class="headerlink" title="Redis的 RDB 和 AOF"></a>Redis的 RDB 和 AOF</h4><p>Redis是内存数据库，他自己的数据库状态在内存中，如果不想办法从内存保存到磁盘，一旦服务器退出，服务器中的数据库状态也会消失不见。</p>
+<p>为了解决这个问题，Redis提供了RDB持久化功能，将内存中的数据保存在磁盘中。</p>
+<p>RDB可以手动执行，或根据服务器配置定期执行。</p>
+<p>RDB文件的创建命令：SAVE（阻塞）和 BGSAVE（非阻塞）</p>
+<p>另外，如果服务器开启了AOF持久化的功能，服务器优先使用AOF还原数据</p>
+<p>只有AOF关闭时，才使用RDB来还原数据库状态</p>
+<p>RDB是一个压缩的二进制文件。对于不同的键值对，RDB用不同的方式保存。</p>
+<h5 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h5><p>除了RDB持久化以外，Redis还提供了 AOF 持久化功能。</p>
+<p>与RDB持久化通过保存数据中的键值对记录来记录数据库状态不同，AOF持久化是通过保存Redis服务器记录的写命令来记录数据库状态的。</p>
+<p>简单的来说，RDB保存的是 a:1 这个键值对， 而AOF 保存的是write a 1这个命令</p>
+<ul>
+<li>AOF持久化分为追加、文件写入、文件同步 三个步骤</li>
+<li>命令追加</li>
+</ul>
+<p>当AOF持久化功能打开时，服务器执行完一个写命令以后，会以协议格式将被执行的命令追加到服务器状态的 aof_buf 缓冲区末尾。</p>
+<ul>
+<li>AOF文件的写入与同步</li>
+</ul>
+<p>Redis的服务进程是一个事件循环，这个事件循环中文件事件负责接收客户端的命令请求，以及向客户端发送命令，而时间事件就是想servercron这样定时函数</p>
+<blockquote>
+<p>为了提高文件的写入效率，现代操作系统中用户调用write函数写文件时常常将其保存到一个缓冲区中，等到缓冲区被填满时、或者超过了指定的时限后，才真正的将缓冲区数据写入磁盘</p>
+<p>这种写法虽然高效，但是也为写入数据带来了安全性问题，因为如果计算机发生停机，缓冲区数据会消失。为此系统提供了Fsync函数，强制写缓冲区数据</p>
+</blockquote>
+<p>AOF持久化的效率和安全性 取决于appendfsync 当其为always时， 服务器在每个事件循环都将缓冲区写入文件，并同步AOF文件。everysec 每个事件循环都写文件，但是1s同步一次 no 每个事件循环写文件，同步等待系统决定</p>
+<p>执行 BGwriteaof 命令时， Redis服务器会维护一个AOF重写缓冲区，该缓冲区会在子进程创建AOF文件期间，记录服务器所有的写命令。当子进程完成创建新的AOF工作后，服务器会将重写缓冲区中的内容追加到AOF文件末尾，使得AOF 保存数据库状态一致。最后用新的AOF文件完成AOF文件的重写操作。 </p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后开开发/">后开开发</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-8-STL概论/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [后台开发工程师总结系列] 8.STL概论
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-6-数据库原理及MySQL/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[后台开发工程师总结系列] 6.数据库原理及MySQL</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.0.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis的好处"><span class="nav-number">1.0.2.</span> <span class="nav-text">redis的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memchached-与-Redis-的区别"><span class="nav-number">1.0.3.</span> <span class="nav-text">memchached 与 Redis 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跳跃表"><span class="nav-number">1.0.4.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis的-RDB-和-AOF"><span class="nav-number">1.0.5.</span> <span class="nav-text">Redis的 RDB 和 AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AOF持久化"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">AOF持久化</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

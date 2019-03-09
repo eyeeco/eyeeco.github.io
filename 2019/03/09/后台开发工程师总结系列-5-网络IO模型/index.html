@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[后台开发工程师总结系列] 5.网络IO模型 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="后台开发">
+  
+  
+  
+  
+  <meta name="description" content="网络IO模型IO是计算机体系中的重要部分，IO外设有打印机、键盘、复印机等；储存设备有硬盘、磁盘、U盘等；通信设备有网卡，路由器等。不同的IO设备通信很难统一。 IO有两种操作，同步IO和异步IO，同步IO必须等IO操作完成后控制权才返回给用户进程，而异步IO无需等待IO操作完成，就将控制权返回给用户进程。 当一个IO发生时，它涉及两个系统对象，一个是调用IO的进程，一个是系统内核。一个read操">
+<meta name="keywords" content="后台开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[后台开发工程师总结系列] 5.网络IO模型">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="网络IO模型IO是计算机体系中的重要部分，IO外设有打印机、键盘、复印机等；储存设备有硬盘、磁盘、U盘等；通信设备有网卡，路由器等。不同的IO设备通信很难统一。 IO有两种操作，同步IO和异步IO，同步IO必须等IO操作完成后控制权才返回给用户进程，而异步IO无需等待IO操作完成，就将控制权返回给用户进程。 当一个IO发生时，它涉及两个系统对象，一个是调用IO的进程，一个是系统内核。一个read操">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550713270622.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550713845144.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550714868104.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550715693981.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550716252243.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550736255434.png">
+<meta property="og:updated_time" content="2019-03-09T09:07:28.178Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[后台开发工程师总结系列] 5.网络IO模型">
+<meta name="twitter:description" content="网络IO模型IO是计算机体系中的重要部分，IO外设有打印机、键盘、复印机等；储存设备有硬盘、磁盘、U盘等；通信设备有网卡，路由器等。不同的IO设备通信很难统一。 IO有两种操作，同步IO和异步IO，同步IO必须等IO操作完成后控制权才返回给用户进程，而异步IO无需等待IO操作完成，就将控制权返回给用户进程。 当一个IO发生时，它涉及两个系统对象，一个是调用IO的进程，一个是系统内核。一个read操">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550713270622.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-后台开发工程师总结系列-5-网络IO模型" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      [后台开发工程师总结系列] 5.网络IO模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/" class="article-date">
+	  <time datetime="2019-03-09T08:56:49.000Z" itemprop="datePublished">三月 9, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网络IO模型"><a href="#网络IO模型" class="headerlink" title="网络IO模型"></a>网络IO模型</h2><p>IO是计算机体系中的重要部分，IO外设有打印机、键盘、复印机等；储存设备有硬盘、磁盘、U盘等；通信设备有网卡，路由器等。不同的IO设备通信很难统一。</p>
+<p>IO有两种操作，同步IO和异步IO，同步IO必须等IO操作完成后控制权才返回给用户进程，而异步IO无需等待IO操作完成，就将控制权返回给用户进程。</p>
+<p>当一个IO发生时，它涉及两个系统对象，一个是调用IO的进程，一个是系统内核。一个read操作两个阶段，1等待数据准备 2 数据从内核拷贝到进程。</p>
+<p>下面针对网络IO的四种模型分别讲解：阻塞IO、非阻塞IO、多路IO复用、异步IO</p>
+<a id="more"></a>
+<h3 id="阻塞IO"><a href="#阻塞IO" class="headerlink" title="阻塞IO"></a>阻塞IO</h3><p>在linux中， 默认情况下所有的socket都是阻塞的，典型的流程如下：</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550713270622.png" alt="1550713270622"></p>
+<p>阻塞和非阻塞的概念是描述用户调用内核IO的方式：阻塞是指IO操作彻底完成后才返回用户空间；而非阻塞IO是IO操作调用后立即给用户一个返回值，不需要IO操作彻底完成。</p>
+<p>当进程调用了 <code>recvfrom</code> 这个系统调用后，系统内核就开始了IO的第一阶段：准备数据。对于网络IO来说，很多时候数据还没到达（还没收到完整的TCP包）系统等待足够的数据到来。而用户这边整个进程会被阻塞。当系统等待数据准备好了，他就会从系统内核拷贝到用户内存中，然后才返回结果，用户进程接触阻塞状态。阻塞IO的特点是IO的两个阶段（准备数据和拷贝数据）都阻塞。</p>
+<p>阻塞IO只适用于小规模的相应，其相应改进例如多进程、多线程或线程池都难以完成大规模响应的任务。</p>
+<h3 id="非阻塞IO"><a href="#非阻塞IO" class="headerlink" title="非阻塞IO"></a>非阻塞IO</h3><p>Linux下可以设置使得socket变为非阻塞状态。一个非阻塞的socket流程如图</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550713845144.png" alt="1550713845144"></p>
+<p>当用户发出read操作时， 如果内核中的数据还没准备好，它不会block用户进程，而是立即返回一个错误。从用户进程的角度来讲，它发起一个read操作后不需要等待，而是马上得到一个错误。当用户进程得到错误后，它就知道数据还没准备好，它就可以再次发起read操作，一旦内核中的数据准备好了，并又收到了用户的系统调用，它就可以将数据复制到用户内存中，然后返回正确的返回值。</p>
+<p>所以在非阻塞IO中，用户需要不断的询问kernel数据是否准备好。非阻塞的接口相对于阻塞IO显著差异在于调用后立即返回。在非阻塞状态下recv接口调用后立即返回，返回值有不同的含义：</p>
+<ol>
+<li>recv() 返回值大于0， 表示接受数据完毕，返回值即是字节数</li>
+<li>recv() 返回0， 表示连接正常断开</li>
+<li>recv() 返回-1， 且errono 等于EAGAIN， 表示操作尚未完成</li>
+<li>recv() 返回-1， 且errono 不等于EAGAIN, 表示recv操作遇到系统错误</li>
+</ol>
+<p>可以看到服务器可以循环调用recv 接口，在单个线程内实现对所有连接数据的接收工作。但是上述模型并不推荐，因为循环盗用recv将大幅占用CPU使用率， 而且recv更多的检测“操作是否完成”的工作，实际操作系统中提供更为完善的接口，例如select() 多路复用模式。</p>
+<h3 id="多路IO复用"><a href="#多路IO复用" class="headerlink" title="多路IO复用"></a>多路IO复用</h3><p>多路IO复用，也被称为事件驱动IO， 它的基本原理是有个函数（比如select）会不断的轮询所有的socket，当有某个socket的数据到达了，就通知用户进程，其流程如图所示</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550714868104.png" alt="1550714868104"> </p>
+<p>当用户进程掉用了select， 那么整个进程会被阻塞，同时内核会监视所有的select负责的socket， 任何一个准备好了其就会返回， 用户进程便可以再次调用 read 从内核拷贝数据  到用户进程。</p>
+<p>这个模型和阻塞IO没有太大的不同，事实上还更差一些。涉及到两个系统调用（select 和 recvfrom）， 但是select解决 了阻塞IO连接数的问题。</p>
+<p>多路IO复用中，每个socket一般都设置为非阻塞的，但是真个用户进程都是阻塞的，不过是被select阻塞，而不是被socketIO阻塞，因此selcet效果与非阻塞IO类似。</p>
+<h2 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h2><p>当用户发起read操作后，立刻就可以去做其他事；另一方名从内核角度，当他收到read后会理解返回，它不会对用户进程产生任何阻塞。然后内核会等待数据准备完成，之后将数据拷贝到用户内存中，当着一切都完成后，内核给用户进程发一个信号返回read操作完成的信息。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550715693981.png" alt="1550715693981"></p>
+<p>调用阻塞IO会一直阻塞对应的进程直到操作完成，而阻塞IO在内核准备数据的情况下会立即返回。两者的区别在于同步IO进程IO操作时会阻塞进程。按照这个定义，之前的阻塞IO、非阻塞IO、多路IO复用都属于同步IO，实际上，真生的IO操作，即 recvfrom 系统调用，在数据没准备好时不阻塞进程，而数据准备好拷贝进程时被阻塞。 但是异步IO不一样，进程发起IO后直接返回，知道内核发送信号，整个过程IO不阻塞。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550716252243.png" alt="1550716252243"></p>
+<p>经过上述介绍，发现阻塞IO和异步IO复用区别很明显，非阻塞IO大部分时间都不阻塞，但是它仍然要求进程去主动检查，并且数据准备完成后需要主动调用 recvfrom , 而异步IO完全不同，它将IO交给了内核，并被通知，在此期间不需要主动的拷贝数据。</p>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select函数在socket编程中非常重要，select是典型的多路IO复用的原型程序，几乎所有的平台都提供。select原型是 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> maxfpd, fd_set *readfds, fd_set *writefds, fd_set *errorfds, struct timeval *timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这里用到了两个结构体，fd_set 和timeval， 结构体fd_set 可以理解为一个集合，这个集合中存放的是文件描述符（即文件句柄）这可以被认为是普通的文件。所以一个socket就是一个文件。结构体timeval 是一个常用代表时间的数据结构，秒和毫秒数。</p>
+<p>下面讲解select各个参数的含义，</p>
+<ol>
+<li>maxfdp 是一个整数值，是指所有文件描述符的范围，即所有文件描述符的最大值加1</li>
+<li>readfds 是指向 fd_set 结构的指针，这个集合中应该包括文件描述符。若集合中有文件可读， select就会返回大于0的值；如果没有可读文件，则根据tiemout 再判断超时，若超出timeout 时间，返回0</li>
+<li>writefds, errorfds 同 readfds,  分别用了写和监视文件错误异常。</li>
+<li>timeout 是select的超时时间，这个参数至关重要，若传入NULL， select就会一直阻塞， 一直等到监视文件描述符某个文件描述符变化为止；若将其设为0，就变成一个存粹的非阻塞函数，不管文件描述符是否变化都返回立即执行；最后一种就是设置一个整数，这样其在timeout时间内 等待事件到来，超时过后一定返回。</li>
+</ol>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><p>和select函数一样，poll函数也用于执行多路IO复用，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;poll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd* fds, unisgned <span class="keyword">int</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd; <span class="comment">//文件描述符</span></span><br><span class="line">    <span class="keyword">short</span> events; <span class="comment">//等待的事件</span></span><br><span class="line">    <span class="keyword">short</span> revents; <span class="comment">// 实际发生的事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每一个pollfd 结构体指定一个被监视的文件描述符，可以传递给多个结构体，指示poll监视多个文件描述符。每个结构体的events域是监视事件掩码，由用户来设置。poll() 不需要显示的请求异常情况报告。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-5-网络IO模型/1550736255434.png" alt="1550736255434"></p>
+<p>Poll函数利用这些事件代码代替了select的读、写、错误事件</p>
+<p>poll() 函数的timeout机制同 select函数基本一样</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll是在linux2.6内核中提出的， 是select和poll的增强版本。相对于select和poll来说，epoll更加的灵活，没有描述符的限制。epoll使用一个文件描述符管理多个描述符，将用户的福安息文件描述符放到内核一个事件表中，这样用户空间和内核空间的数据拷贝只需要一次。</p>
+<p>epoll函数接口</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="keyword">int</span> epfd, <span class="keyword">int</span> op, <span class="keyword">int</span> fd, struct epoll_event *event)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="keyword">int</span> epfd, struct epoll_event* events, <span class="keyword">int</span> maxevents, <span class="keyword">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><code>epoll_create</code> 创建一个epoll句柄，size用来告诉内核监听的数目。这个不同于select中的第一个参数。需要注意的是，创建好epoll句柄后，他会占用一个fd值，所以使用完后要关闭</p>
+<p><code>epoll_ctl</code> 事件注册函数，不同于select() 监听事件时告诉内核监听什么样的事件， 而是先注册监听事件的类型。第一个参数是epoll_create()的返回值，第二个参数表示动作。（CTL的增删改）第三个参数是需要监听的参数，第四个参数告诉内核需要监听什么事。events是几个宏 的集合（类似poll）</p>
+<h3 id="select-、poll、epoll-的区别"><a href="#select-、poll、epoll-的区别" class="headerlink" title="select 、poll、epoll 的区别"></a>select 、poll、epoll 的区别</h3><p>select、poll、epoll 都是多路IO复用机制，多路IO复用通过一种机制可以监视多个描述符，一旦某个描述符就绪（一般是读或写就绪）就能够通知程序进行相应的读写操作。但select、poll、epoll 本质上都是同步IO，以为他们都需要在读写时间就绪后自己负责读写，即使是阻塞的，而异步IO 无需自己负责读写，异步IO的实现会把负责数据从内核拷贝到用户空间，下面将这几种IO做对比</p>
+<ol>
+<li>首先看常见的select和poll，对于网络编程来说，一般认为poll() 比 select() 要高级一些。这主要是由于以下原因。</li>
+</ol>
+<ul>
+<li>poll不要求开发者计算最大文件描述符时+1操作</li>
+<li>poll应对大数目文件描述符时速度更快，应为select对于内核来说需要检测fd_set中的每一个比特位，比较费时</li>
+<li>select可以监控文件描述符的数据是固定的（1024，2048）如果监控数值较大的文件描述符，或是分布稀疏的描述符，效率也会很低。而对于poll() 函数来说可以创建特定大小的数组开保存描述符，不受文件描述符值的限制，poll可以监控的数据量远大于select</li>
+<li>对于select来说，fd_set 在select返回后会发生变换，所以下次进入select之前都需要初始化fd_set, 而poll函数间监控将输入输出事件分开，不需要重新初始化</li>
+<li>select 函数超时参数在返回时也是未定义的，每次进入都需重新设置</li>
+</ul>
+<ol>
+<li>select 优点</li>
+</ol>
+<ul>
+<li>select的可移植性好， 某些UNIX系统不支持poll</li>
+<li>select对于超时精度较好</li>
+</ul>
+<ol>
+<li>epoll 的优点</li>
+</ol>
+<ul>
+<li>支持一个进程打开最大数目的socket描述符（FD）</li>
+</ul>
+<p>select最不能忍的一个地方是 一个进程打开的FD是有一定限制的，由于FD_SETSIZE的默认大小是1024/2048 对于支持上万连接的IM服务器来说太少了。这时候可以选择修改内核然后重新编译。不过epoll没有这个限制，它所支持的FD上限是最大可以打开的文件数目，一般远大于2048。举例而言，1G内存空间这个数目一般是10万左右。</p>
+<ul>
+<li>IO效率不随FD数目增加而线性下降</li>
+</ul>
+<p>传统的select、poll 有一个致命弱点是当有一个很大的socket集合时， 由于网络延迟，只有一部分socket是活跃的，但是 select、poll 每次调用都会扫描全局，导致效率下降。而epoll不会出现这个问题，它只会对活跃的socket 进行操作 – 这是因为epoll是根据每个fd上的回调函数实现的，只有活跃的socket才会调用回调函数，epoll实现了一个伪AIO</p>
+<ul>
+<li>使用mmap 是加速内核与空间的消息传递</li>
+</ul>
+<p>三种方法都需要把fd三种消息传递到用户空间，如何避免不必要的内存拷贝尤为重要，这点上epoll通过内核与用户空间mmap同处一块内存实现。</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><ol>
+<li><p>Linux io模型(select, poll, epoll的区别，水平触发和边缘触发的区别)</p>
+<p><strong>水平触发:</strong>如果文件描述符已经就绪可以非阻塞的执行IO操作了,此时会触发通知.允许在任意时刻重复检测IO的状态.select,poll就属于水平触发.</p>
+<p> <strong>边缘触发:</strong>如果文件描述符自上次状态改变后有新的IO活动到来,此时会触发通知.在收到一个IO事件通知后要尽可能多的执行IO操作,因为如果在一次通知中没有执行完IO那么就需要等到下一次新的IO活动到来才能获取到就绪的描述符.信号驱动式IO就属于边缘触发.</p>
+<p>​     写过单片机的人可以从另一方理解水平触发和边缘触发的区别：</p>
+<p>​     <strong>水平触发:</strong>就是只有高电平(1)或低电平(0)时才触发通知,只要在这两种状态就能得到通知.上面提到的只要有数据可读(描述符就绪)那么水平触发的epoll就立即返回.</p>
+</li>
+</ol>
+<p>   ​    <strong>边缘触发:</strong>只有电平发生变化(高电平到低电平,或者低电平到高电平)的时候才触发通知.上面提到即使有数据可读,但是io状态没有变化epoll也不会立即返回.</p>
+<p>   ​    epoll既可以采用水平触发,也可以采用边缘触发.</p>
+<p>   EPOLL事件有两种模型：<br>   Edge Triggered (ET) 边缘触发只有数据到来,才触发,不管缓存区中是否还有数据。<br>   Level Triggered (LT) 水平触发只要有数据都会触发。</p>
+<p>   首先介绍一下LT工作模式：</p>
+<p>   LT(level triggered)是缺省的工作方式，并且同时支持block和no-block socket.在这种做法中，内核告诉你一个文件描述符是否就绪了，然后你可以对这个就绪的fd进行IO操作。如果你不作任何操作，内核还是会继续通知你的，所以，这种模式编程出错误可能性要小一点。传统的select/poll都是这种模型的代表．</p>
+<p>   优点：当进行socket通信的时候，保证了数据的完整输出，进行IO操作的时候，如果还有数据，就会一直的通知你。</p>
+<p>   缺点：由于只要还有数据，内核就会不停的从内核空间转到用户空间，所有占用了大量内核资源，试想一下当有大量数据到来的时候，每次读取一个字节，这样就会不停的进行切换。内核资源的浪费严重。效率来讲也是很低的。</p>
+<p>   ET:</p>
+<p>   ET(edge-triggered)是高速工作方式，只支持no-block socket。在这种模式下，当描述符从未就绪变为就绪时，内核通过epoll告诉你。然后它会假设你知道文件描述符已经就绪，并且不会再为那个文件描述符发送更多的就绪通知。请注意，如果一直不对这个fd作IO操作(从而导致它再次变成未就绪)，内核不会发送更多的通知(only once).</p>
+<p>   优点：每次内核只会通知一次，大大减少了内核资源的浪费，提高效率。</p>
+<p>   缺点：不能保证数据的完整。不能及时的取出所有的数据。</p>
+<ol start="2">
+<li>网络IO模型？什么是多路复用IO？select和epoll的差别？select具体过程？</li>
+</ol>
+<h4 id="更多关于epoll"><a href="#更多关于epoll" class="headerlink" title="更多关于epoll"></a>更多关于epoll</h4><p>epoll是Linux内核为了处理大量句柄而做出相对于poll的改进，是linux下IO接口select、poll的增强版本，它能显著的较少程序在大量并发接口中有少量活跃链接情况下系统CPU的利用率。</p>
+<p>epoll的优点</p>
+<ol>
+<li>支持进程打开大数目的socket描述符</li>
+<li>IO数据不随FD数目而线性下降（传统的selcet、poll每次调用都会线性扫描全部结合，导致效率下降）</li>
+<li>使用mmap加速内核与用户空间的消息传递，无论是哪种方法都需要内核把FD消息通知给用户空间，如何避免不必要的内存拷贝很重要，epoll使用了内核、用户公用内存实现。</li>
+</ol>
+<p>select 和 poll 的缺点</p>
+<ol>
+<li>每次调用都要重复读取参数</li>
+<li>每次调用重复扫描文件描述符</li>
+<li>每次开始时放入等待队列，调用结束后再从队列中删除。</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后台开发/">后台开发</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-6-数据库原理及MySQL/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [后台开发工程师总结系列] 6.数据库原理及MySQL
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-4-计算机网络/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[后台开发工程师总结系列] 4..计算机网络</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络IO模型"><span class="nav-number">1.</span> <span class="nav-text">网络IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞IO"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞IO"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多路IO复用"><span class="nav-number">1.3.</span> <span class="nav-text">多路IO复用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步IO模型"><span class="nav-number">2.</span> <span class="nav-text">异步IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用函数"><span class="nav-number">3.</span> <span class="nav-text">常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">3.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">3.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.3.</span> <span class="nav-text">epoll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-、poll、epoll-的区别"><span class="nav-number">3.4.</span> <span class="nav-text">select 、poll、epoll 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题"><span class="nav-number">4.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#更多关于epoll"><span class="nav-number">4.0.1.</span> <span class="nav-text">更多关于epoll</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
