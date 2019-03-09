@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[后台开发工程师总结系列] 3.操作系统之线程 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="后台开发">
+  
+  
+  
+  
+  <meta name="description" content="多线程为了更好的理解线程的概念，先对进程、线程的背景做介绍。 早期的计算机都只允许一个程序独占系统资源，一次只能执行一个程序。 这种背景下，一台计算机支持多个程序并发执行的需求就变得迫切，由此产生了进程的概念。进程在多数早期多任务操作系统中是执行工作的基本单元。进程是包含程序指令和相关资源的集合，每个进程和其他进程一起参与调度，竞争CPU、内存。每次进程的切换都存在进程资源的保护和恢复动作，这称为">
+<meta name="keywords" content="后台开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[后台开发工程师总结系列] 3.操作系统之线程">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="多线程为了更好的理解线程的概念，先对进程、线程的背景做介绍。 早期的计算机都只允许一个程序独占系统资源，一次只能执行一个程序。 这种背景下，一台计算机支持多个程序并发执行的需求就变得迫切，由此产生了进程的概念。进程在多数早期多任务操作系统中是执行工作的基本单元。进程是包含程序指令和相关资源的集合，每个进程和其他进程一起参与调度，竞争CPU、内存。每次进程的切换都存在进程资源的保护和恢复动作，这称为">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/1551767091258.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/1551767866351.png">
+<meta property="og:updated_time" content="2019-03-09T08:43:21.647Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[后台开发工程师总结系列] 3.操作系统之线程">
+<meta name="twitter:description" content="多线程为了更好的理解线程的概念，先对进程、线程的背景做介绍。 早期的计算机都只允许一个程序独占系统资源，一次只能执行一个程序。 这种背景下，一台计算机支持多个程序并发执行的需求就变得迫切，由此产生了进程的概念。进程在多数早期多任务操作系统中是执行工作的基本单元。进程是包含程序指令和相关资源的集合，每个进程和其他进程一起参与调度，竞争CPU、内存。每次进程的切换都存在进程资源的保护和恢复动作，这称为">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/1551767091258.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-后台开发工程师总结系列-3-操作系统之线程" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      [后台开发工程师总结系列] 3.操作系统之线程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/" class="article-date">
+	  <time datetime="2019-03-09T08:40:36.000Z" itemprop="datePublished">三月 9, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>为了更好的理解线程的概念，先对进程、线程的背景做介绍。</p>
+<p>早期的计算机都只允许一个程序独占系统资源，一次只能执行一个程序。</p>
+<p>这种背景下，一台计算机支持多个程序并发执行的需求就变得迫切，由此产生了进程的概念。进程在多数早期多任务操作系统中是执行工作的基本单元。进程是包含程序指令和相关资源的集合，每个进程和其他进程一起参与调度，竞争CPU、内存。每次进程的切换都存在进程资源的保护和恢复动作，这称为上下文切换。进程的引入可以解决多用户支持的问题，但也引入了新的问题：进程频繁切换可能严重影响性能。</p>
+<p>同一个进程内部可能有多个线程，共享同一个京城的所有资源。通过线程支持了同一应用程序内部的并发，免去了进程频繁切换的开销，另外并发任务也更简单。</p>
+<p>网络具有天生的并发性，比如数据库可能同时需要处理数以千计的请求。而由于网络连接的不确定性和不可靠性，等待网络交互时，可以让当前的线程进入睡眠、退出调度，处理其他线程，这样能够充分利用系统资源，发挥系统实时处理能力。</p>
+<a id="more"></a>
+<h4 id="多线程是什么"><a href="#多线程是什么" class="headerlink" title="多线程是什么"></a>多线程是什么</h4><p>一个程序运行的过程中，只有一个控制权存在，当函数调用时，函数获得控制权，成为激活函数；同时其他函数不运行。</p>
+<p>多线程程序就是允许一个进程内存在多个控制权，以便让多个函数处于激活状态，让多个函数同时运行，即便是单核计算机也可以通过指令切换，实现多个线程同时运行的效果。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/1551767091258.png" alt="1551767091258"></p>
+<p>回忆栈的 功能和用途：一个栈中只有最下方的栈可被读写，相应的也只有这个栈对应的函数被激活，处于工作状态。为了实现多线程，则必须绕开栈的限制。这样多个线程就有了多个函数栈，每个栈对应一个线程。</p>
+<h4 id="多线程的创建与结束"><a href="#多线程的创建与结束" class="headerlink" title="多线程的创建与结束"></a>多线程的创建与结束</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">say_hello</span><span class="params">(<span class="keyword">void</span>* args)</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hello from thread\n"</span>);</span><br><span class="line">    pthread_exit((<span class="keyword">void</span>*)<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tid;</span><br><span class="line">    <span class="keyword">int</span> iRet = pthread_create(&amp;tid, <span class="literal">NULL</span>, sayhello, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"create error"</span>);</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">void</span>* retval;</span><br><span class="line">    iRet = pthread_join(tid, &amp;reval);</span><br><span class="line">    <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"join error"</span>);</span><br><span class="line">        <span class="keyword">return</span> iRet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"retval %ld"</span>, retval);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="线程的属性"><a href="#线程的属性" class="headerlink" title="线程的属性"></a>线程的属性</h4><p>线程有一组属性是可以在创建时被指定的。该属性被封装在一个对象中，该对象可以用来设置一个或一组线程。线程属性对象类型为 pthread_t .</p>
+<p>默认属性为 ： 非绑定、非分离、默认1MB大小的栈</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-3-操作系统之线程/1551767866351.png" alt="1551767866351"></p>
+<ol>
+<li>分离状态 若线程终止时，线程处于分离状态，系统将不保留线程的终止状态；不需要这个状态可一直设置</li>
+<li>栈地址  可以设置线程的栈地址</li>
+<li>栈大小 系统中有很多线程时，可能需要减小每个线程栈的大小，防止空间不够；如果调用函数很深时，需要加大线程栈的大小。</li>
+<li>栈保护区大小 （防止栈溢出，进入错误提示）</li>
+<li>线程优先级</li>
+<li>继承父进程优先级</li>
+<li>调度策略； 新线程的调度时一旦开始运行，直到被抢占或调度停止</li>
+<li>争用范围</li>
+<li>并发级别</li>
+</ol>
+<h4 id="多线程同步"><a href="#多线程同步" class="headerlink" title="多线程同步"></a>多线程同步</h4><h5 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h5><p>互斥锁是一个特殊的变量，它有上锁和解锁两个状态。互斥锁一般被设置为全局变量。打开互斥锁可以由某个线程获得，一旦获得这个互斥锁就会被锁上，只有该线程有权打开这个，其他线程需要等待</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pthread_mutex_t</span> mutex_x = PTHREAD_MUTEX_INITIALIZER</span><br><span class="line"><span class="keyword">int</span> total_ticket_num = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sell_ticket</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">20</span>; i++)&#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        <span class="keyword">if</span>(total_ticket_num&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            sleep(<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"sell ticket %d"</span>, <span class="number">20</span> - total_ticket_num);</span><br><span class="line">            total_ticket_num--;</span><br><span class="line">        &#125;</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">    &#125;</span><br><span class="line">    reutrn <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iRet;</span><br><span class="line">    <span class="keyword">pthread_t</span> tids[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> iRet = pthread_create(&amp;tids[i], <span class="literal">NULL</span>, &amp;sell_ticket, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Error"</span>);</span><br><span class="line">            <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(<span class="number">30</span>);</span><br><span class="line">    <span class="keyword">void</span>* retval;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)&#123;</span><br><span class="line">        iRet = pthread_join(tids[i], &amp;retval);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Error"</span>);</span><br><span class="line">            <span class="keyword">return</span> iRet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h4><p>条件变量允许线程阻塞和等待另一线程发送信号的方法弥补互斥锁的不足，他常常和互斥锁一起使用。使用时，条件变量用来阻塞一个线程，当条件不满足时，线程往往解开互斥锁等待条件变化。而当其他的线程改变了条件变量时，它将通知相应被这个条件变量阻塞的一个或多个线程，对这些线程获得锁并测试是否瞒住。</p>
+<h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>一些程序中存在读者写着问题，某些资源的访问可能出现两种情况，一种是排他性的（独占），另一种操作访问是可以共享的，可以有多个线程同时去访问某个资源。这就是读操作，这个模型从读写操作中引申出来。</p>
+<p>读写锁也叫共享-独占锁。处理读者写者的常见策略是强读者同步或强写者同步，即总是有限读和优先写</p>
+<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><p>线程可以通过信号量实现通信，信号量和互斥锁的区别：互斥锁只允许一个线程进入临界区，而信号量允许多个线程进入临界区。要使用信号量同步，需要包含头文件semaphore.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sem_t</span> t;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_service</span><span class="params">(<span class="keyword">void</span> *thread_id)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> customer_id = *((<span class="keyword">int</span>*)thread_id);</span><br><span class="line">    <span class="keyword">if</span>(sem_wait(&amp;sem) == <span class="number">0</span>)&#123;</span><br><span class="line">        usleep(<span class="number">100</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d customer service"</span>, customer_id);</span><br><span class="line">        sem_post(&amp;sem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    sem_init(&amp;sem,<span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">pthread_t</span> customers[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">int</span> i, iRet;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> =<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> customer_id = i;</span><br><span class="line">        iRet = pthread_create(&amp;customers[i],<span class="literal">NULL</span>, get_service, &amp;customer_id);</span><br><span class="line">        <span class="keyword">if</span>(iRet)&#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        pthread_join(customers[i], <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sem_destory(&amp;sem);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="多线程重入"><a href="#多线程重入" class="headerlink" title="多线程重入"></a>多线程重入</h4><p>前面介绍了很多方式都是为了解决 “函数不可重入的问题”。</p>
+<p>所谓“可重入函数”是指可以由多个函数并发使用而不担心错误的函数。相反，不可重入函数是指只能由一个任务占有，除非能确保函数互斥。可重入函数可以在任意时刻被中断，稍后在继续运行，且不会丢失数据。</p>
+<ul>
+<li>可重入函数</li>
+</ul>
+<ol>
+<li>不为连续调用持有静态数据</li>
+<li>不返回指向静态数据的指针</li>
+<li>所有数据由函数调用者提供</li>
+<li>使用本地数据、制作全局数据副本来保护全局数据</li>
+<li>如果必须访问全局数据，利用互斥锁、信号量</li>
+<li>不调用任何不可重用函数</li>
+</ol>
+<ul>
+<li>不可重入函数</li>
+</ul>
+<ol>
+<li>使用静态变量</li>
+<li>返回静态变量</li>
+<li>调用了不可重入函数</li>
+<li>使用静态数据结构</li>
+<li>调用了malloc或free函数</li>
+<li>调用了其他IO函数</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后台开发/">后台开发</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-2-操作系统之进程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[后台开发工程师总结系列] 2.操作系统之进程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number">1.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程是什么"><span class="nav-number">1.0.1.</span> <span class="nav-text">多线程是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程的创建与结束"><span class="nav-number">1.0.2.</span> <span class="nav-text">多线程的创建与结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的属性"><span class="nav-number">1.0.3.</span> <span class="nav-text">线程的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程同步"><span class="nav-number">1.0.4.</span> <span class="nav-text">多线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#互斥锁"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">互斥锁</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件变量"><span class="nav-number">1.0.5.</span> <span class="nav-text">条件变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">1.0.6.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量"><span class="nav-number">1.0.7.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程重入"><span class="nav-number">1.0.8.</span> <span class="nav-text">多线程重入</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
