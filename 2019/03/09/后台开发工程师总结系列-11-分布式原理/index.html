@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[后台开发工程师总结系列] 11. 分布式原理 | MapleStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="后台开发">
+  
+  
+  
+  
+  <meta name="description" content="分布式什么是分布式分布式系统是一组通过网络进行通信，为完成共同任务而协调工作节点组成的计算机系统。分布式系统的出现是为了用廉价的、普通的单机完成无法计算、存储的任务。其目的是利用更多的机器， 处理更多的数据。 分布式系统挑战分布式系统需要大量机器协作，面临诸多挑战：  异构的机器与网络  分布式中的机器配置不一样、运行的服务语言、架构不同、因此处理能力不一样。而且网络带宽、延时、丢包率也不一样。">
+<meta name="keywords" content="后台开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[后台开发工程师总结系列] 11. 分布式原理">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/index.html">
+<meta property="og:site_name" content="MapleStory">
+<meta property="og:description" content="分布式什么是分布式分布式系统是一组通过网络进行通信，为完成共同任务而协调工作节点组成的计算机系统。分布式系统的出现是为了用廉价的、普通的单机完成无法计算、存储的任务。其目的是利用更多的机器， 处理更多的数据。 分布式系统挑战分布式系统需要大量机器协作，面临诸多挑战：  异构的机器与网络  分布式中的机器配置不一样、运行的服务语言、架构不同、因此处理能力不一样。而且网络带宽、延时、丢包率也不一样。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551595235757.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602255585.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602372163.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602482460.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602766597.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551603885319.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551603947278.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599695310.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599846381.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599946516.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551600347769.png">
+<meta property="og:updated_time" content="2019-03-09T09:20:39.707Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[后台开发工程师总结系列] 11. 分布式原理">
+<meta name="twitter:description" content="分布式什么是分布式分布式系统是一组通过网络进行通信，为完成共同任务而协调工作节点组成的计算机系统。分布式系统的出现是为了用廉价的、普通的单机完成无法计算、存储的任务。其目的是利用更多的机器， 处理更多的数据。 分布式系统挑战分布式系统需要大量机器协作，面临诸多挑战：  异构的机器与网络  分布式中的机器配置不一样、运行的服务语言、架构不同、因此处理能力不一样。而且网络带宽、延时、丢包率也不一样。">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551595235757.png">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="MapleStory" rel="home"> MapleStory </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">CS:Dalian University of technology</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows" style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-后台开发工程师总结系列-11-分布式原理" style="width: 66%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      [后台开发工程师总结系列] 11. 分布式原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/09/后台开发工程师总结系列-11-分布式原理/" class="article-date">
+	  <time datetime="2019-03-09T09:17:43.000Z" itemprop="datePublished">三月 9, 2019</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><h4 id="什么是分布式"><a href="#什么是分布式" class="headerlink" title="什么是分布式"></a>什么是分布式</h4><p>分布式系统是一组通过网络进行通信，为完成共同任务而协调工作节点组成的计算机系统。分布式系统的出现是为了用廉价的、普通的单机完成无法计算、存储的任务。其目的是利用更多的机器， 处理更多的数据。</p>
+<h4 id="分布式系统挑战"><a href="#分布式系统挑战" class="headerlink" title="分布式系统挑战"></a>分布式系统挑战</h4><p>分布式系统需要大量机器协作，面临诸多挑战：</p>
+<ol>
+<li>异构的机器与网络</li>
+</ol>
+<p>分布式中的机器配置不一样、运行的服务语言、架构不同、因此处理能力不一样。而且网络带宽、延时、丢包率也不一样。</p>
+<ol>
+<li>普遍的节点故障</li>
+</ol>
+<p>虽然单个节点的故障率低，但是节点数据达到一定规模，出故障的概率就变高了。分布式需要故障发生时，系统仍然是可用的。</p>
+<ol>
+<li>不可靠的网络</li>
+</ol>
+<p>节点间通过网络通信，而网络问题：分割、延时、丢包、乱序</p>
+<a id="more"></a>
+<h4 id="分布式特性"><a href="#分布式特性" class="headerlink" title="分布式特性"></a>分布式特性</h4><p>透明性、可扩展性、可靠和可用性、高性能、一致性</p>
+<h4 id="组件、理论、协议"><a href="#组件、理论、协议" class="headerlink" title="组件、理论、协议"></a>组件、理论、协议</h4><p>使用web、APP、SDK通过HTTP、TCP连接到系统，在分布式系统中，为了高并发、高可用，一般都是多个节点提供相同的服务。选择哪个节点来进行服务，这就是负载均衡。负载均衡思想简单、使用很广泛，在分布式系统、大型网站方方面面有应用。</p>
+<p>通过负载均衡找到一个节点，然后处理真正的用户请求。请求有可能很简单，也有可能很复杂。简单的请求比如读取数据，可能是有缓存的，及分布式缓存。如果缓存没有明忠，就绪数据库中拉取数据。复杂的请求可能还会调用其他服务。</p>
+<p>假设服务A需要调用B的服务，两个节点需要通信，通信建立在TPC|IP上，但是每个应用都写socket是复杂的事情，同理http，于是有了进一步的抽象，有了RPC，远程调用跟本地一样方便。</p>
+<p>一个请求可能包含诸多操作，其实涉及到多个服务。一个服务怎么去找到另一个服务呢？通信地址是需要的，怎么获取这个地址，最简单的方法就是写死配置，或者写入数据库。但是这些方法操作不方便，这时候需要注册与发现：提供一个节点向协调中心注册自己的地址，便于服务去拉取地址</p>
+<p>以上可以看到，协调中心提供了中心化的服务：一组节点提供类似单点的服务，比如命令服务、分布式锁、注明的就是chubby、 zookeeper</p>
+<p>回到用户，请求操作会产生数据、日志、通常为信息。这时有一些系统可能对这些信息感兴趣，如个性化推荐、监控等，这里就抽象出了两个概念（消息生产者与消费者）。那么生产者怎么发送给消费者呢，RPC需要指定发送消息，但是实际情况生产者并不清楚，也不关心谁会消费这个消息。简单来说生产者只需往消息队里传入消息即可。消息队列起到了异步处理、解耦的作用</p>
+<p>上面提到，用户会产生一些数据，这些数据忠实记录了用户操作习惯、爱好，是各个行业宝贵的财富。这就产生了分布式计算平台如 Hadoop、Storm</p>
+<p>最后用户操作完成后需要持久化，但是数据量很大，单个节点难以存储。这就需要分布式储存，将数据划分到不同的节点上，同时防止数据丢失，进行备份。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551595235757.png" alt="1551595235757"></p>
+<ul>
+<li>负载均衡</li>
+</ul>
+<p>Nginx 高性能、高并发 的负载均衡服务器，负载均衡、反向代理、静态内容缓存、访问控制</p>
+<p>LVS 基于集群技术和linux操作系统实现高性能、高可用服务器</p>
+<ul>
+<li>webserver</li>
+</ul>
+<p>java: Tomacat Apache</p>
+<p>Python: gunicorn、uswgi、twisted </p>
+<ul>
+<li>service</li>
+</ul>
+<p>SOA、微服务、spring boot 、django</p>
+<ul>
+<li>容器</li>
+</ul>
+<p>docker</p>
+<ul>
+<li>cache</li>
+</ul>
+<p>memcache、 redis</p>
+<ul>
+<li>协调中心</li>
+</ul>
+<p>zookeeper、 etcd</p>
+<ul>
+<li>RPC框架</li>
+</ul>
+<p>grpc、dubbo（阿里RPC框架）</p>
+<ul>
+<li>消息队列</li>
+</ul>
+<p>kafka、rabbitMQ</p>
+<p>异步处理、应用解耦、流量削峰、消息通信</p>
+<ul>
+<li>实时数据平台</li>
+</ul>
+<p>storm</p>
+<ul>
+<li>离线数据平台</li>
+</ul>
+<p>hadoop、spark</p>
+<ul>
+<li>DB</li>
+</ul>
+<p>MySQL、Oracle、MongoDB</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>集群中应用服务器节点通常被设计成无状态，用户可以请求任何一个节点</p>
+<p>负载均衡服务器会根据每个节点的情况将用户请求转发到合适的节点上</p>
+<p>负载均衡服务器用来实现高可用及伸缩性</p>
+<ul>
+<li>高可用：当某个节点故障时， 负载均衡服务器会将用户请求发送到另外的节点上，从而保证所有的服务持续可用</li>
+<li>伸缩性：根据系统的整体负载情况，容易的添加、移除节点</li>
+</ul>
+<h3 id="负载均衡算法"><a href="#负载均衡算法" class="headerlink" title="负载均衡算法"></a>负载均衡算法</h3><ol>
+<li>轮询（Round Robin）</li>
+</ol>
+<p>轮询算法把请求轮流的发送到每个服务上</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602255585.png" alt="1551602255585"></p>
+<p>该算法适合每个服务器性能差不多的情况，如果有性能存在差异，性能较差的服务器可能无法承担较大的负载</p>
+<ol>
+<li>加权轮询</li>
+</ol>
+<p>加权轮询是在轮询的基础上，根据服务器的性能差异，为服务器赋予一定 的权值。性能较高的服务器赋予较高的权值。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602372163.png" alt="1551602372163"></p>
+<ol>
+<li>最少连接</li>
+</ol>
+<p>由于每个请求的连接时间不一样，使用轮询或加权轮询，可能让一台服务器连接数过大，而另一台服务器连接数过小，造成负载不均衡。最少连接算法就是把当前的请求发送到最少连接数的服务器上。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602482460.png" alt="1551602482460"></p>
+<p>4 加权最少连接</p>
+<p>最少连接的基础上，根据服务器性能为每台服务器分配权重，根据权重处理连接数</p>
+<p>5 随机算法</p>
+<p>把请求随机的发送到服务器上</p>
+<p>6 源地址hash</p>
+<p>源地址计算hash值 后，通过对服务器数量取模取得目标服务器的序号。</p>
+<h3 id="转发实现"><a href="#转发实现" class="headerlink" title="转发实现"></a>转发实现</h3><ol>
+<li>HTTP重定向</li>
+</ol>
+<p>HTTP重定向负载均衡服务器使用某种负载均衡算法得到IP地之后，将地址写入HTTP报文中，状态码为302，客户端收到重定向报文后重新请求。</p>
+<p>缺点：两次请求，延迟高</p>
+<p> HTTP 负载均衡处理能力有限，会限制集群的规模</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551602766597.png" alt="1551602766597"></p>
+<ol>
+<li>DNS 域名解析</li>
+</ol>
+<p>在DNS域名解析服务器计算服务器IP地址</p>
+<p>优点：DNS能够根据地理位置域名解析，返回离用户最近的IP地址</p>
+<p>缺点：由于DNS有多级结构，每一级域名都可能被缓存，延时生效。</p>
+<p>大型网站基本使用了DNS作为第一级的负载均衡手段，然后在内部使用其他方式作为第二季负载均衡，也就是说，域名解析的结果一般是二级负载均衡服务器的IP地址</p>
+<ol>
+<li>反向代理服务器</li>
+</ol>
+<p>反向代理服务器位于原服务器前，用户请求经过反向代理服务器再能达到原服务器。反向代理服务器用来缓存、日志，同时也可以作为负载均衡服务器。</p>
+<p>这种负载均衡转发方式下，客户端不直接请求资源。</p>
+<ol>
+<li>网络层</li>
+</ol>
+<p>操作系统内核获取网络数据包，根据负载均衡算法计算IP地址并修改IP地址进行转发原服务器返回的请求也及经过负载均衡服务器。在内核中进行，效率较高。</p>
+<ol>
+<li>链路层</li>
+</ol>
+<p>修改MAC地址进行转发。通过配置服务器虚拟IP和负载均衡IP一直，不需要修改IP地址就可转发。</p>
+<p>这是目前大型网站最广泛使用的负载均衡转发方式，在LINUX平台使用的负载均衡服务器为LVS</p>
+<h2 id="集群Session管理"><a href="#集群Session管理" class="headerlink" title="集群Session管理"></a>集群Session管理</h2><p>一个用户的session信息如果存在一个服务器上，那么当负载均衡服务器把用户请求转到另一个服务器，由于用户没有用户的Session信心，用户需要重新登录。</p>
+<h4 id="Sticky-Session"><a href="#Sticky-Session" class="headerlink" title="Sticky Session"></a>Sticky Session</h4><p>配置负载均衡服务器，是一个用户所有的请求都到同一个路由器，这样吧用户的session放在服务器中</p>
+<p>缺点：服务器宕机时，丢失所有的session</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551603885319.png" alt="1551603885319"></p>
+<h4 id="Session-Replication"><a href="#Session-Replication" class="headerlink" title="Session Replication"></a>Session Replication</h4><p>服务器间进行同步操作，所有的服务器都有所有的session信息</p>
+<p>缺点：占用内存过多、同步占用带宽、服务器处理时间</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551603947278.png" alt="1551603947278"></p>
+<h4 id="Session-Server"><a href="#Session-Server" class="headerlink" title="Session Server"></a>Session Server</h4><p>使用一个单独的Session服务器，可使用MySQL或者Redis</p>
+<p>优点：为了使得大型网站具有伸缩性，集群中的应用服务器保持无状态。session服务器的存在保证了应用服务器的无状态</p>
+<h2 id="大型网站架构常见问题"><a href="#大型网站架构常见问题" class="headerlink" title="大型网站架构常见问题"></a>大型网站架构常见问题</h2><ul>
+<li><ol>
+<li>你使用过哪些组件或者方法来提升网站性能，可用性，及并发量</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>提高硬件性能，增加系统服务器</li>
+<li>使用缓存（本地缓存，分布式缓存Redis、memcache ）</li>
+<li>消息队列（解耦、削峰、异步）</li>
+<li>分布式开发（不同服务部署在不同的机器上，利用nginx负载均衡访问，大大提高了并发量）</li>
+<li>数据库分库（读写分离）分表（水平分表、垂直分表）</li>
+<li>采用集群（多台机器提供相同的服务）</li>
+<li>CDN加速（将一些静态资源放在离用户最近的网络节点）</li>
+<li>浏览器缓存</li>
+<li>合适的连接池（数据库连接池、线程池）</li>
+<li>适当使用多线程开发</li>
+</ol>
+<ul>
+<li>高可用系统的常用手段</li>
+</ul>
+<ol>
+<li>降级：服务器降级是服务器压力剧增的情况下，根据当前业务对服务、页面策略的降级，以释放服务器资源保证核心任务的运行。降级往往会指定级别</li>
+<li>限流：防止恶意请求恶意攻击超出峰值</li>
+<li>缓存：避免大量流量直接打到数据库上</li>
+<li>超时、重试机制：避免堆积请求</li>
+<li>回滚机制：快速修复错误版本</li>
+</ol>
+<ul>
+<li>现代互联网系统应该具备的特点</li>
+</ul>
+<ol>
+<li>高并发、大流量</li>
+<li>高可用，不间断服务</li>
+<li>海量数据</li>
+<li>用户分布广泛、网络情况复杂、分布范围广、网络情况千差万别</li>
+<li>安全环境恶略</li>
+<li>需求快速变更</li>
+<li>渐进式发展</li>
+</ol>
+<ul>
+<li>微服务领域的了解和认识</li>
+</ul>
+<p>大公司及未来的趋势都是spring cloud</p>
+<p>我们通常把spring cloud理解为一系列开源组件的集合，抽象了一套通用的开发模式。他的目的是通过抽象这套模式，让开发者更快的开发业务，而这套开发的实际载体还是依赖于RPC、网关、服务发现、配置管理、限流、分布式链路</p>
+<ul>
+<li>性能测试</li>
+</ul>
+<p>性能测试指通过自动化测试模拟多种正常、峰值、以及异常载荷条件来对系统进行各项指标的测试。</p>
+<ul>
+<li>基准测试:  给系统压力较低时，查看系统的运行状况</li>
+<li>负载测试：对系统不断的增加压力，直至系统多向指标达到安全临界值</li>
+<li>压力测试：超过安全负载情况下不断施加压力，直到系统崩溃或无法处理任何请求，依次获得系统的最大压力承受能力。</li>
+<li>稳定性测试：在特定的硬件、软件、网络环境下，加载一定的业务压力观察是否稳定</li>
+<li>常见的大表优化</li>
+</ul>
+<p>表单数据过大时，数据的CRUD性能会下降，常见优化措施如下</p>
+<ol>
+<li><p>限定数据的范围： 无比进制不带任何限制范围限制条件的查询语句</p>
+</li>
+<li><p>读写分离  经典的数据库拆分方案（主库负责读写，从库负责读）</p>
+</li>
+<li><p>垂直分区：根据数据表的相关性进行拆分。例如用户表中有登录信息和基本信息，可以把这两种信息拆成两个表，甚至放到单独的库做分库。简单来说垂直拆分是数据表列的拆分。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599695310.png" alt="1551599695310">垂直拆分的优点：可以使行数据变小，查询时减少读取的block数、减少IO次数。此外垂直分区可以简化表结构，易于维护</p>
+<p>缺点：主键出现冗余，让某些事务更加的复杂</p>
+</li>
+<li><p>水平分区，保持数据的表结构不变，通过某种策略进行数据分片，这样每一片数据分到不同的表或库中，达到了分布式的目的，水平拆分可以支持非常大的数据量。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599846381.png" alt="1551599846381"></p>
+<p>水平拆分最好分库，水平拆分能够支持非常大的数据储存量，但是分片事务难以解决。</p>
+</li>
+</ol>
+<ul>
+<li>消息队列的好处</li>
+</ul>
+<ol>
+<li>通过异步提高系统的处理性能</li>
+</ol>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551599946516.png" alt="1551599946516"></p>
+<p>不使用消息队列时，用户的请求直接写入数据库，在高并发的情况下服务器压力剧增。使得响应速度变慢。但是使用消息队列后，用户请求的消息立即返回，再由消息队列的消费者进程从消息队列中获取数据，异步写入数据库。由于消息队列服务器速度快于数据库，响应速度大大改善。</p>
+<p>通过以上分析可以得出消息队列有很好的削峰作用–通过异步处理，将短时间高并发事务消息存在消息队列中，从而削平高峰期的并发事务。</p>
+<p><img src="/2019/03/09/后台开发工程师总结系列-11-分布式原理/1551600347769.png" alt="1551600347769"></p>
+<p>数据写入消息队列中就返回用户，但是之后的请求有可能失败。因此消息队列异步处理后需要适当修改业务流程与其配合。</p>
+<p>2 降低系统的耦合性</p>
+<p>分布式消息队列：</p>
+<p>利用发布-订阅者模式工作，生产者发送消息，一个或多个消息接受者（订阅者）订阅消息。从上图可以看出生产者和消费者没有直接耦合，消息发送者将消息发送至分布式消息队列中，接受者只需从后端获取并处理。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后台开发/">后台开发</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/09/后台开发工程师总结系列-10-常用算法及参考实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[后台开发工程师总结系列] 10. 常用算法及参考实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式"><span class="nav-number">1.</span> <span class="nav-text">分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是分布式"><span class="nav-number">1.0.1.</span> <span class="nav-text">什么是分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式系统挑战"><span class="nav-number">1.0.2.</span> <span class="nav-text">分布式系统挑战</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式特性"><span class="nav-number">1.0.3.</span> <span class="nav-text">分布式特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组件、理论、协议"><span class="nav-number">1.0.4.</span> <span class="nav-text">组件、理论、协议</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">2.</span> <span class="nav-text">负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡算法"><span class="nav-number">2.1.</span> <span class="nav-text">负载均衡算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转发实现"><span class="nav-number">2.2.</span> <span class="nav-text">转发实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群Session管理"><span class="nav-number">3.</span> <span class="nav-text">集群Session管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sticky-Session"><span class="nav-number">3.0.1.</span> <span class="nav-text">Sticky Session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session-Replication"><span class="nav-number">3.0.2.</span> <span class="nav-text">Session Replication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session-Server"><span class="nav-number">3.0.3.</span> <span class="nav-text">Session Server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站架构常见问题"><span class="nav-number">4.</span> <span class="nav-text">大型网站架构常见问题</span></a></li>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 MapleStory All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
